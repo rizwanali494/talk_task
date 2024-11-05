@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_constants.dart';
+import 'package:talk_task/utilis/app_prefs.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
+import '../../main.dart';
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_images.dart';
 
@@ -17,23 +19,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  // Future<void> _onNextPressed() async {
-  //   if (_currentPage < 2) {
-  //     _pageController.nextPage(
-  //       duration: const Duration(milliseconds: 300),
-  //       curve: Curves.easeInOut,
-  //     );
-  //   } else {
-  //
-  //     Navigator.of(context).pushNamedAndRemoveUntil(
-  //       RoutesName.demo,
-  //           (route) => false,
-  //     );
-  //     final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     await prefs.setBool('OnBoardingShown', true);
-  //
-  //   }
-  // }
+  Future<void> _onNextPressed() async {
+    if (_currentPage < 2) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+      );
+    } else {
+
+      Navigator.of(context).popUntil(
+            (route) => false,
+      );
+
+      await prefs.setBool(AppPrefs.onBoardingShown, true);
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +105,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   padding:
                   EdgeInsets.symmetric(horizontal: 37.w, vertical: 33.h),
                   child: GestureDetector(
-                  //  onTap: _onNextPressed,
+                    onTap: _onNextPressed,
                     child: Container(
                       width: double.infinity,
                       height: 56.h,

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talk_task/splash_screen.dart';
 import 'package:talk_task/utilis/app_images.dart';
 import 'package:talk_task/utilis/app_themes.dart';
 
-void main() {
+
+late SharedPreferences prefs;
+
+Future<void> main() async {
+  prefs=await SharedPreferences.getInstance();
   runApp( const MyApp());
 }
 
