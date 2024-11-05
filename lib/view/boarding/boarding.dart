@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_prefs.dart';
+import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import '../../main.dart';
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_images.dart';
+import '../screens/setting_screen/setting_screen.dart';
 
 
 class OnboardingScreen extends StatefulWidget {
@@ -27,11 +29,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       );
     } else {
 
-      Navigator.of(context).popUntil(
-            (route) => false,
-      );
+      // Navigator.of(context).popUntil(
+      //       (route) => false,
+      // );
 
       await prefs.setBool(AppPrefs.onBoardingShown, true);
+      Navigator.pushReplacement(context, MyRoute(const SettingScreen()));
 
     }
   }
