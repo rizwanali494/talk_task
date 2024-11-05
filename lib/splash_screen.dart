@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
               height: 150.h,
             ),
              SpinKitFadingCircle(
-              color: AppColors.darkBlue1642DB,
+               color: AppColors.darkBlue1642DB,
               size: 50.h,
             ),
             SizedBox(
