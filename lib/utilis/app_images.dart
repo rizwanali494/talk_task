@@ -9,6 +9,11 @@ class AppImages{
 
   //icons
 
+  //Demo screen
+
+  static String iconSkip='assets/icons/skipButton.png';
+  static String iconNext='assets/icons/next.png';
+
   //home
   static String iconHome='assets/icons/home.png';
   static String iconNotes='assets/icons/note.png';

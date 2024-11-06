@@ -9,6 +9,7 @@ import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/boarding/boarding.dart';
 import 'package:talk_task/view/common_widgets/custom_app_bars.dart';
+import 'package:talk_task/view/demo_screen/demo_screen.dart';
 
 
 
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-       Navigator.pushReplacement(context, MyRoute(const OnboardingScreen()));
+       Navigator.pushReplacement(context, MyRoute(const DemoScreen()));
     });
 
   }

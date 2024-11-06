@@ -10,6 +10,28 @@ class AppConstants {
   static const String taskAi = " Task AI";
 
 
+
+
+  //Demo screens
+  static const String demoWidgetOne = 'Click the microphone icon to easily input your events. Simply speak the event details, including the date, time, and reminder time. The app will automatically add this information below.';
+  static const String demoPage2Text =
+      "If you prefer, you can manually add the event, date, time, and reminder time by clicking the icons below the microphone. Additionally, you can edit any mistakes made here.";
+
+  static const String demoPage3Text = "Your next upcoming event is displayed here.";
+  static const String demoPage4Text =
+      "The notifications screen keeps you informed with updates and archived events.";
+
+  static const String demoPage5Text =
+      "Tap the settings icon to customize your app preferences, including reminder colors on your calendar.";
+  static const String demoPage6Text =
+      "The navigation bar includes tabs for setting recurring reminders, creating one-time reminders on the home screen, and viewing your calendar.";
+  static const String finish = "Finish";
+
+
+
+
+
+
   //about us screen
   static const String aboutUs = 'About Us';
 
@@ -115,5 +137,6 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String recurringRemainders = "Recurring Remainders ";
   static const String monthlyRemainder = "Monthly Remainders: ";
   static const String yearlyRemainder = "Yearly Remainders: ";
+
 
 }
