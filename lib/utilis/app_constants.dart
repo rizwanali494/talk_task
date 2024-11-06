@@ -7,6 +7,8 @@ class AppConstants {
   static const String getStarted = " Get Started";
   static const String next = " Next";
   static const String taskUp = " TASK-UP";
+  static const String taskAi = " Task AI";
+
 
   //about us screen
   static const String aboutUs = 'About Us';

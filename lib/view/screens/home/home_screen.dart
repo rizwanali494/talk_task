@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/utilis/app_constants.dart';
+import 'package:talk_task/utilis/app_text_styles.dart';
+
+import '../../../utilis/app_colors.dart';
+import '../../../utilis/app_images.dart';
 
 // class HomeScreen extends StatefulWidget {
 //   const HomeScreen({super.key});
@@ -394,6 +399,31 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Text('Home'),);
+    return  Scaffold(
+      backgroundColor: AppColors.whiteFFFFF,
+      appBar: AppBar(
+      backgroundColor: AppColors.whiteFFFFF,
+      flexibleSpace: Padding(
+        padding:  EdgeInsets.only(top: 8.h),
+        child: Row(
+          children: [
+            SizedBox(width: 20.w,),
+          Text(AppConstants.taskAi,style: AppTextStyles.poppins(color: AppColors.blueDark002055, fontSize: 20.sp, weight: FontWeight.w700),),
+          const Spacer(),
+          Container(
+            height: 45.h,
+            width:45.h ,
+            clipBehavior: Clip.antiAlias,
+            decoration: const BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle
+            ),
+            child: Image.asset(AppImages.iconNotifications),
+          ),
+            SizedBox(width: 20.w,),
+        ],),
+      ),
+
+    ),);
   }
 }
