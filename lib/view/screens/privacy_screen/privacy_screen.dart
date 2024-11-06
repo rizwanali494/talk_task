@@ -13,6 +13,7 @@ class PrivacyScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          backgroundColor: AppColors.whiteFFFFF,
             appBar: AppBars.settingsAppBar(context: context, title: AppConstants.privacyPolicy),
             body: SingleChildScrollView(
               child: Padding(
@@ -59,9 +60,9 @@ class PrivacyScreen extends StatelessWidget{
                     SizedBox(height: 7.h),
                     CustomText(
                       text: AppConstants.privacyPolicyService,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w300,
+
                     ),
                     SizedBox(height: 7.h),
                     CustomText(

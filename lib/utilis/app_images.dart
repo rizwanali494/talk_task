@@ -21,4 +21,6 @@ class AppImages{
   static String iconPrivacy='assets/icons/privacy.png';
   static String iconTerms='assets/icons/terms.png';
   static String iconCustomize='assets/icons/customize.png';
+  static String iconArrowNextIcon='assets/icons/arrow_next_icon.png';
+
 }

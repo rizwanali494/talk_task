@@ -6,10 +6,11 @@ import 'package:share_plus/share_plus.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/view/screens/about_screen/about_screen.dart';
 import 'package:talk_task/view/screens/privacy_screen/privacy_screen.dart';
-import 'package:talk_task/view/screens/setting_screen/setting_model.dart';
+import 'package:talk_task/view_model/setting_model.dart';
 import 'package:talk_task/view/screens/term_condition_screen/term_condition_screen.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_constants.dart';
+import '../../../utilis/app_images.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_text.dart';
  import 'package:share_plus/share_plus.dart';
@@ -47,76 +48,78 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-       child:Scaffold(
-           appBar: AppBars.settingsAppBar(context: context, title: AppConstants.settings),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
-                child: Consumer<SettingModel>(builder: (context, model, child) {
-                  return Column(
-                    children: List.generate(
-                        5,
-                        (index) => Padding(
-                              padding: EdgeInsets.symmetric(vertical: 13.h),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  if (index == 0) {
-                                    Navigator.push(context, MyRoute(const AboutScreen()));
-                                  } else if (index == 1) {
-                                    if(iosLink !="" && androidLink !=""){
-                                       await Share.share(
-                                        Platform.isIOS?iosLink:androidLink,
-                                        subject: 'Task AI mobile app');
+    return Scaffold(
+      backgroundColor: AppColors.whiteFFFFF,
+        appBar: AppBars.settingsAppBar(context: context, title: AppConstants.settings),
+         body: SingleChildScrollView(
+           child: Padding(
+             padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
+             child: Consumer<SettingModel>(builder: (context, model, child) {
+               return Column(
+                 children: List.generate(
+                     5,
+                     (index) => Padding(
+                           padding: EdgeInsets.symmetric(vertical: 13.h),
+                           child: GestureDetector(
+                             onTap: () async {
+                               if (index == 0) {
+                                 Navigator.push(context, MyRoute(const AboutScreen()));
+                               } else if (index == 1) {
+                                 if(iosLink !="" && androidLink !=""){
+                                    await Share.share(
+                                     Platform.isIOS?iosLink:androidLink,
+                                     subject: 'Task AI mobile app');
 
-                                    }
-                                   
-                                  } else if (index == 2) {
-                                    Navigator.push(context, MyRoute(const PrivacyScreen()));
-                                  } else if (index == 3) {
-                                    Navigator.push(context, MyRoute(const TermConditionScreen()));
-                                  } else if (index == 4) {
-                                    //Navigator.push(context, MyRoute(const Customi()));
-                                  }
+                                 }
 
-                                  // else if (index == 5) {
-                                  //   _showLogoutBottomSheet(context);
-                                  // }
-                                },
-                                child: Container(
-                                  height: 65.h,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                    border: Border.all(color: AppColors.blueBorder),
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20.w),
-                                    child: Row(
-                                      children: [
-                                        Image.asset(model.settingList[index][1],
-                                            width: 30.w, height: 30.h),
-                                        SizedBox(width: 15.w),
-                                        CustomText(
-                                          text: model.settingList[index][0],
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        const Spacer(),
-                                        Icon(Icons.navigate_next_sharp,
-                                            size: 30.sp, color: AppColors.primary),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )),
-                  );
-                }),
-              ),
-            )));
+                               } else if (index == 2) {
+                                 Navigator.push(context, MyRoute(const PrivacyScreen()));
+                               } else if (index == 3) {
+                                 Navigator.push(context, MyRoute(const TermConditionScreen()));
+                               } else if (index == 4) {
+                                 //Navigator.push(context, MyRoute(const Customi()));
+                               }
+
+                               // else if (index == 5) {
+                               //   _showLogoutBottomSheet(context);
+                               // }
+                             },
+                             child: Container(
+                               height: 65.h,
+                               width: double.infinity,
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(12.r),
+                                 border: Border.all(color: AppColors.blueBorder),
+                               ),
+                               child: Padding(
+                                 padding:
+                                     EdgeInsets.symmetric(horizontal: 20.w),
+                                 child: Row(
+                                   children: [
+                                     Image.asset(model.settingList[index][1],
+                                         width: 30.w, height: 30.h),
+                                     SizedBox(width: 15.w),
+                                     CustomText(
+                                       text: model.settingList[index][0],
+                                       fontSize: 16.sp,
+                                       fontWeight: FontWeight.w400,
+                                     ),
+                                     const Spacer(),
+                                     Image.asset(AppImages.iconArrowNextIcon,height: 18.r,),
+
+                                   ],
+                                 ),
+                               ),
+                             ),
+                           ),
+                         )),
+               );
+             }),
+           ),
+         ));
   }
+
+
 
   void _showLogoutBottomSheet(BuildContext context) {
     showModalBottomSheet(

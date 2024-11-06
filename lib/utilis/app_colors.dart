@@ -16,4 +16,6 @@ class AppColors {
   static const Color whiteFFFFF = Color(0xffFFFFFF);
   static const Color blueBorder = Color(0xffCDE0FF);
   static const Color greyLight = Colors.grey;
+  static const Color blueDark002055 = Color(0xff002055);
+
 }

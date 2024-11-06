@@ -53,93 +53,98 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            appBar: AppBars.settingsAppBar(context: context, title: AppConstants.aboutUs),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                        text:
-                        AppConstants.aboutUsWelcome,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w300),
-                    SizedBox(height: 5.h),
-                    CustomText(
-                      text: AppConstants.ourMission,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                    ),
-                    SizedBox(height: 5.h),
-                    CustomText(
-                        text:
-                           AppConstants.aboutUsAtTask,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w300),
-                    SizedBox(height: 5.h),
-                    CustomText(
-                      text: AppConstants.features,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                    ),
-                    SizedBox(height: 5.h),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: items.map((item) {
-                        return RichText(
-                          // textAlign: TextAlign.justify,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: '${item["bullet"]} ',
-                                style: AppTextStyles.poppins(
-                                  fontSize: 16.sp,
-                                  color: AppColors.black,
-                                   weight: FontWeight.bold,
-                                ),
-                              ),
-                              TextSpan(
-                                text: item["bold"],
-                                style:AppTextStyles.poppins(
-                                  fontSize: 16.sp,
-                                  color: AppColors.black,
-                                  weight: FontWeight.bold,
-                                ),
-                              ),
-                              TextSpan(
-                                text: item["text"],
-                                style: AppTextStyles.poppins(
-                                  fontSize: 16.sp,
-                                  color: AppColors.black,
-                                  weight: FontWeight.w300,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(height: 5.h),
-                    CustomText(
-                      text: AppConstants.whyChooseUs,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                    ),
-                    SizedBox(height: 5.h),
-                    CustomText(
-                        text:
-                          AppConstants.aboutUsWeUnderstand,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w300),
-                  ],
+    return Scaffold(
+      backgroundColor: AppColors.whiteFFFFF,
+        appBar: AppBars.settingsAppBar(context: context, title: AppConstants.aboutUs),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+
+                    text:
+                    AppConstants.aboutUsWelcome,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w300),
+                SizedBox(height: 5.h),
+                CustomText(
+                  text: AppConstants.ourMission,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary,
                 ),
-              ),
-            )));
+                SizedBox(height: 5.h),
+                CustomText(
+                    text:
+                       AppConstants.aboutUsAtTask,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w300),
+                SizedBox(height: 5.h),
+                CustomText(
+                  text: AppConstants.features,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary,
+                ),
+                SizedBox(height: 5.h),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: items.map((item) {
+                    return RichText(
+                      // textAlign: TextAlign.justify,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${item["bullet"]} ',
+                            style: AppTextStyles.poppins(
+                              height: 1.4,
+                              fontSize: 16.sp,
+                              color: AppColors.black,
+                               weight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+
+                            text: item["bold"],
+                            style:AppTextStyles.poppins(
+                              fontSize: 16.sp,
+                              height: 1.4,
+                              color: AppColors.black,
+                              weight: FontWeight.bold,
+                            ),
+                          ),
+                          TextSpan(
+                            text: item["text"],
+                            style: AppTextStyles.poppins(
+                              fontSize: 16.sp,
+                              height: 1.4,
+                              color: AppColors.black,
+                              weight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 5.h),
+                CustomText(
+                  text: AppConstants.whyChooseUs,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary,
+                ),
+                SizedBox(height: 5.h),
+                CustomText(
+                    text:
+                      AppConstants.aboutUsWeUnderstand,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w300),
+              ],
+            ),
+          ),
+        ));
   }
 }

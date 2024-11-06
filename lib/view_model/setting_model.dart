@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../utilis/app_images.dart';
+import '../utilis/app_images.dart';
 
 class SettingModel extends ChangeNotifier {
   ///
