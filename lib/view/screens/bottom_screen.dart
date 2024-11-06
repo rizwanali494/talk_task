@@ -45,31 +45,41 @@ final List<Widget> _screens=[const NotesScreen(),const HomeScreen(),const Remain
 
                topRight: Radius.circular(25.r),
              ),
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceAround,
-               children: [
-                 _bottomIconBtn(iconPath: _listIcons[0], isSelected: false),
-                 _bottomIconBtn(iconPath: _listIcons[1], isSelected: false),
-                 _bottomIconBtn(iconPath: _listIcons[2], isSelected: false),
-               ],
+             child: Consumer<BottomNavBarProvider>(
+               builder: (BuildContext context, BottomNavBarProvider value, Widget? child) {
+                 return Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                   children: [
+                     _bottomIconBtn(iconPath: _listIcons[0], isSelected:value.selectedIndex!=0? false:true, index: 0, context: context),
+                     _bottomIconBtn(iconPath: _listIcons[1], isSelected: value.selectedIndex!=1? false:true, index: 1, context: context),
+                     _bottomIconBtn(iconPath: _listIcons[2], isSelected: value.selectedIndex!=2? false:true, index: 2, context: context),
+                   ],
+                 );
+               },
+
              )),
        ),
    );
   }
 
 
-  Widget _bottomIconBtn({required String iconPath,required bool isSelected}){
-    return SizedBox(
-      width: 100.w,
-      height: 50.h,
-      child: Center(
-        child: Image.asset(
-          iconPath,
-          height: 30.h,
-          width: 30.h,
-          color:isSelected
-              ? AppColors.primary
-              : AppColors.greyLight,
+  Widget _bottomIconBtn({required String iconPath,required bool isSelected,required int index,required BuildContext context}){
+    return GestureDetector(
+      onTap: (){
+        context.read<BottomNavBarProvider>().setPageIndex(pageIndex: index);
+      },
+      child: SizedBox(
+        width: 100.w,
+        height: 50.h,
+        child: Center(
+          child: Image.asset(
+            iconPath,
+            height: 30.h,
+            width: 30.h,
+            color:isSelected
+                ? AppColors.primary
+                : AppColors.greyLight,
+          ),
         ),
       ),
     );
