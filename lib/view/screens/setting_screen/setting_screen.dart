@@ -15,6 +15,8 @@ import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_text.dart';
  import 'package:share_plus/share_plus.dart';
 
+import '../customization_screen/customization_screen.dart';
+
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -77,7 +79,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                } else if (index == 3) {
                                  Navigator.push(context, MyRoute(const TermConditionScreen()));
                                } else if (index == 4) {
-                                 //Navigator.push(context, MyRoute(const Customi()));
+                                 Navigator.push(context, MyRoute(const CustomizationScreen()));
                                }
 
                                // else if (index == 5) {

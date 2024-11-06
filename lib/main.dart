@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talk_task/view_model/customization_viewModel.dart';
 import 'package:talk_task/view_model/setting_model.dart';
 import 'package:talk_task/splash_screen.dart';
 import 'package:talk_task/utilis/app_images.dart';
@@ -24,6 +25,8 @@ class MyApp extends StatelessWidget {
    return MultiProvider(
      providers: [
        ChangeNotifierProvider(create: (context) => SettingModel(),),
+       ChangeNotifierProvider(create: (context) => CustomizationViewmodel(),),
+
      ],
      child: ScreenUtilInit(
        designSize: const Size(432,923),

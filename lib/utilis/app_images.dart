@@ -22,5 +22,7 @@ class AppImages{
   static String iconTerms='assets/icons/terms.png';
   static String iconCustomize='assets/icons/customize.png';
   static String iconArrowNextIcon='assets/icons/arrow_next_icon.png';
+  static String imgCustomize='assets/images/custom_image.png';
+
 
 }

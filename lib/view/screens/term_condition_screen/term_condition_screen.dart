@@ -28,7 +28,19 @@ class TermConditionScreen extends StatelessWidget {
                            AppConstants.termsAndConditionsOne,
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w300),
-                    SizedBox(height: 7.h),
+                   // SizedBox(height: 2.h),
+                    CustomText(
+                        text:
+                        AppConstants.googlePlayServices,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w300),
+
+                    //SizedBox(height: 2.h),
+                    CustomText(
+                        text:
+                        AppConstants.termsAndConditionsThree,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w300),
                     CustomText(
                       text: AppConstants.changesToTheseTerms,
                       fontSize: 20.sp,

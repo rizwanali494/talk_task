@@ -26,7 +26,7 @@ class CustomText extends StatelessWidget {
       text,
       textAlign: textAlign,
       style: AppTextStyles.poppins(
-        height: 1.4,
+        height: 1.38,
         fontSize: fontSize,
         color: color,
         weight: fontWeight,
