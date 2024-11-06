@@ -78,7 +78,7 @@ final List<Widget> _screens=[const NotesScreen(),const HomeScreen(),const Remain
             height: 30.h,
             width: 30.h,
             color:isSelected
-                ? AppColors.primary
+                ? AppColors.secondary
                 : AppColors.greyLight,
           ),
         ),
