@@ -113,7 +113,7 @@ Consequently, you may incur charges from your mobile provider for data usage dur
 
   //recurring remainders
   static const String recurringRemainders = "Recurring Remainders ";
-
-
+  static const String monthlyRemainder = "Monthly Remainders: ";
+  static const String yearlyRemainder = "Yearly Remainders: ";
 
 }

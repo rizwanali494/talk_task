@@ -15,7 +15,7 @@ class CustomFields{
         children: [
         Padding(
           padding:  EdgeInsets.only(left: 4.w),
-          child: Text(title,style: AppTextStyles.poppins(color: AppColors.grey787878, fontSize: 17.sp, weight: FontWeight.w600),),
+          child: Text(title,style: AppTextStyles.poppins(color: AppColors.grey787878, fontSize: 17.sp, weight: FontWeight.w400),),
         ),
          SizedBox(height: 4.h,),
          SizedBox(

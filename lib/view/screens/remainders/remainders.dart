@@ -51,6 +51,7 @@ class _RemainderState extends State<RecurringRemainders> {
   Widget _cardAddEvent(){
     return Container(
       height: 1.sh*0.63,
+      width: 1.sw,
       margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 7.h),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.r),
@@ -67,7 +68,16 @@ class _RemainderState extends State<RecurringRemainders> {
               Center(child:CustomText(text: AppConstants.addTask,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
               , Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,)
               ,  CustomFields.field(title: AppConstants.event, onPressed: (){}),
-
+              Row(children: [
+                 Expanded(child: CustomFields.field(title: AppConstants.monthlyRemainder, onPressed: (){})),
+                SizedBox(width:10.w,),
+                Expanded(child: CustomFields.field(title: AppConstants.yearlyRemainder, onPressed: (){})),
+              ],),
+              Row(children: [
+                Expanded(child: CustomFields.field(title: AppConstants.time, onPressed: (){})),
+                SizedBox(width:10.w,),
+                Expanded(child: CustomFields.field(title: AppConstants.reminderTime, onPressed: (){})),
+              ],),
               SizedBox(height: 8.h,)
               ,SizedBox(
                   width: 1.sw*0.9,

@@ -24,22 +24,22 @@ class CustomCards{
       child:Column(children: [
         SizedBox(height: 5.h,),
         Row(children: [
-          CustomText(text: AppConstants.event,color: AppColors.grey787878.withOpacity(0.8), fontSize: 20.sp, fontWeight: FontWeight.w600),
+          CustomText(text: AppConstants.event,color: AppColors.grey787878.withOpacity(0.9), fontSize: 20.sp, fontWeight: FontWeight.w500),
           Text(event,style: eventStyle,),
         ],),
         SizedBox(height: 5.h,),
         Row(children: [
-          Text(AppConstants.date,style: AppTextStyles.poppins(color: AppColors.grey787878.withOpacity(0.6), fontSize: 20.sp, weight: FontWeight.w600),),
+          CustomText(text: AppConstants.date,color: AppColors.grey787878.withOpacity(0.9), fontSize: 20.sp, fontWeight: FontWeight.w500),
           Text(date,style: eventStyle,),
         ],),
         SizedBox(height: 5.h,),
         Row(children: [
-          Text(AppConstants.time,style: AppTextStyles.poppins(color: AppColors.grey787878.withOpacity(0.6), fontSize: 20.sp, weight: FontWeight.w600),),
+          CustomText(text: AppConstants.time,color: AppColors.grey787878.withOpacity(0.9), fontSize: 20.sp, fontWeight: FontWeight.w500),
           Text(time,style: eventStyle,),
         ],),
         SizedBox(height: 5.h,),
         Row(children: [
-          Text(AppConstants.reminderTime,style: AppTextStyles.poppins(color: AppColors.grey787878.withOpacity(0.6), fontSize: 20.sp, weight: FontWeight.w600),),
+          CustomText(text: AppConstants.reminderTime,color: AppColors.grey787878.withOpacity(0.9), fontSize: 20.sp, fontWeight: FontWeight.w500),
           Text(remainderTime,style: eventStyle,),
         ],),
         SizedBox(height: 5.h,),

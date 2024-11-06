@@ -75,7 +75,7 @@ class AppBars {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
 
-            InkWell(
+            GestureDetector(
               onTap: leadingOnpressed,
               child: Container(
                 margin: EdgeInsets.only(left: 20.w),
@@ -90,7 +90,7 @@ class AppBars {
               ),
             ),
            CustomText(text: title,fontSize: 20.sp,fontWeight: FontWeight.w700,color: AppColors.blueDark002055,),
-            InkWell(
+            GestureDetector(
               onTap: tailingOnpressed,
               child: Container(
                 margin: EdgeInsets.only(right: 20.w),
