@@ -33,6 +33,7 @@ final List<Widget> _screens=[const NotesScreen(),const HomeScreen(),const Remain
        bottomNavigationBar: Container(
          height: 57.h,
          decoration: BoxDecoration(
+           color: AppColors.whiteFFFFF,
            borderRadius: BorderRadius.only(
              topRight: Radius.circular(25.r),
              topLeft: Radius.circular(25.r),

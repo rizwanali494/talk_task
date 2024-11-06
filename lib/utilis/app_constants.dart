@@ -101,4 +101,13 @@ Consequently, you may incur charges from your mobile provider for data usage dur
 
   //customization
   static const String customization="Customization";
+
+  //Home
+  static const String addTask = "Add Task";
+  static const String addEvent = "Add Event";
+  static const String event = "Event: ";
+  static const String date = "Date: ";
+  static const String time = "Time: ";
+  static const String reminderTime = "Reminder Time";
+
 }
