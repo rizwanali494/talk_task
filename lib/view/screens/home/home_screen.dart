@@ -65,18 +65,20 @@ class _HomeScreenState extends State<HomeScreen> {
   //body
 
 Widget _body(){
- return Column(
-   crossAxisAlignment: CrossAxisAlignment.start,
-   children: [
-   _cardAddEvent(),
-   Padding(
-     padding:  EdgeInsets.only(left: 16.w),
-     child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,),
-     
-   ),
-    SizedBox(height: 5.h,),
-     CustomCards.eventCard(event: 'Study', date: "22/12/2024", time: '6:00 am', remainderTime: "04:00 am")
- ],);
+ return SingleChildScrollView(
+   child: Column(
+     crossAxisAlignment: CrossAxisAlignment.start,
+     children: [
+     _cardAddEvent(),
+     Padding(
+       padding:  EdgeInsets.only(left: 16.w),
+       child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,),
+       
+     ),
+      SizedBox(height: 5.h,),
+       CustomCards.eventCard(event: 'Study', date: "22/12/2024", time: '6:00 am', remainderTime: "04:00 am")
+   ],),
+ );
 }
 
 

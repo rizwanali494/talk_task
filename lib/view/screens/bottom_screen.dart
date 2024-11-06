@@ -20,7 +20,7 @@ import '../common_widgets/custom_app_bars.dart';
 class BottomScreen extends StatelessWidget{
    BottomScreen({super.key});
   final List<String> _listIcons=[AppImages.iconNotes,AppImages.iconHome,AppImages.iconCalender];
-final List<Widget> _screens=[const NotesScreen(),const HomeScreen(),const Remainders()];
+final List<Widget> _screens=[const RecurringRemainders(),const HomeScreen(),const NotesScreen()];
 
   @override
   Widget build(BuildContext context) {

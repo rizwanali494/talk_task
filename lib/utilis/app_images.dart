@@ -26,6 +26,6 @@ class AppImages{
   static String iconArrowNextIcon='assets/icons/arrow_next_icon.png';
   static String imgCustomize='assets/images/custom_image.png';
   static String iconNotifications='assets/icons/notification.png';
-
+  static String iconSettings='assets/icons/setting.png';
 
 }

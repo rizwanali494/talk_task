@@ -111,5 +111,9 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String reminderTime = "Reminder Time: ";
   static const String upcomingEvents = "Upcoming Events";
 
+  //recurring remainders
+  static const String recurringRemainders = "Recurring Remainders ";
+
+
 
 }
