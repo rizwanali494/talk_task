@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:talk_task/utilis/app_routes.dart';
-import 'package:talk_task/view/screens/about_screen/about_screen.dart';
-import 'package:talk_task/view/screens/privacy_screen/privacy_screen.dart';
+import 'package:talk_task/view/screens/setting_screen/about_screen.dart';
+import 'package:talk_task/view/screens/setting_screen/privacy_screen.dart';
 import 'package:talk_task/view_model/setting_model.dart';
-import 'package:talk_task/view/screens/term_condition_screen/term_condition_screen.dart';
+import 'package:talk_task/view/screens/setting_screen/term_condition_screen.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_constants.dart';
 import '../../../utilis/app_images.dart';
@@ -15,7 +15,7 @@ import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_text.dart';
  import 'package:share_plus/share_plus.dart';
 
-import '../customization_screen/customization_screen.dart';
+import 'customization_screen.dart';
 
 
 class SettingScreen extends StatefulWidget {
