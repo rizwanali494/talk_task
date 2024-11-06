@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:talk_task/utilis/app_images.dart';
 import '../../main.dart';
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_prefs.dart';
@@ -30,7 +31,7 @@ class _DemoScreenState extends State<DemoScreen> {
     _currentPage++;
     if (_currentPage < 6) {
       _pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 150),
         curve: Curves.easeInOut,
       );
     } else {
@@ -56,8 +57,8 @@ class _DemoScreenState extends State<DemoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    final height = 1.sh;
+    final width = 1.sw;
     return Scaffold(
       body: Column(
         children: [
@@ -223,13 +224,14 @@ class BlurryHomeScreen extends StatelessWidget {
       fit: StackFit.expand,
       children: [
       //  BlurScreen(isShowIcon: isShowIcon), // Your original HomeScreen widget
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
-          child: Container(
-            color:
-                Colors.black.withOpacity(0.5), // Adjust the opacity as needed
-          ),
-        ),
+       Image.asset(AppImages.imgDemoThreeBackGround),
+        // BackdropFilter(
+        //   filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
+        //   child: Container(
+        //     color:
+        //         Colors.black.withOpacity(0.5), // Adjust the opacity as needed
+        //   ),
+        // ),
       ],
     );
   }
