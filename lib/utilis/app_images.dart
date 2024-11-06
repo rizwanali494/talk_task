@@ -12,7 +12,7 @@ class AppImages{
   //home
   static String iconHome='assets/icons/home.png';
   static String iconNotes='assets/icons/note.png';
-  static String iconCalender='assets/icons/calender.png';
+  static String iconCalender='assets/icons/calendar.png';
 
   //settings
   static String iconBack='assets/icons/back.png';
