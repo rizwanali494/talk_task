@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_constants.dart';
+import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
+import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../common_widgets/custom_app_bars.dart';
@@ -25,7 +27,9 @@ class _RemainderState extends State<RecurringRemainders> {
       backgroundColor: AppColors.whiteFFFFF,
       appBar: AppBars.appBarHomeScreens(title: AppConstants.recurringRemainders,
           leadingBtnIcon: AppImages.iconNotifications, trailingBtnIcon: AppImages.iconSettings,
-          leadingOnpressed: (){}, tailingOnpressed: (){}),
+          leadingOnpressed: (){}, tailingOnpressed: (){
+        Navigator.push(context, MyRoute(const SettingScreen()));
+          }),
       body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

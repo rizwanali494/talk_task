@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
+import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../utilis/app_colors.dart';
 
 class CustomCards{
@@ -23,7 +24,7 @@ class CustomCards{
       child:Column(children: [
         SizedBox(height: 5.h,),
         Row(children: [
-          Text(AppConstants.event,style: AppTextStyles.poppins(color: AppColors.grey787878.withOpacity(0.6), fontSize: 20.sp, weight: FontWeight.w600),),
+          CustomText(text: AppConstants.event,color: AppColors.grey787878.withOpacity(0.8), fontSize: 20.sp, fontWeight: FontWeight.w600),
           Text(event,style: eventStyle,),
         ],),
         SizedBox(height: 5.h,),
