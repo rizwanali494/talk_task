@@ -104,7 +104,7 @@ class Demo5Widget extends StatelessWidget {
               right: 13.w,
               child: GestureDetector(
                 onTap: () {},
-              //  child: Image.asset(Asset.demoData_5, width: 52.w, height: 61.h),
+               child: Image.asset(AppImages.imgDemoSettings, width: 52.w, height: 61.h),
               ),
             ),
           ],

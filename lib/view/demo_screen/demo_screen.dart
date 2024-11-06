@@ -1,8 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../main.dart';
 import '../../utilis/app_colors.dart';
+import '../../utilis/app_prefs.dart';
+import '../../utilis/app_routes.dart';
 import '../common_widgets/custom_text.dart';
+import '../screens/bottom_screen.dart';
 import 'DemoWidgets/demo_1_widget.dart';
 import 'DemoWidgets/demo_2_widget.dart';
 import 'DemoWidgets/demo_3_widget.dart';
@@ -30,10 +34,8 @@ class _DemoScreenState extends State<DemoScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      // Navigator.pushNamedAndRemoveUntil(
-      //     context, RoutesName.home, (route) => false);
-      // final SharedPreferences prefs = await SharedPreferences.getInstance();
-      // await prefs.setBool('DemoShown', true);
+      Navigator.pushReplacement(context, MyRoute(BottomScreen()));
+      prefs.setBool(AppPrefs.onBoardingShown, true);
     }
   }
 

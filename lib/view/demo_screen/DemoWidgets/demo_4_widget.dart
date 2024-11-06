@@ -46,7 +46,7 @@ class Demo4Widget extends StatelessWidget {
                   child: SizedBox(
                     height: height * 0.059,
                     width: width * 0.15,
-                    //child: Image.asset(Asset.demoData_4),
+                    child: Image.asset(AppImages.imgDemoNotification),
                   ),
                 )),
 

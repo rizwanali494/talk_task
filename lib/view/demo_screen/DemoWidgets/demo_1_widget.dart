@@ -59,8 +59,11 @@ class Demo1Widget extends StatelessWidget {
                 padding: EdgeInsets.only(top: height * 0.15),
                 child: Column(
                   children: [
-                    // Image.asset(Asset.demoData_1,
-                    //     height: height * 0.2, width: width * 0.4),
+                    CustomText(text: AppConstants.addTask,color: AppColors.whiteFFFFF,
+                      fontSize: 19.sp,fontWeight: FontWeight.w600,),
+                     SizedBox(height: 10.h,),
+                     Image.asset(AppImages.iconMicrophone,color: AppColors.whiteFFFFF,
+                         height: height * 0.2, width: width * 0.4),
                     Stack(
                       children: [
                         Stack(

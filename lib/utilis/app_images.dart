@@ -13,6 +13,11 @@ class AppImages{
 
   static String iconSkip='assets/icons/skipButton.png';
   static String iconNext='assets/icons/next.png';
+  //images
+  static String imgDemoNotification='assets/images/demo_notification.png';
+  static String imgDemoSettings='assets/images/demo_settings.png';
+  static String imgDemoOneBackGround='assets/images/demo_one_bg.png';
+  static String imgDemoThreeBackGround='assets/images/demo_three_bg.png';
 
   //home
   static String iconHome='assets/icons/home.png';
