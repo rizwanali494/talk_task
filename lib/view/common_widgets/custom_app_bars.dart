@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../utilis/app_colors.dart';
-import '../../utilis/app_constants.dart';
 import '../../utilis/app_images.dart';
-import '../../utilis/app_text_styles.dart';
 import 'custom_text.dart';
 
 class AppBars {
@@ -25,7 +22,7 @@ class AppBars {
     return AppBar(
       elevation: 0,
       backgroundColor: AppColors.whiteFFFFF,
-      shadowColor: AppColors.whiteFFFFF,
+      shadowColor: AppColors.transparent,
       surfaceTintColor: AppColors.whiteFFFFF,
       automaticallyImplyLeading: false,
       systemOverlayStyle: const SystemUiOverlayStyle(
@@ -63,7 +60,7 @@ class AppBars {
     return AppBar(
       elevation: 0,
       backgroundColor: AppColors.whiteFFFFF,
-      shadowColor: AppColors.whiteFFFFF,
+      shadowColor: AppColors.transparent,
       surfaceTintColor: AppColors.whiteFFFFF,
       automaticallyImplyLeading: false,
       systemOverlayStyle: const SystemUiOverlayStyle(
