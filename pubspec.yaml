@@ -42,7 +42,7 @@ dependencies:
   share_plus: ^10.1.1
   intl: ^0.19.0
   auto_size_text: ^3.0.0
-  #awesome_notifications: ^0.10.0
+  syncfusion_flutter_calendar: ^27.1.58
   flutter_callkit_incoming: ^2.0.4+2
   path_provider: ^2.0.13
   lottie: ^3.1.3

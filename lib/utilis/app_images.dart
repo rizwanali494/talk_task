@@ -29,6 +29,7 @@ class AppImages{
   static String iconCalender='assets/icons/calendar.png';
 
 
+
   //settings
   static String iconBack='assets/icons/back.png';
   static String iconShare='assets/icons/share.png';
@@ -40,6 +41,9 @@ class AppImages{
   static String imgCustomize='assets/images/custom_image.png';
   static String iconNotifications='assets/icons/notification.png';
   static String iconSettings='assets/icons/setting.png';
+  static String iconCheck='assets/icons/check_icon.png';
+  static String iconArchive='assets/icons/archived.png';
+
 
   //call screens
   static String iconTick='assets/icons/tick.png';

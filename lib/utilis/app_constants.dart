@@ -12,6 +12,7 @@ class AppConstants {
 
 
 
+
   //Demo screens
   static const String demoWidgetOne = 'Click the microphone icon to easily input your events. Simply speak the event details, including the date, time, and reminder time. The app will automatically add this information below.';
   static const String demoPage2Text =
@@ -137,7 +138,7 @@ Consequently, you may incur charges from your mobile provider for data usage dur
 
 //settings
   static const String settings = "Settings";
-
+  static const String notification = "Notification";
 
 
   //customization

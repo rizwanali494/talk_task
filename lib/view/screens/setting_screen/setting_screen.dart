@@ -26,8 +26,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  String iosLink = "";
-  String androidLink = "";
+  String iosLink = "abc@gmail.com";
+  String androidLink = "abc@gmail.com";
   @override
   void initState() {
    // init();

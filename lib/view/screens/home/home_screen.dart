@@ -13,6 +13,7 @@ import '../../../utilis/app_images.dart';
 import '../../../view_model/call_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
+import 'calender/calender_screen.dart';
 
 
 
@@ -105,8 +106,12 @@ Widget _cardAddEvent(){
             SizedBox(height: 8.h,),
             Center(child: Text(AppConstants.addTask,style: AppTextStyles.poppins(color: AppColors.blueDark002055, fontSize: 20.sp, weight: FontWeight.w700),))
             , Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,)
-            ,  CustomFields.field(title: AppConstants.event, onPressed: (){})
-            ,  CustomFields.field(title: AppConstants.date, onPressed: (){})
+            ,  CustomFields.field(title: AppConstants.event, onPressed: (){
+
+            })
+            ,  CustomFields.field(title: AppConstants.date, onPressed: (){
+              showDialog(context: context, builder: (context)=>const CalenderScreen());
+            })
             ,  CustomFields.field(title: AppConstants.time, onPressed: (){})
             ,  CustomFields.field(title: AppConstants.reminderTime, onPressed: (){}),
             SizedBox(height: 8.h,)

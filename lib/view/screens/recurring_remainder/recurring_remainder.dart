@@ -11,6 +11,7 @@ import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../call_screens/call_screen.dart';
+import '../notification_screen/notification_screen.dart';
 
 
 class RecurringRemainders extends StatefulWidget {
@@ -31,7 +32,7 @@ class _RemainderState extends State<RecurringRemainders> {
           leadingBtnIcon: AppImages.iconNotifications, trailingBtnIcon: AppImages.iconSettings,
           leadingOnpressed: (){
 
-            Navigator.push(context, MyRoute(const CallScreen(date: '06/28/2024', time: '5:30 AM',)));
+            Navigator.push(context, MyRoute(const NotificationScreen()));
           }, tailingOnpressed: (){
         Navigator.push(context, MyRoute(const SettingScreen()));
           }),
