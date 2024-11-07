@@ -91,8 +91,8 @@ class CallKitService {
   }
 
 
-  static Future<void> handleMissedCall() async {
-   // await FlutterCallkitIncoming.showMissedCallNotification(_currentUuid);
+  static Future<void> acceptCall() async {
+   await FlutterCallkitIncoming.setCallConnected(_currentUuid);
   }
 
   static listenEvents({required BuildContext context}){

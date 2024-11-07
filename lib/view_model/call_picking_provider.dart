@@ -13,6 +13,8 @@ class CallPickingProvider extends ChangeNotifier{
        notifyListeners();
      }
 
+
+
      endCall(){
        CallKitService.endCall();
        callPicked=false;
