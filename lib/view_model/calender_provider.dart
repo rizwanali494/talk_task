@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CalenderViewmodel with ChangeNotifier {
+class CalenderProvider with ChangeNotifier {
   String? selectedDate;
 
   selectDate(DateTime date) {

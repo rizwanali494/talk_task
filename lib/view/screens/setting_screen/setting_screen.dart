@@ -6,11 +6,11 @@ import 'package:share_plus/share_plus.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/view/screens/setting_screen/about_screen.dart';
 import 'package:talk_task/view/screens/setting_screen/privacy_screen.dart';
-import 'package:talk_task/view_model/setting_model.dart';
 import 'package:talk_task/view/screens/setting_screen/term_condition_screen.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_constants.dart';
 import '../../../utilis/app_images.dart';
+import '../../../view_model/setting_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_text.dart';
  import 'package:share_plus/share_plus.dart';
@@ -56,7 +56,7 @@ class _SettingScreenState extends State<SettingScreen> {
          body: SingleChildScrollView(
            child: Padding(
              padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
-             child: Consumer<SettingModel>(builder: (context, model, child) {
+             child: Consumer<SettingProvider>(builder: (context, model, child) {
                return Column(
                  children: List.generate(
                      5,

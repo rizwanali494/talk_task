@@ -17,6 +17,7 @@ class CallKitService {
 
   // Method to show incoming call notification
   static Future<void> showIncomingCall({required String nameCaller,}) async {
+
     CallKitParams callKitParams = CallKitParams(
       id: _currentUuid,
       nameCaller: nameCaller,
@@ -28,18 +29,17 @@ class CallKitService {
       textDecline: 'Decline',
       missedCallNotification: const NotificationParams(
         showNotification: true,
-        isShowCallback: true,
+        isShowCallback: false,
         subtitle: 'Missed call',
         callbackText: 'Call back',
       ),
-      duration: 10000,  // duration in milliseconds
+      duration: 30000,  // duration in milliseconds
       extra: <String, dynamic>{'userId': '1a2b3c4d'},
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
       android: const AndroidParams(
         isShowFullLockedScreen: true,
-
         isCustomNotification: true,
-        isShowLogo: false,
+        isShowLogo: true,
         ringtonePath: 'system_ringtone_default',
         backgroundColor: '#05AAEC',
         backgroundUrl: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg',
@@ -67,7 +67,6 @@ class CallKitService {
         ringtonePath: 'system_ringtone_default',
       ),
     );
-
     // Call FlutterCallkitIncoming to display the incoming call
     await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
 
@@ -83,7 +82,9 @@ class CallKitService {
     await FlutterCallkitIncoming.endAllCalls();
   }
 
-
+   static Future<void> acceptCall() async {
+    // await FlutterCallkitIncoming.hideCallkitIncoming(params);
+   }
 
   static StreamSubscription<CallEvent?>? listenEvents(){
     _subscription = FlutterCallkitIncoming.onEvent.listen((event) {});

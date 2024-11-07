@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/view/screens/home/home_screen.dart';
 import 'package:talk_task/view/screens/notes/notes.dart';
-import 'package:talk_task/view/screens/remainders/remainders.dart';
+import 'package:talk_task/view/screens/recurring_remainder/recurring_remainder.dart';
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_images.dart';
 import '../../view_model/bottom_nav_bar_provider.dart';

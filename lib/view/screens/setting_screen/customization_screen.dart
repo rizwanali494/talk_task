@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_constants.dart';
 import '../../../utilis/app_images.dart';
-import '../../../view_model/customization_viewModel.dart';
-import '../../../view_model/setting_model.dart';
+import '../../../view_model/customization_screen_provider.dart';
+import '../../../view_model/setting_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_text.dart';
 
@@ -28,13 +28,13 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
 
   init() async {
     var customizationProvider =
-        Provider.of<CustomizationViewmodel>(context, listen: false);
+        Provider.of<CustomizationProvider>(context, listen: false);
     await customizationProvider.fetchColors();
   }
 
   @override
   Widget build(BuildContext context) {
-    var customizationProvider = Provider.of<CustomizationViewmodel>(context);
+    var customizationProvider = Provider.of<CustomizationProvider>(context);
     return customizationProvider.isLoading
                 ? const Center(
                     child: SpinKitCircle(
@@ -50,7 +50,7 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                           vertical: 25.h, horizontal: 25.w),
-                      child: Consumer<SettingModel>(
+                      child: Consumer<SettingProvider>(
                           builder: (context, model, child) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

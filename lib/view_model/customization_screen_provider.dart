@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomizationViewmodel with ChangeNotifier {
+class CustomizationProvider with ChangeNotifier {
   dynamic eventColor1;
   dynamic eventColor2;
   dynamic eventColor3;

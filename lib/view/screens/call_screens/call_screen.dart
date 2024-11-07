@@ -9,10 +9,10 @@ import '../../../utilis/app_images.dart';
 import '../../../view_model/call_picking_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 
-class RemainderCall extends StatelessWidget {
+class CallScreen extends StatelessWidget {
   final String time;
   final String date;
-  const RemainderCall({super.key,required this.date,required this.time});
+  const CallScreen({super.key,required this.date,required this.time});
 
   @override
   Widget build(BuildContext context) {

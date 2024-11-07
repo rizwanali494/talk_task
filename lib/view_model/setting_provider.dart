@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utilis/app_images.dart';
 
-class SettingModel extends ChangeNotifier {
+class SettingProvider extends ChangeNotifier {
   ///
   /// List of setting items
   ///
