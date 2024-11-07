@@ -18,6 +18,8 @@ class AppColors {
   static const Color blueBorder = Color(0xffCDE0FF);
   static const Color greyLight = Colors.grey;
   static const Color blueDark002055 = Color(0xff002055);
+  static const Color blue05AAEC = Color(0xff05AAEC);
+  static const Color blueLightA5E5FF = Color(0xffA5E5FF);
   static const Color greyDark6C6D6D = Color(0xff6C6D6D);
   static const Color grey787878 = Color(0xff787878);
   static const Color grey848A94 = Color(0xff848A94);
