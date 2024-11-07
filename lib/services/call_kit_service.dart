@@ -81,8 +81,8 @@ class CallKitService {
   }
 
 
- static Future<void> updateCallState(String callState) async {
-    //await FlutterCallkitIncoming.updateCallState(_currentUuid, callState);
+ static Future<void> endAllCalls(String callState) async {
+    await FlutterCallkitIncoming.endAllCalls();
   }
 
 
