@@ -43,7 +43,7 @@ class Demo2Widget extends StatelessWidget {
               child: GestureDetector(
                 onTap: () async {
                   Navigator.pushReplacement(context, MyRoute(BottomScreen()));
-                  prefs.setBool(AppPrefs.onBoardingShown, true);
+                  prefs.setBool(AppPrefs.onDemoShown, true);
 
                 },
                 child: SizedBox(

@@ -2,14 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:talk_task/main.dart';
 import 'package:talk_task/utilis/app_colors.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_images.dart';
+import 'package:talk_task/utilis/app_prefs.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/boarding/boarding.dart';
 import 'package:talk_task/view/common_widgets/custom_app_bars.dart';
 import 'package:talk_task/view/demo_screen/demo_screen.dart';
+import 'package:talk_task/view/screens/bottom_screen.dart';
 
 
 
@@ -24,8 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-       Navigator.pushReplacement(context, MyRoute(const DemoScreen()));
+
+    Future.delayed(const Duration(seconds: 3), (){
+      _startingPagesTransition();
     });
 
   }
@@ -95,5 +99,19 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
+
+  void _startingPagesTransition(){
+    //if On boarding screens has been seen then move to DemoScreen
+    if(prefs.getBool(AppPrefs.onBoardingShown)==true && prefs.getBool(AppPrefs.onDemoShown)==true ){
+      Navigator.pushReplacement(context, MyRoute( BottomScreen()));
+    }
+    else if(prefs.getBool(AppPrefs.onBoardingShown)==true && prefs.getBool(AppPrefs.onDemoShown)==null){
+      Navigator.pushReplacement(context, MyRoute( const DemoScreen()));
+    }
+    else{
+      Navigator.pushReplacement(context, MyRoute(const OnboardingScreen()));
+    }
+
+  }
 
 }

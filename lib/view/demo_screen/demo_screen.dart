@@ -36,7 +36,7 @@ class _DemoScreenState extends State<DemoScreen> {
       );
     } else {
       Navigator.pushReplacement(context, MyRoute(BottomScreen()));
-      prefs.setBool(AppPrefs.onBoardingShown, true);
+      prefs.setBool(AppPrefs.onDemoShown, true);
     }
   }
 
