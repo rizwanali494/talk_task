@@ -20,8 +20,8 @@ class RemainderCall extends StatelessWidget {
       backgroundColor: AppColors.primary,
       appBar: AppBars.authAppBars(bgColor: AppColors.blue05AAEC, iconBrightness: Brightness.dark),
       body: Consumer<CallPickingProvider>(builder: (BuildContext context,  value, Widget? child) {
-        if(value.callPicked){return _callIncoming(context);}
-        else if(!value.callPicked){return _callPicked(context);}
+        if(!value.callPicked){return _callIncoming(context);}
+        else if(value.callPicked){return _callPicked(context);}
         return const SizedBox();
       },
       )

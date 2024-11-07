@@ -1,5 +1,9 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:talk_task/utilis/app_routes.dart';
+
+import '../utilis/app_colors.dart';
+import '../view/screens/call_screens/remainder_call.dart';
 
 //https://farm4.staticflickr.com/3075/3168662394_7d7103de7d_z_d.jpg
 //https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg
@@ -13,13 +17,13 @@ class NotificationService {
       [
         NotificationChannel(
           channelKey: 'jawad',
-          defaultRingtoneType: DefaultRingtoneType.Notification,
+          defaultRingtoneType: DefaultRingtoneType.Ringtone,
           enableVibration: true,
           importance: NotificationImportance.High,
           channelDescription:
           'my simple channeol',
-          defaultColor: Colors.pink,
-          ledColor: Colors.pink,
+        //  defaultColor: AppColors..pink,
+        //  ledColor: Colors.pink,
           channelName:'jawad',
         ),
       ],
@@ -27,8 +31,8 @@ class NotificationService {
   }
 
 
-  static void showNotification() async {
-
+  static void showNotification({required String title,required String time,required String date,required BuildContext context}) async {
+    Navigator.push(context, MyRoute( RemainderCall(date: date, time: time,)));
     bool result=await checkAndRequestNotificationPermission();
     if(!result){return;}
     _notificationId++;
@@ -36,20 +40,19 @@ class NotificationService {
       content: NotificationContent(
         id: _notificationId,
         channelKey: 'jawad',
-        title:  'Notification $_notificationId',
-        body: 'This is awqesome noti9 body This is awqesome noti9 body This is awqesome noti9 body',
-        chronometer: Duration(seconds: 0),
-        color:Colors.blueAccent ,
-        backgroundColor: Colors.pink,
-        largeIcon: 'resource://drawable/lion',
-        bigPicture: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg'
-        , notificationLayout: NotificationLayout.BigPicture,
+        title:  title,
+        body: time,
+        chronometer: const Duration(seconds: 0),
+        color:AppColors.primary ,
+       // backgroundColor: Colors.pink,
+       // largeIcon: 'resource://drawable/lion',
+       // bigPicture: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg'
+      //  , notificationLayout: NotificationLayout.BigPicture,
       ),
 
-      actionButtons: [NotificationActionButton(key: '1',label: 'chal oye',isDangerousOption: true)],
+      actionButtons: [NotificationActionButton(key: '1',label: 'End',isDangerousOption: true,)],
       //schedule: NotificationInterval(interval: 60,repeats: true)
     );
-    // scheduleDismissal(_notificationId);
     listenNotificationActions();
   }
 

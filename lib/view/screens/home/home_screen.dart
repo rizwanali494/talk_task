@@ -5,6 +5,7 @@ import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
+import '../../../services/local_notifications.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../common_widgets/custom_buttons.dart';
@@ -21,6 +22,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((a){
+      NotificationService.showNotification(title: 'This is test', time: '11:20 AM', date: '22/08/2024', context: context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

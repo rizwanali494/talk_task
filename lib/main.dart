@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talk_task/services/local_notifications.dart';
 import 'package:talk_task/view_model/bottom_nav_bar_provider.dart';
 import 'package:talk_task/view_model/call_picking_provider.dart';
 import 'package:talk_task/view_model/customization_viewModel.dart';
@@ -16,6 +17,8 @@ late SharedPreferences prefs;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs=await SharedPreferences.getInstance();
+  NotificationService.initialize();
+
   runApp( const MyApp());
 }
 
