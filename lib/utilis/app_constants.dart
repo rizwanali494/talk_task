@@ -158,4 +158,14 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String yearlyRemainder = "Yearly Remainders: ";
 
 
+  //call screens
+
+  static const String remainderCall = "Reminder Call ";
+  static const String dontForget = "Don't Forget! ";
+  static const String accept = "Accept";
+  static const String reject = "Reject";
+  static const String onGoing = "Ongoing Call";
+
+
+
 }

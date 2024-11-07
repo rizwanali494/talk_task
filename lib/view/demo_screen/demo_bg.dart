@@ -46,7 +46,7 @@ class DemoBackgroundScreen extends StatelessWidget {
 
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 17.w),
+          padding: EdgeInsets.symmetric(horizontal: 0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

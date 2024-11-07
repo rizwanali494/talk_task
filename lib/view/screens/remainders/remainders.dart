@@ -10,6 +10,7 @@ import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
 import '../../common_widgets/custom_text_fields.dart';
+import '../call_screens/remainder_call.dart';
 
 class RecurringRemainders extends StatefulWidget {
   const RecurringRemainders({super.key});
@@ -27,7 +28,10 @@ class _RemainderState extends State<RecurringRemainders> {
       backgroundColor: AppColors.whiteFFFFF,
       appBar: AppBars.appBarHomeScreens(title: AppConstants.recurringRemainders,
           leadingBtnIcon: AppImages.iconNotifications, trailingBtnIcon: AppImages.iconSettings,
-          leadingOnpressed: (){}, tailingOnpressed: (){
+          leadingOnpressed: (){
+
+            Navigator.push(context, MyRoute(const RemainderCall(date: '06/28/2024', time: '5:30 AM',)));
+          }, tailingOnpressed: (){
         Navigator.push(context, MyRoute(const SettingScreen()));
           }),
       body: SingleChildScrollView(

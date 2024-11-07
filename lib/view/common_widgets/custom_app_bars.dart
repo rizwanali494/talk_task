@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_images.dart';
+import 'custom_buttons.dart';
 import 'custom_text.dart';
 
 class AppBars {
@@ -33,13 +34,11 @@ class AppBars {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Image.asset(AppImages.iconBack, width: 42.w, height: 42.h),
-            ),
+         children: [
+           Buttons.customIconButton(onPressed: (){
+             Navigator.pop(context);
+           }, icon: AppImages.iconBack),
+
             CustomText(
               color: AppColors.blueDark002055,
               text: title,
@@ -72,35 +71,16 @@ class AppBars {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
 
-            GestureDetector(
-              onTap: leadingOnpressed,
-              child: Container(
-                margin: EdgeInsets.only(left: 20.w),
-                height: 45.h,
-                width: 45.h,
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(
-                    color: AppColors.primary, shape: BoxShape.circle),
-                child: Image.asset(
-                  leadingBtnIcon,height: 40.h,
-                ),
-              ),
+            Padding(
+              padding:  EdgeInsets.only(left: 13.w),
+              child: Buttons.customIconButton(onPressed: leadingOnpressed, icon: leadingBtnIcon),
             ),
            CustomText(text: title,fontSize: 20.sp,fontWeight: FontWeight.w700,color: AppColors.blueDark002055,),
-            GestureDetector(
-              onTap: tailingOnpressed,
-              child: Container(
-                margin: EdgeInsets.only(right: 20.w),
-                height: 45.h,
-                width: 45.h,
-                clipBehavior: Clip.antiAlias,
-                decoration: const BoxDecoration(
-                    color: AppColors.primary, shape: BoxShape.circle),
-                child: Image.asset(
-                  trailingBtnIcon,height: 40.h,
-                ),
-              ),
+            Padding(
+              padding:  EdgeInsets.only(right: 13.w),
+              child: Buttons.customIconButton(onPressed: tailingOnpressed, icon: trailingBtnIcon),
             ),
+
 
           ],
         ),

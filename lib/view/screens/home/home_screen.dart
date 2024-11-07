@@ -43,16 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(width: 20.w,),
             Text(AppConstants.taskAi,style: AppTextStyles.poppins(color: AppColors.blueDark002055, fontSize: 20.sp, weight: FontWeight.w700),),
             const Spacer(),
-            Container(
-              height: 45.h,
-              width:45.h ,
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle
-              ),
-              child: Image.asset(AppImages.iconNotifications,),
-            ),
+            Buttons.customIconButton(onPressed: (){}, icon: AppImages.iconNotifications),
             SizedBox(width: 20.w,),
           ],),
       ),

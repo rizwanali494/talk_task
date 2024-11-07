@@ -1,5 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_images.dart';
 import '../../main.dart';
@@ -31,7 +31,7 @@ class _DemoScreenState extends State<DemoScreen> {
     _currentPage++;
     if (_currentPage < 6) {
       _pageController.nextPage(
-        duration: const Duration(milliseconds: 150),
+        duration: const Duration(milliseconds: 50),
         curve: Curves.easeInOut,
       );
     } else {
@@ -60,6 +60,14 @@ class _DemoScreenState extends State<DemoScreen> {
     final height = 1.sh;
     final width = 1.sw;
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        toolbarHeight: 0,
+        elevation: 0,
+
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: AppColors.greyLight),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -113,11 +121,8 @@ class _DemoScreenState extends State<DemoScreen> {
                   onWidgetTap: _onNextPressed,
                   onNextTap: _onNextPressed,
                   onSkipTap: () async {
-                    // Navigator.pushNamedAndRemoveUntil(
-                    //     context, RoutesName.home, (route) => false);
-                    // final SharedPreferences prefs =
-                    //     await SharedPreferences.getInstance();
-                    // await prefs.setBool('DemoShown', true);
+                    Navigator.pushReplacement(context, MyRoute(BottomScreen()));
+                    prefs.setBool(AppPrefs.onDemoShown, true);
                   },
                 ),
 
@@ -130,11 +135,8 @@ class _DemoScreenState extends State<DemoScreen> {
                   onWidgetTap: _onNextPressed,
                   onNextTap: _onNextPressed,
                   onSkipTap: () async {
-                   // Navigator.pushNamedAndRemoveUntil(
-                    //     context, RoutesName.home, (route) => false);
-                    // final SharedPreferences prefs =
-                    //     await SharedPreferences.getInstance();
-                    // await prefs.setBool('DemoShown', true);
+                    Navigator.pushReplacement(context, MyRoute(BottomScreen()));
+                    prefs.setBool(AppPrefs.onDemoShown, true);
                   },
                ),
 
@@ -167,9 +169,8 @@ class DemoNextButton extends StatelessWidget {
   final String text;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
+    double height = 1.sh;
+    double width = 1.sw;
     return GestureDetector(
       onTap: onTap,
       child: Container(
