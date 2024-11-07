@@ -6,11 +6,8 @@ import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:provider/provider.dart';
-import 'package:talk_task/main.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:uuid/uuid.dart';
-
-import '../utilis/app_images.dart';
 import '../view/screens/call_screens/remainder_call.dart';
 import '../view_model/call_picking_provider.dart';
 
@@ -26,8 +23,6 @@ class CallKitService {
       id: _currentUuid,
       nameCaller: nameCaller,
       appName: 'Callkit',
-      //https://i.pravatar.cc/100
-
       avatar: "https://farm4.staticflickr.com/3075/3168662394_7d7103de7d_z_d.jpg",
       handle: '0123456789',
       type: 0,
@@ -98,14 +93,18 @@ class CallKitService {
   static listenEvents({required BuildContext context}){
     FlutterCallkitIncoming.onEvent.listen((event) {
        print("event is ${event!.event.name}");
-      if(event!.event==Event.actionCallAccept){
+      if(event.event==Event.actionCallAccept){
         context.read<CallPickingProvider>().setCallStatus(true);
+
         Navigator.of(context).push(MyRoute(const RemainderCall(date: '04/12/2024', time: '5:30 AM',)));
       }
       else if(event.event==Event.actionCallDecline){
 
       }
+      else if(event.event==Event.actionCallCustom){
+        print('gwvf');
 
+      }
       else if(event.event==Event.actionCallIncoming){
         Navigator.of(context).push(MyRoute(const RemainderCall(date: '04/12/2024', time: '5:30 AM',)));
       }
