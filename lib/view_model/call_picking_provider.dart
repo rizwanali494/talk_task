@@ -2,6 +2,8 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:talk_task/services/call_kit_service.dart';
+
 
 class CallPickingProvider extends ChangeNotifier{
      bool callPicked=false;
@@ -12,6 +14,7 @@ class CallPickingProvider extends ChangeNotifier{
      }
 
      endCall(){
+       CallKitService.endCall();
        callPicked=false;
        notifyListeners();
      }

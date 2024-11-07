@@ -55,6 +55,7 @@ class RemainderCall extends StatelessWidget {
                 children: [
                   _callButtons(onPressed: (){
                     context.read<CallPickingProvider>().endCall();
+                    Navigator.of(context).pop();
                   }, icon: AppImages.iconCross, bgColor: AppColors.redFF0000),
                   CustomText(text: AppConstants.reject,fontSize: 16.sp,fontWeight: FontWeight.w500),
                 ],
@@ -113,13 +114,35 @@ class RemainderCall extends StatelessWidget {
          SizedBox(height: 1.sh*0.1,),
          Center(child: CustomText(text: AppConstants.onGoing,fontSize: 24.sp,fontWeight: FontWeight.w600,color: AppColors.whiteFFFFF,)),
          SizedBox(height: 20.h,),
+         StreamBuilder(stream: TimerStream.getTimerStream(), builder: (context,snap){
+           if(snap.connectionState==ConnectionState.waiting){
+             return CustomText(text: "00:00",fontSize: 20.sp,color: AppColors.whiteFFFFF,fontWeight: FontWeight.w500,);
+           }
+           return  CustomText(text: snap.data.toString(),fontSize: 20.sp,color: AppColors.whiteFFFFF,fontWeight: FontWeight.w500,);;
+         }),
          Lottie.asset(AppImages.imgCallLottie,height: 1.sh*0.55),
          SizedBox(height: 30.h,),
          _callButtons(onPressed: (){
            context.read<CallPickingProvider>().endCall();
+           Navigator.of(context).pop();
          }, icon: AppImages.iconEndCall, bgColor: AppColors.redFF0000),
        ],),
      ),
    );
+  }
+}
+
+
+
+
+class TimerStream {
+  static Stream<String> getTimerStream() {
+    int seconds = 0; 
+    return Stream.periodic(const Duration(seconds: 1), (count) {
+      seconds = count;
+      int minutes = seconds ~/ 60;
+      int remainingSeconds = seconds % 60;
+      return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+    });
   }
 }
