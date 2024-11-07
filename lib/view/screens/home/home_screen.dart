@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:talk_task/main.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
@@ -8,6 +10,7 @@ import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../../services/call_kit_service.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../view_model/call_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
 
@@ -27,15 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((a){
-      CallKitService.showIncomingCall(nameCaller: 'Jawad Aslam');
+    context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
 
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    CallKitService.listenEvents(context: context);
+    context.read<CallPickingProvider>().listenCallEvents(context: context);
     return  Scaffold(
       backgroundColor: AppColors.whiteFFFFF,
       appBar:_topBar() ,

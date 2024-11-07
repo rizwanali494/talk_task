@@ -1,21 +1,19 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
 import 'package:flutter_callkit_incoming/entities/android_params.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/entities/call_kit_params.dart';
 import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
-import 'package:provider/provider.dart';
-import 'package:talk_task/utilis/app_routes.dart';
 import 'package:uuid/uuid.dart';
-import '../view/screens/call_screens/remainder_call.dart';
-import '../view_model/call_picking_provider.dart';
 
 
 
 class CallKitService {
   // Instance to hold the current UUID for the call
    static final String _currentUuid = const Uuid().v4();
+   static final StreamController<CallEvent?> _callEventController = StreamController<CallEvent?>.broadcast();
+   static StreamSubscription<CallEvent?>? _subscription;
 
   // Method to show incoming call notification
   static Future<void> showIncomingCall({required String nameCaller,}) async {
@@ -81,7 +79,7 @@ class CallKitService {
   }
 
 
- static Future<void> endAllCalls(String callState) async {
+ static Future<void> endAllCalls() async {
     await FlutterCallkitIncoming.endAllCalls();
   }
 
@@ -90,24 +88,8 @@ class CallKitService {
    await FlutterCallkitIncoming.setCallConnected(_currentUuid);
   }
 
-  static listenEvents({required BuildContext context}){
-    FlutterCallkitIncoming.onEvent.listen((event) {
-       print("event is ${event!.event.name}");
-      if(event.event==Event.actionCallAccept){
-        context.read<CallPickingProvider>().setCallStatus(true);
-
-        Navigator.of(context).push(MyRoute(const RemainderCall(date: '04/12/2024', time: '5:30 AM',)));
-      }
-      else if(event.event==Event.actionCallDecline){
-
-      }
-      else if(event.event==Event.actionCallCustom){
-        print('gwvf');
-
-      }
-      else if(event.event==Event.actionCallIncoming){
-        Navigator.of(context).push(MyRoute(const RemainderCall(date: '04/12/2024', time: '5:30 AM',)));
-      }
-    });
+  static StreamSubscription<CallEvent?>? listenEvents(){
+    _subscription = FlutterCallkitIncoming.onEvent.listen((event) {});
+    return _subscription;
   }
 }
