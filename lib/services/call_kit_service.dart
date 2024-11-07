@@ -84,9 +84,6 @@ class CallKitService {
   }
 
 
-  static Future<void> acceptCall() async {
-   await FlutterCallkitIncoming.setCallConnected(_currentUuid);
-  }
 
   static StreamSubscription<CallEvent?>? listenEvents(){
     _subscription = FlutterCallkitIncoming.onEvent.listen((event) {});

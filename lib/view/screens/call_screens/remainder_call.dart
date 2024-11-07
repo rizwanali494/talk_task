@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:talk_task/services/call_kit_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../../utilis/app_colors.dart';
@@ -65,7 +64,7 @@ class RemainderCall extends StatelessWidget {
                 children: [
                   _callButtons(onPressed: (){
                     context.read<CallPickingProvider>().setCallStatus(true);
-                    CallKitService.acceptCall();
+                    context.read<CallPickingProvider>().acceptCall(context: context);
                   }, icon: AppImages.iconTick, bgColor: AppColors.green05E700),
                   SizedBox(height: 2.h,),
                   CustomText(text: AppConstants.accept,fontSize: 16.sp,fontWeight: FontWeight.w500,),
