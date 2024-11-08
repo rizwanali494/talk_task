@@ -7,7 +7,7 @@ import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
-import '../../../view_model/calender_provider.dart';
+import '../../../view_model/date_picker_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text.dart';
 
@@ -26,7 +26,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CalenderProvider>(context, listen: false).selectedDate = null;
+    Provider.of<DatePickerProvider>(context, listen: false).selectedDate = null;
   }
 
   @override
@@ -99,7 +99,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                   // Calendar view
                   Expanded(
                     child: SfCalendar(
-                      selectionDecoration: BoxDecoration(),
+                      selectionDecoration: const BoxDecoration(),
                       initialDisplayDate: _currentDate,
                       view: CalendarView.month,
                       cellBorderColor: AppColors.transparent,
@@ -109,7 +109,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                         setState(() {
                           _selectedDate = calenderDetails.date;
                         });
-                        context.read<CalenderProvider>().selectDate(calenderDetails.date!);
+                        context.read<DatePickerProvider>().selectDate(calenderDetails.date!);
                       },
                       headerHeight: 0, // Hide default header
                       monthCellBuilder:
@@ -161,7 +161,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                       textColor: AppColors.grey787878,
                       onPressed: () {
                         Navigator.of(widget.parentContext, rootNavigator: true).pop();
-                        context.read<CalenderProvider>().selectDate(DateTime(0));
+                        Provider.of<DatePickerProvider>(context, listen: false).selectedDate = null;
                       },
                     ),
                   ),
@@ -173,7 +173,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                       textColor: AppColors.whiteFFFFF,
                       onPressed: () {
                         if (_selectedDate != null) {
-                          context.read<CalenderProvider>().selectDate(_selectedDate!);
+                          context.read<DatePickerProvider>().selectDate(_selectedDate!);
                         }
                         Navigator.of(widget.parentContext, rootNavigator: true).pop();
                       },

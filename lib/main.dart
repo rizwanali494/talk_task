@@ -9,10 +9,11 @@ import 'package:talk_task/splash_screen.dart';
 import 'package:talk_task/utilis/app_images.dart';
 import 'package:talk_task/utilis/app_themes.dart';
 import 'package:talk_task/view_model/bottom_nav_bar_provider.dart';
-import 'package:talk_task/view_model/calender_provider.dart';
 import 'package:talk_task/view_model/call_picking_provider.dart';
 import 'package:talk_task/view_model/customization_screen_provider.dart';
+import 'package:talk_task/view_model/date_picker_provider.dart';
 import 'package:talk_task/view_model/setting_provider.dart';
+import 'package:talk_task/view_model/time_picking_provider.dart';
 import 'package:workmanager/workmanager.dart';
 
 
@@ -48,8 +49,10 @@ class MyApp extends StatelessWidget {
        ChangeNotifierProvider(create: (context) => SettingProvider(),),
        ChangeNotifierProvider(create: (context) => CustomizationProvider(),),
        ChangeNotifierProvider(create: (context) => BottomNavBarProvider(),),
-       ChangeNotifierProvider(create: (context) => CalenderProvider(),),
+       ChangeNotifierProvider(create: (context) => DatePickerProvider(),),
        ChangeNotifierProvider(create: (context) => CallPickingProvider(),),
+       ChangeNotifierProvider(create: (context) => TimePickerProvider(),),
+       ChangeNotifierProvider(create: (context) => RemainderTimePickerProvider(),),
 
      ],
      child: ScreenUtilInit(

@@ -24,6 +24,7 @@ class CustomFields{
              height: 45.h,
              child: TextField(
               readOnly: isReadOnly,
+              style: AppTextStyles.poppins(color: AppColors.black, fontSize: 15.sp, weight: FontWeight.w400),
               controller: controller,
               cursorColor: AppColors.secondary,
               onTap: onPressed,

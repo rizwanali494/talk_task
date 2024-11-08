@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:talk_task/main.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_colors.dart';
+import 'package:talk_task/view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text.dart';
 
 class PickTimeDialogue extends StatefulWidget {
-  const PickTimeDialogue({super.key});
+  final bool isRemainderTimePicker;
+  const PickTimeDialogue({super.key,required this.isRemainderTimePicker});
 
   @override
   State<PickTimeDialogue> createState() => _PickTimeDialogueState();
 }
 
 class _PickTimeDialogueState extends State<PickTimeDialogue> {
-  int _selectedHour = 6;   // Default hour
-  int _selectedMinute = 28; // Default minute
-  String _selectedPeriod = "AM"; // Default AM/PM
+  int _selectedHour = DateTime.now().hour % 12 == 0 ? 12 : DateTime.now().hour % 12;
+  int _selectedMinute = DateTime.now().minute;
+  String _selectedPeriod = "AM";
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +180,17 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
                         // Format selected time as HH:mm AM/PM (e.g., 06:28 AM)
                         String formattedTime =
                             '${_selectedHour.toString().padLeft(2, '0')}:${_selectedMinute.toString().padLeft(2, '0')} $_selectedPeriod';
-                        print('Selected time: $formattedTime');
+                        if(widget.isRemainderTimePicker){
+                          context.read<RemainderTimePickerProvider>().
+                          selectTime(hour: _selectedHour.toString().padLeft(2, '0'), minute: _selectedMinute.toString().padLeft(2, '0'), timeAmOrPm: _selectedPeriod);
+
+                        }
+                        else{
+                          context.read<TimePickerProvider>().
+                          selectTime(hour: _selectedHour.toString().padLeft(2, '0'), minute: _selectedMinute.toString().padLeft(2, '0'), timeAmOrPm: _selectedPeriod);
+
+                        }
+
                         Navigator.pop(context, formattedTime); // Return the selected time
                       },
                     ),

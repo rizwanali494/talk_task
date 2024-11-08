@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
@@ -10,6 +11,9 @@ import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../view_model/date_picker_provider.dart';
+import '../../../view_model/provider_list.dart';
+import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../dialogues/pick_date_dialogue.dart';
@@ -38,9 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    //context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
+    ResetProviders.resetHomeProviders(context: context);
+   // context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
     // context.read<CallPickingProvider>().listenCallEvents(context: context);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   AppBar _topBar(){
     return AppBar(
       backgroundColor: AppColors.whiteFFFFF,
+      surfaceTintColor: AppColors.whiteFFFFF,
       flexibleSpace: Padding(
         padding:  EdgeInsets.only(top: 8.h),
         child: Row(
@@ -114,20 +122,41 @@ Widget _cardAddEvent(){
             SizedBox(height: 8.h,),
             Center(child: Text(AppConstants.addTask,style: AppTextStyles.poppins(color: AppColors.blueDark002055, fontSize: 20.sp, weight: FontWeight.w700),))
             , Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,)
-            ,  CustomFields.field(title: AppConstants.event, onPressed: (){
+            ,  CustomFields.field(title: AppConstants.event, onPressed: (){}, controller: _eventController,isReadOnly: false)
+            ,  Consumer<DatePickerProvider>(
+              builder: (BuildContext context,  value, Widget? child) {
+                if(value.selectedDate!=null){_dateController.text=value.selectedDate??"";}
+                return  CustomFields.field(title: AppConstants.date, onPressed: (){
+                  showDialog(
+                    context: context, builder: (BuildContext context) =>   PickDateDialogue(parentContext:context),
+                  );
+              },  controller: _dateController);}
+            )
+            ,  Consumer<TimePickerProvider>(
+              builder: (BuildContext context,  value, Widget? child) {
+                if(value.isTimeSelected){
+                  _timeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
+                }
+                return CustomFields.field(title: AppConstants.time, onPressed: (){
+                  showDialog(context: context, builder: (context)=> const PickTimeDialogue(isRemainderTimePicker: false,));
+                }, controller: _timeController);
+              },
 
-            }, controller: _eventController,isReadOnly: false)
-            ,  CustomFields.field(title: AppConstants.date, onPressed: (){
-              showDialog(
-                context: context, builder: (BuildContext context) =>   PickDateDialogue(parentContext:context),
-              );
+            )
 
-            }, controller: _dateController)
-            ,  CustomFields.field(title: AppConstants.time, onPressed: (){
-              showDialog(context: context, builder: (context)=> const PickTimeDialogue());
+            ,  Consumer<RemainderTimePickerProvider>(
+              builder: (BuildContext context,  value, Widget? child) {
+                if(value.isTimeSelected){
+                  _remainderTimeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
+                }
+                return CustomFields.field(title: AppConstants.reminderTime, onPressed: (){
+                  showDialog(context: context, builder: (context)=> const PickTimeDialogue(isRemainderTimePicker: true,));
+                }, controller: _remainderTimeController);
+              },
 
-            }, controller: _timeController)
-            ,  CustomFields.field(title: AppConstants.reminderTime, onPressed: (){}, controller: _remainderTimeController),
+            ),
+
+
             SizedBox(height: 8.h,)
             ,SizedBox(
                 width: 1.sw*0.9,
