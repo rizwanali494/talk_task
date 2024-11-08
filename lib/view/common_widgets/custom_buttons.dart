@@ -40,4 +40,22 @@ class Buttons{
       ),
     );
   }
+
+  static Widget customCalenderDateButton({required String title,required Color backgroundColor,required Color textColor,required Function ? onPressed}){
+    return Container(
+      height: 55.h,
+      decoration: BoxDecoration(
+        border: Border.all(color:textColor),
+         borderRadius: BorderRadius.circular(13.r)
+      ),
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: backgroundColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(13.r)
+              )
+          ),
+          onPressed: (){}, child: Text(title,style: AppTextStyles.poppins(color: textColor, fontSize: 16.sp, weight: FontWeight.w400),)),
+    );
+  }
 }
