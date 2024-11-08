@@ -19,8 +19,8 @@ class NotificationScreen extends StatelessWidget {
           context: context, title: AppConstants.notification),
       body:ListView(
         children: [
-          _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently'),
-
+          _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: false),
+          _cardNotification(iconPath: AppImages.iconArchive, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: true),
         ],
       ),
     );
@@ -29,29 +29,38 @@ class NotificationScreen extends StatelessWidget {
 
 
 
-  Widget _cardNotification({required String iconPath,required String title,required String time}){
-    return ListTile(
-      title:CustomText(text: title,fontSize: 16.sp,fontWeight: FontWeight.w600,) ,
-      subtitle:  Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CustomText(text: time,fontWeight: FontWeight.w400,color: AppColors.grey787878,fontSize: 15.sp,),
-          Container(
-              height: 30.h,
-              child: Buttons.textButton(title: AppConstants.clickHereToView, onPressed: () {  }))
-        ],
-      ),
-      leading:  Container(height: 60.h,width: 60.h,
-        clipBehavior: Clip.antiAlias,
-        decoration:  const BoxDecoration(
-            color: AppColors.skyBlueF5F5FF,
-            shape: BoxShape.circle
+  Widget _cardNotification({required String iconPath,required String title,required String time,required bool showTrailingButton}){
+    return Column(
+      children: [
+        ListTile(
+          title:CustomText(text: title,fontSize: 16.sp,fontWeight: FontWeight.w600,) ,
+          subtitle:  Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomText(text: time,fontWeight: FontWeight.w400,color: AppColors.grey787878,fontSize: 15.sp,),
+              if(showTrailingButton)
+              SizedBox(
+                  height: 35.h,
+                  child: Buttons.textButton(title: AppConstants.clickHereToView, onPressed: () {  }))
+            ],
+          ),
+          leading:  Container(height: 60.h,width: 60.h,
+            clipBehavior: Clip.antiAlias,
+            decoration:  const BoxDecoration(
+                color: AppColors.skyBlueF5F5FF,
+                shape: BoxShape.circle
+            ),
+            child:Padding(
+             padding:AppImages.iconArchive==iconPath ? EdgeInsets.all(0.r): EdgeInsets.all(13.r),
+              child: Image.asset(iconPath,),
+            ) ,
+          ) ,
         ),
-        child:Padding(
-          padding:  EdgeInsets.all(13.r),
-          child: Image.asset(iconPath),
-        ) ,
-      ) ,
+        Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 23.w,vertical: 12.h),
+          child:  Divider(color: AppColors.greyLight.withOpacity(0.3),height: 0.3,),
+        )
+      ],
     );
   }
 
