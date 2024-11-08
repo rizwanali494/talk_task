@@ -40,20 +40,6 @@ class _DemoScreenState extends State<DemoScreen> {
     }
   }
 
-  @override
-  void initState() {
-   //init();
-    super.initState();
-  }
-
-//   init() async {// Name of the time zone, e.g., "America/New_York"
-// final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-//     FirebaseFirestore.instance.collection("Users").doc(token).set({
-//       "FCM": token,
-//       "NotificationOpenned": true,
-//       'timezone': currentTimeZone,
-//     });
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -192,28 +178,6 @@ class DemoNextButton extends StatelessWidget {
     );
   }
 }
-
-// class BottomTrianglePainter extends CustomPainter {
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     final paint = Paint()
-//       ..color = primaryColor
-//       ..style = PaintingStyle.fill;
-
-//     final path = Path()
-//       ..moveTo(0, 0)
-//       ..lineTo(size.width / 2, size.height)
-//       ..lineTo(size.width, 0)
-//       ..close();
-
-//     canvas.drawPath(path, paint);
-//   }
-
-//   @override
-//   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-//     return false;
-//   }
-// }
 
 class BlurryHomeScreen extends StatelessWidget {
   const BlurryHomeScreen({super.key, required this.isShowIcon});

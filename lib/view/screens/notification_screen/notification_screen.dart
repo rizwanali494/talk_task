@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_constants.dart';
-import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
@@ -19,7 +18,7 @@ class NotificationScreen extends StatelessWidget {
           context: context, title: AppConstants.notification),
       body:ListView(
         children: [
-          _notificationCard(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded'),
+          _notificationCard(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: ''),
         ],
       ),
     );
@@ -27,7 +26,7 @@ class NotificationScreen extends StatelessWidget {
 
 
 
-    Widget _notificationCard({required String iconPath,required String title}){
+    Widget _notificationCard({required String iconPath,required String title,required String time}){
     return Row(children: [
       SizedBox(width: 10.w,),
       Container(height: 73.h,width: 73.h,
@@ -42,7 +41,8 @@ class NotificationScreen extends StatelessWidget {
         ) ,
       ),
       SizedBox(width: 10.w,),
-      Container(child: CustomText(text: title,fontSize: 16.sp,fontWeight: FontWeight.w600,),)
+      Container(child: CustomText(text: title,fontSize: 16.sp,fontWeight: FontWeight.w600,),),
+      CustomText(text: time,fontWeight: FontWeight.w300,color: AppColors.grey787878,fontSize: 16.sp,)
     ],);
     }
 

@@ -10,7 +10,6 @@ import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
 import '../../common_widgets/custom_text_fields.dart';
-import '../call_screens/call_screen.dart';
 import '../notification_screen/notification_screen.dart';
 
 
@@ -24,6 +23,13 @@ class RecurringRemainders extends StatefulWidget {
 
 
 class _RemainderState extends State<RecurringRemainders> {
+  final TextEditingController _eventController= TextEditingController();
+  final TextEditingController _monthlyController= TextEditingController();
+  final TextEditingController _yearlyController= TextEditingController();
+  final TextEditingController _timeController= TextEditingController();
+  final TextEditingController _remainderTimeController= TextEditingController();
+  
+  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -73,16 +79,16 @@ class _RemainderState extends State<RecurringRemainders> {
               SizedBox(height: 8.h,),
               Center(child:CustomText(text: AppConstants.addTask,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
               , Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,)
-              ,  CustomFields.field(title: AppConstants.event, onPressed: (){}),
+              ,  CustomFields.field(title: AppConstants.event, onPressed: (){}, controller: _eventController),
               Row(children: [
-                 Expanded(child: CustomFields.field(title: AppConstants.monthlyRemainder, onPressed: (){})),
+                 Expanded(child: CustomFields.field(title: AppConstants.monthlyRemainder, onPressed: (){},controller: _monthlyController)),
                 SizedBox(width:10.w,),
-                Expanded(child: CustomFields.field(title: AppConstants.yearlyRemainder, onPressed: (){})),
+                Expanded(child: CustomFields.field(title: AppConstants.yearlyRemainder, onPressed: (){}, controller: _yearlyController)),
               ],),
               Row(children: [
-                Expanded(child: CustomFields.field(title: AppConstants.time, onPressed: (){})),
+                Expanded(child: CustomFields.field(title: AppConstants.time, onPressed: (){}, controller: _timeController)),
                 SizedBox(width:10.w,),
-                Expanded(child: CustomFields.field(title: AppConstants.reminderTime, onPressed: (){})),
+                Expanded(child: CustomFields.field(title: AppConstants.reminderTime, onPressed: (){}, controller: _remainderTimeController)),
               ],),
               SizedBox(height: 8.h,)
               ,SizedBox(

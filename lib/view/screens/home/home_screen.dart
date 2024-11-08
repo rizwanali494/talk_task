@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/main.dart';
 import 'package:talk_task/utilis/app_constants.dart';
+import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
@@ -13,6 +14,7 @@ import '../../../utilis/app_images.dart';
 import '../../../view_model/call_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
+import '../notification_screen/notification_screen.dart';
 import 'calender/calender_screen.dart';
 
 
@@ -27,17 +29,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  final TextEditingController _eventController= TextEditingController();
+  final TextEditingController _dateController= TextEditingController();
+  final TextEditingController _timeController= TextEditingController();
+  final TextEditingController _remainderTimeController= TextEditingController();
+
+
 
   @override
   void initState() {
     super.initState();
-    context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
-
+    //context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
+    // context.read<CallPickingProvider>().listenCallEvents(context: context);
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<CallPickingProvider>().listenCallEvents(context: context);
+
     return  Scaffold(
       backgroundColor: AppColors.whiteFFFFF,
       appBar:_topBar() ,
@@ -58,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(width: 20.w,),
             Text(AppConstants.taskAi,style: AppTextStyles.poppins(color: AppColors.blueDark002055, fontSize: 20.sp, weight: FontWeight.w700),),
             const Spacer(),
-            Buttons.customIconButton(onPressed: (){}, icon: AppImages.iconNotifications),
+            Buttons.customIconButton(onPressed: (){
+              Navigator.push(context, MyRoute(const NotificationScreen()));
+            }, icon: AppImages.iconNotifications),
             SizedBox(width: 20.w,),
           ],),
       ),
@@ -108,12 +118,12 @@ Widget _cardAddEvent(){
             , Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,)
             ,  CustomFields.field(title: AppConstants.event, onPressed: (){
 
-            })
+            }, controller: _eventController,isReadOnly: false)
             ,  CustomFields.field(title: AppConstants.date, onPressed: (){
               showDialog(context: context, builder: (context)=>const CalenderScreen());
-            })
-            ,  CustomFields.field(title: AppConstants.time, onPressed: (){})
-            ,  CustomFields.field(title: AppConstants.reminderTime, onPressed: (){}),
+            }, controller: _dateController)
+            ,  CustomFields.field(title: AppConstants.time, onPressed: (){}, controller: _timeController)
+            ,  CustomFields.field(title: AppConstants.reminderTime, onPressed: (){}, controller: _remainderTimeController),
             SizedBox(height: 8.h,)
             ,SizedBox(
                 width: 1.sw*0.9,

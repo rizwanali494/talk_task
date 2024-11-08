@@ -6,7 +6,7 @@ import '../../utilis/app_text_styles.dart';
 
 class CustomFields{
 
- static Widget field({required String title,required GestureTapCallback? onPressed}){
+ static Widget field({required String title,required GestureTapCallback? onPressed, bool isReadOnly=true,required TextEditingController controller}){
     return Padding(
       padding:  EdgeInsets.symmetric(vertical: 3.h),
       child: GestureDetector(
@@ -23,7 +23,9 @@ class CustomFields{
            SizedBox(
              height: 45.h,
              child: TextField(
-              readOnly: true,
+              readOnly: isReadOnly,
+              controller: controller,
+              cursorColor: AppColors.secondary,
               onTap: onPressed,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
