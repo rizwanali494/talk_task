@@ -83,7 +83,7 @@ class CallKitService {
   }
 
    static Future<void> acceptCall() async {
-    // await FlutterCallkitIncoming.hideCallkitIncoming(params);
+     await FlutterCallkitIncoming.endCall(_currentUuid);
    }
 
   static StreamSubscription<CallEvent?>? listenEvents(){

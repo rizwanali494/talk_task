@@ -24,6 +24,7 @@ class CallPickingProvider extends ChangeNotifier{
 
      acceptCall({required BuildContext context}){
        setCallStatus(true);
+       CallKitService.acceptCall();
        Navigator.of(context).push(MyRoute(const CallScreen(date: '04/12/2024', time: '5:30 AM',)));
 
      }
