@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:talk_task/services/isar.dart';
+import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/services/local_notification_service.dart';
 import 'package:talk_task/splash_screen.dart';
 import 'package:talk_task/utilis/app_images.dart';
@@ -33,7 +33,7 @@ Future<void> main() async {
   prefs=await SharedPreferences.getInstance();
   NotificationService.initialize();
   Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  IsarService.init();
+  HiveHelper.initHive();
   runApp( const MyApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
 }

@@ -1,21 +1,36 @@
-import 'package:isar/isar.dart';
+import 'dart:ui';
+
+import 'package:hive/hive.dart';
 part 'events_model.g.dart';
 
 
-@Collection()
-class Event {
-  Id? id;
+@HiveType(typeId: 0)
+class EventsModel extends HiveObject {
+  @HiveField(0)
+  String title;
 
-  String eventTitle;
-  DateTime time;
-  DateTime remianderTime;
-  DateTime date;
+  @HiveField(1)
+  DateTime remainderTime;
 
-  Event({
-    this.id,
-    required this.eventTitle,
-    required this.time,
-    required this.remianderTime,
-    required this.date,
+  @HiveField(2)
+  DateTime eventDate;
+
+  @HiveField(3)
+  DateTime eventTime;
+
+  EventsModel({
+    required this.title,
+    required this.remainderTime,
+    required this.eventDate,
+    required this.eventTime,
   });
+
+
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Title:${title}    RemainderTime:${remainderTime}    EventDate:${eventDate}  EventTime:${eventTime}";
+  }
+
 }

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/models/events_model.dart';
-import 'package:talk_task/services/isar.dart';
+import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
@@ -131,9 +131,10 @@ Widget _cardAddEvent(){
             ,SizedBox(
                 width: 1.sw*0.9,
                 child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5), textColor: AppColors.whiteFFFFF, onPressed: () async {
-                  IsarService.addEvent(Event(eventTitle: 'jawad', time: DateTime.now(), remianderTime: DateTime.now(), date: DateTime.now()));
-                  List<Event> s= await IsarService.getAllEvents();
-                  print(s.toString());
+                          await HiveHelper.addDataInBox(boxName: 'events', key: 'event', value:
+                          EventsModel(title: 'jawad', remainderTime: DateTime.now(), eventDate:  DateTime.now(), eventTime:  DateTime.now()));
+                          List<dynamic> allEvents=await HiveHelper.getBox(boxName: 'events');
+                          print(allEvents);
                 }))
           ],),
       ),
