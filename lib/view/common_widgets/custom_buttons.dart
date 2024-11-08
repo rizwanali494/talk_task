@@ -10,7 +10,7 @@ import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../utilis/app_colors.dart';
 
 class Buttons{
-  static Widget customElevatedButton({required String title,required Color backgroundColor,required Color textColor,required Function ? onPressed}){
+  static Widget customElevatedButton({required String title,required Color backgroundColor,required Color textColor,required VoidCallback ? onPressed}){
     return SizedBox(
       height: 50.h,
       child: ElevatedButton(
@@ -20,7 +20,7 @@ class Buttons{
               borderRadius: BorderRadius.circular(13.r)
             )
           ),
-          onPressed: (){}, child: Text(title,style: AppTextStyles.poppins(color: textColor, fontSize: 20.sp, weight: FontWeight.w500),)),
+          onPressed: onPressed, child: Text(title,style: AppTextStyles.poppins(color: textColor, fontSize: 20.sp, weight: FontWeight.w500),)),
     );
   }
 
