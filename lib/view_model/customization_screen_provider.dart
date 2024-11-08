@@ -4,8 +4,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utilis/app_colors.dart';
+
 class CustomizationProvider with ChangeNotifier {
-  dynamic eventColor1;
+  dynamic eventColor1=AppColors.primary;
   dynamic eventColor2;
   dynamic eventColor3;
   bool isLoading = false;

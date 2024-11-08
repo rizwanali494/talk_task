@@ -35,9 +35,10 @@ class _CalenderScreenState extends State<CalenderScreen> {
   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       clipBehavior: Clip.antiAlias,
       child: Container(
-        height:  500.h,
+
         color: AppColors.whiteFFFFF,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -46,6 +47,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
             ),
             Container(
               clipBehavior: Clip.antiAlias,
+               height: 360.h,
                margin: EdgeInsets.symmetric(horizontal: 7.w),
               decoration: BoxDecoration(
                 color: AppColors.whiteFFFFF,
@@ -53,7 +55,6 @@ class _CalenderScreenState extends State<CalenderScreen> {
                 borderRadius: BorderRadius.circular(14.r)
               ),
               child: SfCalendar(
-
                 initialDisplayDate: DateTime.now(),
                 view: CalendarView.month,
                 cellBorderColor: AppColors.transparent,
@@ -68,20 +69,20 @@ class _CalenderScreenState extends State<CalenderScreen> {
                   backgroundColor: AppColors.transparent,
                   textStyle: AppTextStyles.poppins(
                     color: AppColors.primary,
-                    fontSize: 1.sh * 0.022, weight: FontWeight.w600,
+                    fontSize: 20.sp, weight: FontWeight.w600,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 viewHeaderStyle: ViewHeaderStyle(
                   dayTextStyle: AppTextStyles.poppins(
                     color: AppColors.black,
-                    fontSize: 1.sh * 0.019,
-                    weight: FontWeight.w600,
+                    fontSize: 15.sp,
+                    weight: FontWeight.w500,
                   ),
                   dateTextStyle: AppTextStyles.poppins(
                     color: AppColors.primary,
-                    fontSize: 1.sh * 0.015,
-                    weight: FontWeight.w600,
+                    fontSize: 15.sp,
+                    weight: FontWeight.w500,
                   ),
                 ),
                 monthCellBuilder:
@@ -104,7 +105,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
                       .read<CustomizationProvider>()
                       .eventColor2)
                       : eventCount == 0
-                      ? Colors.transparent
+                      ? AppColors.transparent
                       : Color(
                       context
                           .read<CustomizationProvider>()
@@ -115,13 +116,13 @@ class _CalenderScreenState extends State<CalenderScreen> {
                     child: CustomText(
                       text: date.day.toString(),
                       color: eventCount != 0
-                          ? Colors.white
+                          ? AppColors.whiteFFFFF
                           : details.visibleDates[10].month ==
                           details.date.month
                           ? AppColors.black // Current month in black
                           : AppColors.black.withOpacity(0.7),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 1.sh * 0.015,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14.sp,
                     ),
                   );
                 },
@@ -129,15 +130,16 @@ class _CalenderScreenState extends State<CalenderScreen> {
             ),
             SizedBox(height: 20.h,),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 10.w),
+              padding:  EdgeInsets.symmetric(horizontal: 10.w,),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                 Expanded(child: Buttons.customCalenderDateButton(title: AppConstants.cancel, backgroundColor: AppColors.whiteFFFFF, textColor: AppColors.grey787878, onPressed: (){})),
-                SizedBox(width:9.w ,),
+                SizedBox(width:14.w ,),
                 Expanded(child: Buttons.customCalenderDateButton(title: AppConstants.save, backgroundColor: AppColors.secondary, textColor: AppColors.whiteFFFFF, onPressed: (){})),
               ],),
             ),
+            SizedBox(height: 20.h,),
           ],
         ),
       ),
