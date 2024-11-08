@@ -153,6 +153,7 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String reminderTime = "Reminder Time: ";
   static const String upcomingEvents = "Upcoming Events";
   static const String setDate = "Set Date";
+  static const String setTime = "Set Time";
   static const String save = "Save";
   static const String cancel = "Cancel";
 
@@ -171,5 +172,7 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String onGoing = "Ongoing Call";
 
 
+//notification
+  static const String clickHereToView = "Click Here To View";
 
 }

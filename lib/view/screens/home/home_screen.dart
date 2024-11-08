@@ -1,21 +1,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:talk_task/main.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
-import '../../../services/call_kit_service.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
-import '../../../view_model/call_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
+import '../dialogues/pick_date_dialogue.dart';
+import '../dialogues/pick_time_dialogue.dart';
 import '../notification_screen/notification_screen.dart';
-import 'calender/calender_screen.dart';
 
 
 
@@ -120,9 +117,12 @@ Widget _cardAddEvent(){
 
             }, controller: _eventController,isReadOnly: false)
             ,  CustomFields.field(title: AppConstants.date, onPressed: (){
-              showDialog(context: context, builder: (context)=>const CalenderScreen());
+              showDialog(context: context, builder: (context)=> PickDateDialogue());
             }, controller: _dateController)
-            ,  CustomFields.field(title: AppConstants.time, onPressed: (){}, controller: _timeController)
+            ,  CustomFields.field(title: AppConstants.time, onPressed: (){
+              showDialog(context: context, builder: (context)=> const PickTimeDialogue());
+
+            }, controller: _timeController)
             ,  CustomFields.field(title: AppConstants.reminderTime, onPressed: (){}, controller: _remainderTimeController),
             SizedBox(height: 8.h,)
             ,SizedBox(

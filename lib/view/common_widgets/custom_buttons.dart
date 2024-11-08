@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
+import 'package:talk_task/view/common_widgets/custom_text.dart';
 
 import '../../utilis/app_colors.dart';
 
@@ -57,5 +58,9 @@ class Buttons{
           ),
           onPressed: (){}, child: Text(title,style: AppTextStyles.poppins(color: textColor, fontSize: 16.sp, weight: FontWeight.w400),)),
     );
+  }
+
+  static Widget textButton({required String title,required VoidCallback ? onPressed,}){
+    return TextButton(onPressed: onPressed, child: Text(title,style: AppTextStyles.poppins(color: AppColors.primary, fontSize: 16.sp, weight: FontWeight.w500,shouldUnderline: true),));
   }
 }

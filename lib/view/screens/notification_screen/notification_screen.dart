@@ -5,6 +5,7 @@ import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../common_widgets/custom_app_bars.dart';
+import '../../common_widgets/custom_buttons.dart';
 
 
 class NotificationScreen extends StatelessWidget {
@@ -18,7 +19,8 @@ class NotificationScreen extends StatelessWidget {
           context: context, title: AppConstants.notification),
       body:ListView(
         children: [
-          _notificationCard(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: ''),
+          _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently'),
+
         ],
       ),
     );
@@ -26,24 +28,32 @@ class NotificationScreen extends StatelessWidget {
 
 
 
-    Widget _notificationCard({required String iconPath,required String title,required String time}){
-    return Row(children: [
-      SizedBox(width: 10.w,),
-      Container(height: 73.h,width: 73.h,
-      clipBehavior: Clip.antiAlias,
-      decoration:  const BoxDecoration(
-        color: AppColors.skyBlueF5F5FF,
-        shape: BoxShape.circle
+
+  Widget _cardNotification({required String iconPath,required String title,required String time}){
+    return ListTile(
+      title:CustomText(text: title,fontSize: 16.sp,fontWeight: FontWeight.w600,) ,
+      subtitle:  Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomText(text: time,fontWeight: FontWeight.w400,color: AppColors.grey787878,fontSize: 15.sp,),
+          Container(
+              height: 30.h,
+              child: Buttons.textButton(title: AppConstants.clickHereToView, onPressed: () {  }))
+        ],
       ),
+      leading:  Container(height: 60.h,width: 60.h,
+        clipBehavior: Clip.antiAlias,
+        decoration:  const BoxDecoration(
+            color: AppColors.skyBlueF5F5FF,
+            shape: BoxShape.circle
+        ),
         child:Padding(
-          padding:  EdgeInsets.all(18.r),
+          padding:  EdgeInsets.all(13.r),
           child: Image.asset(iconPath),
         ) ,
-      ),
-      SizedBox(width: 10.w,),
-      Container(child: CustomText(text: title,fontSize: 16.sp,fontWeight: FontWeight.w600,),),
-      CustomText(text: time,fontWeight: FontWeight.w300,color: AppColors.grey787878,fontSize: 16.sp,)
-    ],);
-    }
+      ) ,
+    );
+  }
+
 
 }
