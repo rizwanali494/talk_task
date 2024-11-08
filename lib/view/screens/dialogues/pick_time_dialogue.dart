@@ -103,7 +103,7 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
                                   text: minuteIndex.toString().padLeft(2, '0'), // Minute (00 to 59)
                                   color: _selectedMinute == minuteIndex
                                       ? AppColors.black
-                                      : AppColors.grey787878,
+                                      : AppColors.greyLight,
                                   fontWeight: FontWeight.w600, // Weight 600
                                   fontSize: 24.sp,
                                 ),
