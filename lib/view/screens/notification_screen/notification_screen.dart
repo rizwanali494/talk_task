@@ -19,6 +19,19 @@ class NotificationScreen extends StatelessWidget {
           context: context, title: AppConstants.notification),
       body:ListView(
         children: [
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 22.w,vertical: 7.h),
+            child: CustomText(text: AppConstants.today,fontSize: 16.sp,fontWeight: FontWeight.w500,color: AppColors.grey787878,),
+          ),
+          SizedBox(height: 10.h,),
+          _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: false),
+          _cardNotification(iconPath: AppImages.iconArchive, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: true),
+          _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: false),
+          _cardNotification(iconPath: AppImages.iconArchive, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: true),
+          _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: false),
+          _cardNotification(iconPath: AppImages.iconArchive, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: true),
+          _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: false),
+          _cardNotification(iconPath: AppImages.iconArchive, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: true),
           _cardNotification(iconPath: AppImages.iconCheck, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: false),
           _cardNotification(iconPath: AppImages.iconArchive, title: 'Event Successfully Uploaded', time: 'Recently', showTrailingButton: true),
         ],
@@ -27,7 +40,9 @@ class NotificationScreen extends StatelessWidget {
   }
 
 
-
+Widget _divider(){
+    return const Divider(color: AppColors.greyLight,height: 1.5,);
+}
 
   Widget _cardNotification({required String iconPath,required String title,required String time,required bool showTrailingButton}){
     return Column(
@@ -37,7 +52,7 @@ class NotificationScreen extends StatelessWidget {
           subtitle:  Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomText(text: time,fontWeight: FontWeight.w400,color: AppColors.grey787878,fontSize: 15.sp,),
+              CustomText(text: time,fontWeight: FontWeight.w400,color: AppColors.grey787878.withOpacity(0.75),fontSize: 15.sp,),
               if(showTrailingButton)
               SizedBox(
                   height: 35.h,
