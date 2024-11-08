@@ -5,7 +5,6 @@ import 'package:talk_task/utilis/app_colors.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text.dart';
 
-
 class PickTimeDialogue extends StatefulWidget {
   const PickTimeDialogue({super.key});
 
@@ -20,11 +19,12 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
+    return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      clipBehavior: Clip.antiAlias,
-      child: Container(
+      contentPadding: EdgeInsets.zero,
+      content: Container(
         color: AppColors.whiteFFFFF,
+        width: double.maxFinite,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,94 +32,87 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
             Padding(
               padding: EdgeInsets.only(left: 10.w, top: 14.h, bottom: 14.h),
               child: CustomText(
-                text: AppConstants.setTime,  // Using AppConstants to define the text
+                text: AppConstants.setTime,
                 fontSize: 18.sp,
                 color: AppColors.black,
                 fontWeight: FontWeight.w700,
               ),
             ),
+
             Container(
-              height: 250.h,
+              height: 200.h,
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Hour Selector
-                  Expanded(
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: 3, // Display only 3 items at a time
-                          itemBuilder: (context, index) {
-                            int hourIndex = (_selectedHour - 1 + index) % 12;
-                            if (hourIndex == 0) hourIndex = 12;
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedHour = hourIndex;
-                                });
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(vertical: 10.h),
-                                child: CustomText(
-                                  text: '$hourIndex', // Hour (1 to 12)
-                                  color: _selectedHour == hourIndex
-                                      ? AppColors.black
-                                      : AppColors.grey787878,
-                                  fontWeight: FontWeight.w600, // Weight 600
-                                  fontSize: 24.sp,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        Divider(color: AppColors.grey787878, height: 1.h),
-                      ],
+                  SizedBox(
+                    width: 50.w,
+                    child: ListWheelScrollView.useDelegate(
+                      itemExtent: 45.h,
+                      diameterRatio: 1.2,
+                      physics: const FixedExtentScrollPhysics(),
+                      onSelectedItemChanged: (index) {
+                        setState(() {
+                          _selectedHour = (index + 1) % 12 == 0 ? 12 : (index + 1) % 12;
+                        });
+                      },
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        childCount: 12,
+                        builder: (context, index) {
+                          int hour = (index + 1) % 12 == 0 ? 12 : (index + 1) % 12;
+                          return CustomText(
+                            text: hour.toString().padLeft(2, '0'),
+                            color: _selectedHour == hour ? AppColors.black : AppColors.grey787878,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24.sp,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  // Colon separator with no extra spaces
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 12.h),
+                    child: CustomText(
+                      text: ':',
+                      color: AppColors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 24.sp,
                     ),
                   ),
                   // Minute Selector
-                  Expanded(
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: 3, // Display only 3 items at a time
-                          itemBuilder: (context, index) {
-                            int minuteIndex = (_selectedMinute + index) % 60;
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedMinute = minuteIndex;
-                                });
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(vertical: 10.h),
-                                child: CustomText(
-                                  text: minuteIndex.toString().padLeft(2, '0'), // Minute (00 to 59)
-                                  color: _selectedMinute == minuteIndex
-                                      ? AppColors.black
-                                      : AppColors.greyLight,
-                                  fontWeight: FontWeight.w600, // Weight 600
-                                  fontSize: 24.sp,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        Divider(color: AppColors.grey787878, height: 1.h),
-                      ],
+                  SizedBox(
+                    width: 50.w,
+                    child: ListWheelScrollView.useDelegate(
+                      itemExtent: 45.h,
+                      diameterRatio: 1.2,
+                      physics: const FixedExtentScrollPhysics(),
+                      onSelectedItemChanged: (index) {
+                        setState(() {
+                          _selectedMinute = index;
+                        });
+                      },
+                      childDelegate: ListWheelChildBuilderDelegate(
+                        childCount: 60,
+                        builder: (context, index) {
+                          return CustomText(
+                            text: index.toString().padLeft(2, '0'),
+                            color: _selectedMinute == index ? AppColors.black : AppColors.grey787878,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 24.sp,
+                          );
+                        },
+                      ),
                     ),
                   ),
                   // AM/PM Selector
-                  Expanded(
+                  SizedBox(
+                    width: 50.w,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(height: 20.h),
                         GestureDetector(
                           onTap: () {
                             setState(() {
@@ -131,7 +124,7 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
                             color: _selectedPeriod == "AM"
                                 ? AppColors.black
                                 : AppColors.grey787878,
-                            fontWeight: FontWeight.w600, // Weight 600
+                            fontWeight: FontWeight.w600,
                             fontSize: 24.sp,
                           ),
                         ),
@@ -146,7 +139,7 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
                             color: _selectedPeriod == "PM"
                                 ? AppColors.black
                                 : AppColors.grey787878,
-                            fontWeight: FontWeight.w600, // Weight 600
+                            fontWeight: FontWeight.w600,
                             fontSize: 24.sp,
                           ),
                         ),
@@ -156,6 +149,7 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
                 ],
               ),
             ),
+
             SizedBox(height: 20.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -168,7 +162,7 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
                       backgroundColor: AppColors.whiteFFFFF,
                       textColor: AppColors.grey787878,
                       onPressed: () {
-                        Navigator.pop(context);  // Close the dialog on cancel
+                        Navigator.of(context).pop(false);  // Close the dialog on cancel
                       },
                     ),
                   ),

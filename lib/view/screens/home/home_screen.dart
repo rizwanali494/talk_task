@@ -38,14 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
     //context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
     // context.read<CallPickingProvider>().listenCallEvents(context: context);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return  Scaffold(
       backgroundColor: AppColors.whiteFFFFF,
       appBar:_topBar() ,
@@ -120,7 +118,10 @@ Widget _cardAddEvent(){
 
             }, controller: _eventController,isReadOnly: false)
             ,  CustomFields.field(title: AppConstants.date, onPressed: (){
-              showDialog(context: context, builder: (context)=> PickDateDialogue());
+              showDialog(
+                context: context, builder: (BuildContext context) =>   PickDateDialogue(parentContext:context),
+              );
+
             }, controller: _dateController)
             ,  CustomFields.field(title: AppConstants.time, onPressed: (){
               showDialog(context: context, builder: (context)=> const PickTimeDialogue());

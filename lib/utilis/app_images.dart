@@ -50,4 +50,8 @@ class AppImages{
   static String iconCross='assets/icons/cross.png';
   static String iconEndCall='assets/icons/end_call_icon.png';
 
+  //calender screen
+  static String iconForward='assets/icons/arrow_right_icon.png';
+  static String iconBackArrow='assets/icons/arrow_left_icon.png';
+
 }

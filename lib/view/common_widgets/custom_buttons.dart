@@ -42,7 +42,7 @@ class Buttons{
     );
   }
 
-  static Widget customCalenderDateButton({required String title,required Color backgroundColor,required Color textColor,required Function ? onPressed}){
+  static Widget customCalenderDateButton({required String title,required Color backgroundColor,required Color textColor,required VoidCallback ? onPressed}){
     return Container(
       height: 55.h,
       decoration: BoxDecoration(
@@ -56,7 +56,7 @@ class Buttons{
                   borderRadius: BorderRadius.circular(13.r)
               )
           ),
-          onPressed: (){}, child: Text(title,style: AppTextStyles.poppins(color: textColor, fontSize: 16.sp, weight: FontWeight.w400),)),
+          onPressed: onPressed, child: Text(title,style: AppTextStyles.poppins(color: textColor, fontSize: 16.sp, weight: FontWeight.w400),)),
     );
   }
 
