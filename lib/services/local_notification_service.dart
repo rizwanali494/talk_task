@@ -51,7 +51,7 @@ class NotificationService {
       ),
 
       actionButtons: [NotificationActionButton(key: '1',label: 'Dismiss',isDangerousOption: true)],
-      schedule: NotificationInterval(interval: const Duration(seconds: 120),repeats: true)
+      //schedule: NotificationInterval(interval: const Duration(seconds: 120),repeats: true)
     );
     // scheduleDismissal(_notificationId);
     listenNotificationActions();
