@@ -124,6 +124,7 @@ class CallScreen extends StatelessWidget {
          Lottie.asset(AppImages.imgCallLottie,height: 1.sh*0.55),
          SizedBox(height: 30.h,),
          _callButtons(onPressed: (){
+           Navigator.of(context).pop();
            context.read<CallPickingProvider>().endCall();
            Navigator.of(context).pop();
          }, icon: AppImages.iconEndCall, bgColor: AppColors.redFF0000),
