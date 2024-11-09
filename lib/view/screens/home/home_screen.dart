@@ -190,6 +190,7 @@ Widget _cardAddEvent(){
                           _timeController.text='';
                           _remainderTimeController.text='';
                           _dateController.text='';
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: 'Event scheduled'));
                           List<dynamic> allEvents=await HiveHelper.getBox(boxName: 'events');
                           print(allEvents);
                 }))
