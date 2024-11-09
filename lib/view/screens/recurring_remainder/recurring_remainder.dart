@@ -7,6 +7,7 @@ import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../view_model/call_picking_provider.dart';
 import '../../../view_model/events_listner_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
@@ -31,7 +32,13 @@ class _RemainderState extends State<RecurringRemainders> {
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
   
-  
+  @override
+  void initState() {
+    super.initState();
+     context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
+     context.read<CallPickingProvider>().listenCallEvents(context: context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

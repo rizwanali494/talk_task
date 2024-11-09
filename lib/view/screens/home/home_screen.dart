@@ -50,8 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
      ResetProviders.resetHomeProviders(context: context);
    });
     context.read<EventsListenerProvider>().listenEventsBox();
-   // context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
-    // context.read<CallPickingProvider>().listenCallEvents(context: context);
+
   }
 
 
