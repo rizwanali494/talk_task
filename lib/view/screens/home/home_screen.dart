@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/models/events_model.dart';
@@ -15,6 +16,7 @@ import '../../../view_model/date_picker_provider.dart';
 import '../../../view_model/provider_list.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
+import '../../common_widgets/custom_snackbars.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../dialogues/pick_date_dialogue.dart';
 import '../dialogues/pick_time_dialogue.dart';
@@ -42,7 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    ResetProviders.resetHomeProviders(context: context);
+   WidgetsBinding.instance.addPostFrameCallback((a){
+     ResetProviders.resetHomeProviders(context: context);
+   });
    // context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
     // context.read<CallPickingProvider>().listenCallEvents(context: context);
   }
@@ -161,8 +165,31 @@ Widget _cardAddEvent(){
             ,SizedBox(
                 width: 1.sw*0.9,
                 child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5), textColor: AppColors.whiteFFFFF, onPressed: () async {
-                          await HiveHelper.addDataInBox(boxName: 'events', key: 'event', value:
-                          EventsModel(title: 'jawad', remainderTime: DateTime.now(), eventDate:  DateTime.now(), eventTime:  DateTime.now()));
+                          if(_eventController.text.replaceAll(' ', '').isEmpty){
+                            EasyLoading.showInfo('Event name required');
+                            return;
+                          }
+                          if(_dateController.text.isEmpty){
+                            EasyLoading.showInfo('Event date required');
+                            return;
+                          }
+                          if(_timeController.text.isEmpty){
+                            EasyLoading.showInfo('Event time required');
+                            return;
+                          }
+                          if(_remainderTimeController.text.isEmpty){
+                            EasyLoading.showInfo('Event remainder time required');
+                            return;
+                          }
+
+                          await HiveHelper.addDataInBox(boxName: 'events', key: _eventController.text, value:
+                          EventsModel(title: _eventController.text, remainderTime: DateTime.now().add(const Duration(seconds: 10)),
+                              eventDate:  DateTime.now(), eventTime:   DateTime.now().add(const Duration(minutes: 16))));
+                          ResetProviders.resetHomeProviders(context: context);
+                           _eventController.text='';
+                          _timeController.text='';
+                          _remainderTimeController.text='';
+                          _dateController.text='';
                           List<dynamic> allEvents=await HiveHelper.getBox(boxName: 'events');
                           print(allEvents);
                 }))

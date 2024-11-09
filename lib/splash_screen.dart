@@ -9,6 +9,7 @@ import 'package:talk_task/utilis/app_images.dart';
 import 'package:talk_task/utilis/app_prefs.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
+import 'package:talk_task/utilis/customize_easyloading.dart';
 import 'package:talk_task/view/boarding/boarding.dart';
 import 'package:talk_task/view/common_widgets/custom_app_bars.dart';
 import 'package:talk_task/view/demo_screen/demo_screen.dart';
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
+    CustomizeEasyLoading.customizeEasyLoading();
     Future.delayed(const Duration(seconds: 3), (){
       _startingPagesTransition();
     });

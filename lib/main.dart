@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
      child: ScreenUtilInit(
        designSize: const Size(432,923),
        child: MaterialApp(
+         builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
           home: const SplashScreen(),
