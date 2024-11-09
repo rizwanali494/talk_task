@@ -16,7 +16,7 @@ class EventsModel extends HiveObject {
   DateTime eventDate;
 
   @HiveField(3)
-  DateTime eventTime;
+  String eventTime;
 
   EventsModel({
     required this.title,

@@ -232,7 +232,7 @@ Future<void> _addEventHive({required String eventTitle,required String eventTime
   required String remainderTime,required DateTime eventDate}) async {
   await HiveHelper.addEventInBox(boxName: 'events', key: _eventController.text, value:
   EventsModel(title: _eventController.text, remainderTime: remainderTime,
-      eventDate:  eventDate, eventTime:   DateTime.now().add(const Duration(minutes: 16))));
+      eventDate:  eventDate, eventTime: eventTime));
   ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: 'Event scheduled'));
   context.read<EventsListenerProvider>().listenEventsBox();
   }

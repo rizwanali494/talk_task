@@ -20,7 +20,7 @@ class EventsModelAdapter extends TypeAdapter<EventsModel> {
       title: fields[0] as String,
       remainderTime: fields[1] as String,
       eventDate: fields[2] as DateTime,
-      eventTime: fields[3] as DateTime,
+      eventTime: fields[3] as String,
     );
   }
 
