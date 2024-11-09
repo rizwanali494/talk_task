@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../view_model/events_listner_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
@@ -54,7 +56,7 @@ class _RemainderState extends State<RecurringRemainders> {
 
         ),
         SizedBox(height: 5.h,),
-        CustomCards.eventCard(event: 'Study', date: "22/12/2024", time: '6:00 am', remainderTime: "04:00 am")
+              _displayEvents()
       ],)),
     );
   }
@@ -99,5 +101,28 @@ class _RemainderState extends State<RecurringRemainders> {
       ),
     );
   }
+
+
+  Widget _displayEvents() {
+    return Consumer<EventsListenerProvider>(
+      builder: (BuildContext context, value, Widget? child) {
+        return Column(children: [
+          if(value.allEvents.isEmpty)
+            const Center(child: Padding(
+              padding: EdgeInsets.all(38.0),
+              child: Text(AppConstants.noEvents),
+            )),
+          for(int i=0;i<value.allEvents.length;i++)
+            CustomCards.eventCard(
+                event:value.allEvents[i].title,
+                date: value.allEvents[i].eventDate.toString().split(' ')[0],
+                time: value.allEvents[i].eventTime.toString(),
+                remainderTime: value.allEvents[i].remainderTime
+            )
+        ],);
+      },
+    );
+  }
+
 
 }

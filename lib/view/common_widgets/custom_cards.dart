@@ -14,7 +14,7 @@ class CustomCards{
 
   static Widget eventCard({required String event,required String date,required String time,required String remainderTime}){
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 13.w),
+      margin: EdgeInsets.symmetric(horizontal: 13.w,vertical: 7.h),
       padding: EdgeInsets.symmetric(horizontal: 7.w),
       decoration: BoxDecoration(
           color: AppColors.whiteFFFFF,

@@ -12,7 +12,9 @@ import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../utilis/date_formating.dart';
 import '../../../view_model/date_picker_provider.dart';
+import '../../../view_model/events_listner_provider.dart';
 import '../../../view_model/provider_list.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
@@ -47,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
    WidgetsBinding.instance.addPostFrameCallback((a){
      ResetProviders.resetHomeProviders(context: context);
    });
+    context.read<EventsListenerProvider>().listenEventsBox();
    // context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
     // context.read<CallPickingProvider>().listenCallEvents(context: context);
   }
@@ -98,11 +101,11 @@ Widget _body(){
      _cardAddEvent(),
      Padding(
        padding:  EdgeInsets.only(left: 16.w),
-       child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,),
+       child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
        
      ),
       SizedBox(height: 5.h,),
-       CustomCards.eventCard(event: 'Study', date: "22/12/2024", time: '6:00 am', remainderTime: "04:00 am")
+       _displayEvents()
    ],),
  );
 }
@@ -182,15 +185,9 @@ Widget _cardAddEvent(){
                             return;
                           }
 
-                          await HiveHelper.addDataInBox(boxName: 'events', key: _eventController.text, value:
-                          EventsModel(title: _eventController.text, remainderTime: DateTime.now().add(const Duration(seconds: 10)),
-                              eventDate:  DateTime.now(), eventTime:   DateTime.now().add(const Duration(minutes: 16))));
-                          ResetProviders.resetHomeProviders(context: context);
-                           _eventController.text='';
-                          _timeController.text='';
-                          _remainderTimeController.text='';
-                          _dateController.text='';
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: 'Event scheduled'));
+                          _addEventHive(eventTitle: _eventController.text, eventTime: _timeController.text,
+                              remainderTime: _remainderTimeController.text, eventDate:DateFormatting.createDateTimeFromString(date: _dateController.text, time: _timeController.text));
+                          _resetFieldValues();
                           List<dynamic> allEvents=await HiveHelper.getBox(boxName: 'events');
                           print(allEvents);
                 }))
@@ -201,7 +198,44 @@ Widget _cardAddEvent(){
 }
 
 
+  Widget _displayEvents() {
+    return Consumer<EventsListenerProvider>(
+      builder: (BuildContext context, value, Widget? child) {
+        return Column(children: [
+          if(value.allEvents.isEmpty)
+            const Center(child: Padding(
+              padding: EdgeInsets.all(38.0),
+              child: Text(AppConstants.noEvents),
+            )),
+          for(int i=0;i<value.allEvents.length;i++)
+        CustomCards.eventCard(
+        event:value.allEvents[i].title,
+            date: value.allEvents[i].eventDate.toString().split(' ')[0],
+            time: value.allEvents[i].eventTime.toString(),
+            remainderTime: value.allEvents[i].remainderTime
+        )
+        ],);
+      },
+    );
+  }
 
+
+   void _resetFieldValues(){
+  ResetProviders.resetHomeProviders(context: context);
+  _eventController.text='';
+  _timeController.text='';
+  _remainderTimeController.text='';
+  _dateController.text='';
+}
+
+Future<void> _addEventHive({required String eventTitle,required String eventTime,
+  required String remainderTime,required DateTime eventDate}) async {
+  await HiveHelper.addEventInBox(boxName: 'events', key: _eventController.text, value:
+  EventsModel(title: _eventController.text, remainderTime: remainderTime,
+      eventDate:  eventDate, eventTime:   DateTime.now().add(const Duration(minutes: 16))));
+  ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: 'Event scheduled'));
+  context.read<EventsListenerProvider>().listenEventsBox();
+  }
 
 
 }

@@ -10,7 +10,7 @@ class EventsModel extends HiveObject {
   String title;
 
   @HiveField(1)
-  DateTime remainderTime;
+  String remainderTime;
 
   @HiveField(2)
   DateTime eventDate;
