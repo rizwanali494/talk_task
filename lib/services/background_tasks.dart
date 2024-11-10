@@ -1,3 +1,4 @@
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/main.dart';
@@ -16,7 +17,10 @@ void simpleTaskCallback({required String task,required Map<String, dynamic>? dat
 }
 
 Future<void> simpleTask({required String task,required Map<String, dynamic>? data}) async {
-
+  await LaunchApp.openApp(
+      androidPackageName: 'com.example.talk_task',
+      iosUrlScheme: 'talk_task://'
+  );
   //NotificationService.initialize();
   CallKitService.showIncomingCall(nameCaller: task);
   //NotificationService.showNotification(title: task, description: 'hb');

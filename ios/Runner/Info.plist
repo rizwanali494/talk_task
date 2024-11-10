@@ -49,7 +49,11 @@
     <array>
         <string>voip</string>
         <string>remote-notification</string>
-        <string>processing</string> //you can add this if needed
+        <string>processing</string>
+    </array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>talk_task</string>
     </array>
 </dict>
 </plist>
