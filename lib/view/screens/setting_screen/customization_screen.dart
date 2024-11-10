@@ -21,15 +21,14 @@ class CustomizationScreen extends StatefulWidget {
 class _CustomizationScreenState extends State<CustomizationScreen> {
   @override
   void initState() {
-    init();
-
     super.initState();
+    init();
   }
 
   init() async {
-    var customizationProvider =
-        Provider.of<CustomizationProvider>(context, listen: false);
-    await customizationProvider.fetchColors();
+    WidgetsBinding.instance.addPostFrameCallback((d){
+      Provider.of<CustomizationProvider>(context, listen: false).fetchColors();
+    });
   }
 
   @override

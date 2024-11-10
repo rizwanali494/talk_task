@@ -10,6 +10,7 @@ import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
+import 'package:workmanager/workmanager.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../../utilis/date_formating.dart';
@@ -234,7 +235,19 @@ Future<void> _addEventHive({required String eventTitle,required String eventTime
       eventDate:  eventDate, eventTime: eventTime));
   ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: 'Event scheduled'));
   context.read<EventsListenerProvider>().listenEventsBox();
-  }
+  Workmanager().registerOneOffTask(
+    _eventController.text,
+    _eventController.text,
+    initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: eventDate),
+    // Delay for 120 seconds
+    inputData: <String, dynamic>{'key': 'value'}, // Optional data for the task
+    constraints: Constraints(
+      networkType: NetworkType.not_required, // Optional: if network is required
+      requiresCharging: false, // Optional: if the device must be charging
+    ),
+  );
+
+}
 
 
 }

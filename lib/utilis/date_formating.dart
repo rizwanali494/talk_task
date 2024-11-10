@@ -14,4 +14,11 @@ class DateFormatting{
     DateTime dateTime = dateFormat.parse(dateTimeString);
     return dateTime;
   }
+
+
+  static Duration getDurationInSeconds({required DateTime targetDateTime}) {
+    DateTime now = DateTime.now();
+    Duration difference = targetDateTime.difference(now);
+    return Duration(seconds: difference.inSeconds);
+  }
 }

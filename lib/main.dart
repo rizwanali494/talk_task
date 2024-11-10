@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:talk_task/services/background_tasks.dart';
 import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/services/local_notification_service.dart';
 import 'package:talk_task/splash_screen.dart';
@@ -24,9 +27,10 @@ import 'package:workmanager/workmanager.dart';
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
-    NotificationService.showNotification(title: 'Meeting with jawad', description: 'You have meeting after half hour');
+      simpleTaskCallback();
     return Future.value(true);
   });
+
 }
 
 late SharedPreferences prefs;

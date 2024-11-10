@@ -15,6 +15,7 @@ class EventsListenerProvider extends ChangeNotifier {
     try {
       List<dynamic> all = await HiveHelper.getBox(boxName: 'events');
       allEvents = all.cast<EventsModel>();
+      allEvents.sort((a, b) => a.eventDate.compareTo(b.eventDate));
       notifyListeners();
     } catch (e) {
       print(e.toString());
