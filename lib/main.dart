@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -27,13 +26,14 @@ import 'package:workmanager/workmanager.dart';
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
-      simpleTaskCallback();
+     simpleTaskCallback(task:task,data:inputData);
     return Future.value(true);
   });
 
 }
 
 late SharedPreferences prefs;
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +65,7 @@ class MyApp extends StatelessWidget {
      child: ScreenUtilInit(
        designSize: const Size(432,923),
        child: MaterialApp(
+         key: navigatorKey,
          builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
           theme: lightTheme,

@@ -8,6 +8,7 @@ import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
+import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:workmanager/workmanager.dart';
@@ -188,7 +189,7 @@ Widget _cardAddEvent(){
                           _addEventHive(eventTitle: _eventController.text, eventTime: _timeController.text,
                               remainderTime: _remainderTimeController.text, eventDate:DateFormatting.createDateTimeFromString(date: _dateController.text, time: _timeController.text));
                           _resetFieldValues();
-                          List<dynamic> allEvents=await HiveHelper.getBox(boxName: 'events');
+                          List<dynamic> allEvents=await HiveHelper.getBox(boxName: HiveBoxNames.events);
                           print(allEvents);
                 }))
           ],),
@@ -228,6 +229,7 @@ Widget _cardAddEvent(){
   _dateController.text='';
 }
 
+
 Future<void> _addEventHive({required String eventTitle,required String eventTime,
   required String remainderTime,required DateTime eventDate}) async {
   await HiveHelper.addEventInBox(boxName: 'events', key: _eventController.text, value:
@@ -238,12 +240,12 @@ Future<void> _addEventHive({required String eventTitle,required String eventTime
   Workmanager().registerOneOffTask(
     _eventController.text,
     _eventController.text,
+
     initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: eventDate),
-    // Delay for 120 seconds
-    inputData: <String, dynamic>{'key': 'value'}, // Optional data for the task
+    inputData: <String, dynamic>{'date': eventDate.toString().split(' ')[0],'time':eventTime}, // Optional data for the task
     constraints: Constraints(
-      networkType: NetworkType.not_required, // Optional: if network is required
-      requiresCharging: false, // Optional: if the device must be charging
+      networkType: NetworkType.not_required,
+      requiresCharging: false,
     ),
   );
 

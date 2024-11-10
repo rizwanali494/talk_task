@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/services/hive_service.dart';
+import 'package:talk_task/utilis/hive_box_names.dart';
 
 class EventsListenerProvider extends ChangeNotifier {
   List<EventsModel> allEvents = [];
@@ -13,7 +14,7 @@ class EventsListenerProvider extends ChangeNotifier {
 
   Future<void> listenEventsBox() async {
     try {
-      List<dynamic> all = await HiveHelper.getBox(boxName: 'events');
+      List<dynamic> all = await HiveHelper.getBox(boxName: HiveBoxNames.events);
       allEvents = all.cast<EventsModel>();
       allEvents.sort((a, b) => a.eventDate.compareTo(b.eventDate));
       notifyListeners();
@@ -21,4 +22,6 @@ class EventsListenerProvider extends ChangeNotifier {
       print(e.toString());
     }
   }
+
+
 }
