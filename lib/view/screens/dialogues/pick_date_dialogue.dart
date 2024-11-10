@@ -18,7 +18,6 @@ class PickDateDialogue extends StatefulWidget {
   @override
   State<PickDateDialogue> createState() => _PickDateDialogueState();
 }
-
 class _PickDateDialogueState extends State<PickDateDialogue> {
   DateTime? _selectedDate;
   DateTime _currentDate = DateTime.now(); // Track the current month
@@ -31,6 +30,8 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime today = DateTime.now().subtract(const Duration(days: 1)); // Get today's date
+
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       clipBehavior: Clip.antiAlias,
@@ -106,35 +107,46 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                       firstDayOfWeek: 1,
                       showNavigationArrow: false, // Disable default navigation arrows
                       onSelectionChanged: (calenderDetails) {
+                        final DateTime selectedDate = calenderDetails.date!;
+                        if (selectedDate.isBefore(today)) {
+                          return; // Ignore selection if the date is before today
+                        }
+
                         setState(() {
-                          _selectedDate = calenderDetails.date;
+                          _selectedDate = selectedDate;
                         });
-                        context.read<DatePickerProvider>().selectDate(calenderDetails.date!);
+                        context.read<DatePickerProvider>().selectDate(selectedDate);
                       },
+
                       headerHeight: 0, // Hide default header
-                      monthCellBuilder:
-                          (BuildContext context, MonthCellDetails details) {
+                      monthCellBuilder: (BuildContext context, MonthCellDetails details) {
                         final DateTime date = details.date;
                         bool isSelected = _selectedDate != null && _selectedDate!.isAtSameMomentAs(date);
+                        bool isBeforeToday = date.isBefore(today);
 
-                        // Only change the background color for the selected date, no border
+                        // Set the text color for past dates (greyed-out text)
+                        Color textColor = isBeforeToday
+                            ? AppColors.black.withOpacity(0.5) // Grey text for past dates
+                            : (isSelected
+                            ? AppColors.whiteFFFFF // Selected date text color
+                            : AppColors.black); // Default text color for future dates
+
+                        // Cell background color remains unchanged for past dates
                         Color cellColor = isSelected
-                            ? AppColors.primary // Only set background color for selected date
-                            : (date.month == DateTime.now().month
-                            ? AppColors.transparent
-                            : AppColors.transparent);
+                            ? AppColors.primary // Background color for selected date
+                            : AppColors.transparent; // No background color for other dates
 
                         return ClipOval(
+
                           child: Container(
-                            color: cellColor, // Only apply background color here
+                            decoration: BoxDecoration(shape: BoxShape.circle,
+                              color: cellColor,
+                            ),
+                             // Only apply background color here
                             child: Center(
                               child: CustomText(
                                 text: date.day.toString(),
-                                color: isSelected
-                                    ? AppColors.whiteFFFFF
-                                    : (date.month == DateTime.now().month
-                                    ? AppColors.black
-                                    : AppColors.black.withOpacity(0.5)),
+                                color: textColor, // Apply text color
                                 fontWeight: FontWeight.w500,
                                 fontSize: 13.sp,
                               ),
@@ -142,7 +154,6 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                           ),
                         );
                       },
-
                     ),
                   ),
                 ],
