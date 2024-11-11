@@ -19,17 +19,16 @@ void simpleTaskCallback({required String task,required Map<String, dynamic>? dat
 
 Future<void> simpleTask({required String task,required Map<String, dynamic>? data}) async {
   CallKitService.showIncomingCall(nameCaller: data?['title'] ?? '');
+  LaunchApp.openApp(
+androidPackageName: 'com.example.talk_task',
+iosUrlScheme: 'talk_task://',
+);
   CallKitService.listenEvents()!.onData((event) {
     if (event!.event == Event.actionCallAccept) {
-      //acceptCall(context: context);
       print('accpted');
     }
 
     else if (event.event == Event.actionCallIncoming) {
-      LaunchApp.openApp(
-        androidPackageName: 'com.example.talk_task',
-        iosUrlScheme: 'talktask://',
-      );
       Navigator.of(initialContext!).push(MyRoute(
           CallScreen(date: data?['date'] ?? "", time: data?['time'] ?? "",)));
     }
