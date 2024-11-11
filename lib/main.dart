@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -30,7 +29,6 @@ void callbackDispatcher() {
      simpleTaskCallback(task:task,data:inputData);
     return Future.value(true);
   });
-
 }
 
 late SharedPreferences prefs;

@@ -53,7 +53,17 @@
     </array>
     <key>LSApplicationQueriesSchemes</key>
     <array>
-      <string>talk_task</string>
+      <string>talktask</string>
     </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>talktask</string> <!-- Custom scheme name -->
+        </array>
+      </dict>
+    </array>
+
 </dict>
 </plist>
