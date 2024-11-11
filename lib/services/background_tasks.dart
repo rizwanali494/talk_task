@@ -1,35 +1,56 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:external_app_launcher/external_app_launcher.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:talk_task/main.dart';
+import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:talk_task/services/call_kit_service.dart';
-import 'package:talk_task/services/hive_service.dart';
-import 'package:talk_task/services/local_notification_service.dart';
-import 'package:talk_task/utilis/app_routes.dart';
-import 'package:talk_task/utilis/hive_box_names.dart';
-import 'package:talk_task/view/screens/call_screens/call_screen.dart';
-import 'package:talk_task/view_model/call_picking_provider.dart';
-import 'package:talk_task/view_model/events_listner_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 void simpleTaskCallback({required String task,required Map<String, dynamic>? data}) {
   simpleTask(task: task, data: data);
 }
 
-Future<void> simpleTask({required String task,required Map<String, dynamic>? data}) async {
-  await LaunchApp.openApp(
-      androidPackageName: 'com.example.talk_task',
-      iosUrlScheme: 'talk_task://'
-  );
-  //NotificationService.initialize();
-  CallKitService.showIncomingCall(nameCaller: task);
-  //NotificationService.showNotification(title: task, description: 'hb');
-  Navigator.of(navigatorKey.currentContext!).push(MyRoute(CallScreen(date: data?['date']??"", time: data?['time']??"",)));
- // navigatorKey.currentContext!.read<EventsListenerProvider>().listenEventsBox();
- // navigatorKey.currentContext!.read<CallPickingProvider>().listenCallEvents(context: navigatorKey.currentContext!);
- // CallKitService.showIncomingCall(nameCaller: task);
 
+Future<void> simpleTask({required String task,required Map<String, dynamic>? data}) async {
+  CallKitService.showIncomingCall(nameCaller: data?['title']??'');
+  CallKitService.listenEvents()!.onData((event){
+    if(event!.event==Event.actionCallAccept){
+    }
+
+  });
+  LaunchApp.openApp(
+    androidPackageName: 'com.example.talk_task',
+    iosUrlScheme: 'talk_task://',
+  );
 }
 
 
+Future<void> openApp() async {
+  const iosUrlScheme = 'talk_task://';
+  const androidUrlScheme = 'com.example.talk_task';
+  if (Platform.isIOS) {
+    final iosUri = Uri.parse(iosUrlScheme);
+    if (await canLaunchUrl(iosUri)) {
+      await launchUrl(iosUri);
+    } else {
+      print('Could not launch the app on iOS.');
+    }
+  } else if (Platform.isAndroid) {
+    final androidUri = Uri.parse(androidUrlScheme);
+    if (await canLaunchUrl(androidUri)) {
+      await launchUrl(androidUri);
+    }
+  } else {
+    print('Unsupported platform');
+  }
+}
+//
 
+
+
+//NotificationService.initialize();
+//NotificationService.showNotification(title: task, description: 'hb');
+//Navigator.of(initialContext!).push(MyRoute(CallScreen(date: data?['date']??"", time: data?['time']??"",)));
+// navigatorKey.currentContext!.read<EventsListenerProvider>().listenEventsBox();
+// navigatorKey.currentContext!.read<CallPickingProvider>().listenCallEvents(context: navigatorKey.currentContext!);
+// CallKitService.showIncomingCall(nameCaller: task);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/main.dart';
 import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
@@ -50,8 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
    WidgetsBinding.instance.addPostFrameCallback((a){
      ResetProviders.resetHomeProviders(context: context);
+     context.read<EventsListenerProvider>().listenEventsBox();
    });
-    context.read<EventsListenerProvider>().listenEventsBox();
+    print(navigatorKey.currentContext);
+    print(initialContext);
 
   }
 
@@ -242,7 +245,7 @@ Future<void> _addEventHive({required String eventTitle,required String eventTime
     _eventController.text,
 
     initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: eventDate),
-    inputData: <String, dynamic>{'date': eventDate.toString().split(' ')[0],'time':eventTime}, // Optional data for the task
+    inputData: <String, dynamic>{'date': eventDate.toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
     constraints: Constraints(
       networkType: NetworkType.not_required,
       requiresCharging: false,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -33,7 +34,8 @@ void callbackDispatcher() {
 }
 
 late SharedPreferences prefs;
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+GlobalKey navigatorKey = GlobalKey();
+BuildContext ? initialContext;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +51,7 @@ class MyApp extends StatelessWidget {
    const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    initialContext=context;
     _preChacheImages(context);
    return MultiProvider(
      providers: [

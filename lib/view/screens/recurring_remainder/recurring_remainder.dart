@@ -35,8 +35,8 @@ class _RemainderState extends State<RecurringRemainders> {
   @override
   void initState() {
     super.initState();
-     context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
-     context.read<CallPickingProvider>().listenCallEvents(context: context);
+    // context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
+    // context.read<CallPickingProvider>().listenCallEvents(context: context);
   }
 
   @override
