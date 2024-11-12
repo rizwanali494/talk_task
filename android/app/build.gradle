@@ -1,3 +1,6 @@
+
+
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -32,8 +35,9 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            minifyEnabled false  // Set to true to enable minification
+            shrinkResources false
+            def enableProguardInReleaseBuilds = true
             signingConfig = signingConfigs.debug
         }
     }

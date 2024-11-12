@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:talk_task/services/call_kit_service.dart';
 
@@ -11,10 +10,10 @@ void simpleTaskCallback({required String task,required Map<String, dynamic>? dat
 
 Future<void> simpleTask({required String task,required Map<String, dynamic>? data}) async {
   CallKitService.showIncomingCall(nameCaller: data?['title'] ?? '');
-  LaunchApp.openApp(
-androidPackageName: 'talktask://',
-iosUrlScheme: 'talktask://',
-);
+//   LaunchApp.openApp(
+// androidPackageName: 'talktask://',
+// iosUrlScheme: 'talktask://',
+// );
 
   CallKitService.listenEvents()!.onData((event) {
     if (event!.event == Event.actionCallAccept) {

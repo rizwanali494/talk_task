@@ -51,7 +51,7 @@ dependencies:
   hive_flutter: ^1.1.0
   hive: ^2.2.3
   flutter_easyloading: ^3.0.5
-  external_app_launcher: ^4.0.0
+  #external_app_launcher: ^4.0.0
   app_links: ^6.3.2
   app_settings: ^5.1.1
   flutter_callkit_incoming: ^2.0.4+2
