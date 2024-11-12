@@ -1,15 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:external_app_launcher/external_app_launcher.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:app_links/app_links.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:talk_task/services/call_kit_service.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../main.dart';
-import '../utilis/app_routes.dart';
-import '../view/screens/call_screens/call_screen.dart';
-import 'local_notification_service.dart';
 
 
 void simpleTaskCallback({required String task,required Map<String, dynamic>? data}) {
