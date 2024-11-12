@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:talk_task/services/local_notification_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_prefs.dart';
 import 'package:talk_task/utilis/app_routes.dart';
@@ -22,6 +23,13 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+
+  @override
+  initState(){
+    super.initState();
+  NotificationService.checkAndRequestNotificationPermission();
+
+  }
 
   Future<void> _onNextPressed() async {
     if (_currentPage < 2) {

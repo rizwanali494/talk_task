@@ -7,6 +7,8 @@ import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:uuid/uuid.dart';
 
+import 'local_notification_service.dart';
+
 
 
 class CallKitService {
@@ -27,6 +29,7 @@ class CallKitService {
       type: 0,
       textAccept: 'Accept',
       textDecline: 'Decline',
+
       missedCallNotification: const NotificationParams(
         showNotification: true,
         isShowCallback: false,
@@ -69,8 +72,7 @@ class CallKitService {
     );
     // Call FlutterCallkitIncoming to display the incoming call
     await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
-
-
+    NotificationService.showNotification(title: 'upcoming event ', description: 'hello');
   }
 
 

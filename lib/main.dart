@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -26,6 +27,8 @@ import 'package:workmanager/workmanager.dart';
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
+    NotificationService.initialize();
+    NotificationService.showNotification(title: inputData?['title']??'', description: 'hb');
      simpleTaskCallback(task:task,data:inputData);
     return Future.value(true);
   });
@@ -84,4 +87,6 @@ class MyApp extends StatelessWidget {
     precacheImage(AssetImage(AppImages.imgBoardingThird), context);
     precacheImage(AssetImage(AppImages.imgSplash), context);
   }
+
+
 }
