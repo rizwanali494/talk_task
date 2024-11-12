@@ -32,26 +32,6 @@ Future<void> simpleTask({required String task,required Map<String, dynamic>? dat
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //
 //
 // Future<void> openApp() async {

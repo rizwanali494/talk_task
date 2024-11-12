@@ -143,6 +143,12 @@ Consequently, you may incur charges from your mobile provider for data usage dur
 
   //customization
   static const String customization="Customization";
+  static const String customizationTitle="Personalize your calendar by choosing colors for different event days. Select a color for days with 1 event, 2 events, and 3 or more events to keep your schedule visually organized.";
+  static const String customizationCalender="Customize Calendar Colors";
+  static const String eventDays="Event Days";
+  static const String events="events";
+  static const String eventCustomize="event";
+  static const String changeColor="Change Color";
 
   //Home
   static const String addTask = "Add Task";

@@ -64,22 +64,19 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                             SizedBox(height: 20.h),
                             CustomText(
                               text:
-                                  '"Personalize your calendar by choosing colors for different event days. Select a color for days with 1 event, 2 events, and 3 or more events to keep your schedule visually organized."',
+                              AppConstants.customizationTitle,
                               fontSize: 15.sp,
                               fontWeight: FontWeight.w400,
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(height: 69.h),
                             CustomText(
-                              text: 'Customize Calendar Colors',
+                              text: AppConstants.customizationCalender,
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w700,
                             ),
                             SizedBox(height: 20.h),
 
-                            ///
-                            /// --------> Customization
-                            ///
                             Column(
                               children: List.generate(
                                 3,
@@ -123,7 +120,7 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                                                   SizedBox(
                                                     width: 140.w,
                                                     child: CustomText(
-                                                        text: 'Event Days',
+                                                        text: AppConstants.eventDays,
                                                         fontSize: 22.sp,
                                                         fontWeight:
                                                             FontWeight.w600),
@@ -132,12 +129,12 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                                                     width: 140.w,
                                                     child: CustomText(
                                                       text: index == 2
-                                                          ? '${index + 1}+ events'
+                                                          ? '${index + 1} ${AppConstants.events}'
                                                           : (index + 1)
                                                                   .toString() +
                                                               (index == 0
-                                                                  ? ' event'
-                                                                  : ' events'),
+                                                                  ? AppConstants.eventCustomize
+                                                                  : AppConstants.events),
                                                       fontSize: 20.sp,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -195,7 +192,7 @@ class _CustomizationScreenState extends State<CustomizationScreen> {
                                                     ],
                                                   ),
                                                   CustomText(
-                                                      text: 'Change Color',
+                                                      text: AppConstants.changeColor,
                                                       fontSize: 12.sp,
                                                       fontWeight:
                                                           FontWeight.w600)

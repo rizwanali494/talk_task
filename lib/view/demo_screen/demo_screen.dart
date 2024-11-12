@@ -31,7 +31,7 @@ class _DemoScreenState extends State<DemoScreen> {
     _currentPage++;
     if (_currentPage < 6) {
       _pageController.nextPage(
-        duration: const Duration(milliseconds: 50),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
       );
     } else {

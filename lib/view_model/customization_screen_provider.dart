@@ -1,9 +1,7 @@
 // ignore: file_names
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../utilis/app_colors.dart';
 
 class CustomizationProvider with ChangeNotifier {

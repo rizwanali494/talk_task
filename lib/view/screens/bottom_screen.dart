@@ -6,8 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/view/screens/calender/calender.dart';
 import 'package:talk_task/view/screens/home/home_screen.dart';
-import 'package:talk_task/view/screens/notes/notes.dart';
 import 'package:talk_task/view/screens/recurring_remainder/recurring_remainder.dart';
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_images.dart';
@@ -20,7 +20,7 @@ import '../common_widgets/custom_app_bars.dart';
 class BottomScreen extends StatelessWidget{
    BottomScreen({super.key});
   final List<String> _listIcons=[AppImages.iconNotes,AppImages.iconHome,AppImages.iconCalender];
-final List<Widget> _screens=[const RecurringRemainders(),const HomeScreen(),const NotesScreen()];
+final List<Widget> _screens=[const RecurringRemainders(),const HomeScreen(),const CalenderScreen()];
 
   @override
   Widget build(BuildContext context) {

@@ -53,8 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
      ResetProviders.resetHomeProviders(context: context);
      context.read<EventsListenerProvider>().listenEventsBox();
    });
-    print(navigatorKey.currentContext);
-    print(initialContext);
+
 
   }
 

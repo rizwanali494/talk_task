@@ -9,8 +9,7 @@ import 'package:talk_task/view/demo_screen/demo_screen.dart';
 import '../../main.dart';
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_images.dart';
-import '../screens/bottom_screen.dart';
-import '../screens/setting_screen/setting_screen.dart';
+
 
 
 class OnboardingScreen extends StatefulWidget {
@@ -38,10 +37,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-
-      // Navigator.of(context).popUntil(
-      //       (route) => false,
-      // );
 
       await prefs.setBool(AppPrefs.onBoardingShown, true);
       Navigator.pushReplacement(context, MyRoute( const DemoScreen()));
