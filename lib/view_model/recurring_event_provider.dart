@@ -5,6 +5,7 @@ import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/utilis/app_mesages.dart';
 import 'package:talk_task/utilis/date_formating.dart';
 import 'package:talk_task/utilis/hive_box_names.dart';
+import 'package:workmanager/workmanager.dart';
 import '../view/common_widgets/custom_snackbars.dart';
 
 class RecurringvEventsProvider extends ChangeNotifier {
@@ -30,16 +31,19 @@ class RecurringvEventsProvider extends ChangeNotifier {
         repeatingDays:  repeatingDays, eventTime: eventTime, eventScheduledDate: DateFormatting.getRecurringTime(timeString: eventTime)));
     ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: AppMessages.recurringEventScheduled));
     context.read<RecurringvEventsProvider>().listenEventsBox();
-    // Workmanager().registerOneOffTask(
-    //   _eventController.text,
-    //   _eventController.text,
-    //   initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: eventDate),
-    //   inputData: <String, dynamic>{'date': eventDate.toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
-    //   constraints: Constraints(
-    //     networkType: NetworkType.not_required,
-    //     requiresCharging: false,
-    //   ),
-    // );
+   
+    for(int i=0;i<30;i++){
+      Workmanager().registerOneOffTask(
+        eventTitle,
+        eventTitle,
+        initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add(Duration(days: i))),
+        inputData: <String, dynamic>{'date':  DateFormatting.getRecurringTime(timeString: eventTime).toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
+        constraints: Constraints(
+          networkType: NetworkType.not_required,
+          requiresCharging: false,
+        ),
+      );
+    }
 
   }
 
