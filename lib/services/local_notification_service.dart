@@ -5,8 +5,6 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import '../utilis/app_colors.dart';
 
-//https://farm4.staticflickr.com/3075/3168662394_7d7103de7d_z_d.jpg
-//https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg
 
 class NotificationService {
   static int _notificationId = 0;
@@ -32,9 +30,6 @@ class NotificationService {
 
 
   static void showNotification({required String title,required String description}) async {
-
-    bool result=await checkAndRequestNotificationPermission();
-    if(!result){return;}
     _notificationId++;
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
@@ -55,16 +50,6 @@ class NotificationService {
     );
     // scheduleDismissal(_notificationId);
     listenNotificationActions();
-  }
-
-
-  static Future<bool> checkAndRequestNotificationPermission() async {
-    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
-    if (!isAllowed) {
-      await AwesomeNotifications().requestPermissionToSendNotifications();
-      isAllowed = await AwesomeNotifications().isNotificationAllowed();
-    }
-    return isAllowed;
   }
 
 

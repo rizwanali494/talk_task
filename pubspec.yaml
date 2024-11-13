@@ -55,6 +55,7 @@ dependencies:
   app_links: ^6.3.2
   app_settings: ^5.1.1
   flutter_callkit_incoming: ^2.0.4+2
+  permission_handler: ^10.2.0
 
 
 
