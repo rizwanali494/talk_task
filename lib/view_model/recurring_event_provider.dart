@@ -12,7 +12,7 @@ class RecurringvEventsProvider extends ChangeNotifier {
 
   Future<void> listenEventsBox() async {
     try {
-      List<dynamic> all = await HiveHelper.getBox(boxName: HiveBoxNames.events);
+      List<dynamic> all = await HiveHelper.getBox(boxName: HiveBoxNames.recurringEvents);
       allRecurringEvents = all.cast<RecurringEventsModel>();
       allRecurringEvents.sort((a, b) => a.title.compareTo(b.title));
       notifyListeners();

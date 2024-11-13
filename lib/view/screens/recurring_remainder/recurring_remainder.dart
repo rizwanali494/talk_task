@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
+import 'package:talk_task/utilis/date_formating.dart';
 import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
@@ -44,6 +45,15 @@ class _RemainderState extends State<RecurringRemainders> {
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
   final List<String>  _listDays = ["M", "Tu", "W", "Th", "F", "Sa", "Su"];
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((a){
+      context.read<RecurringvEventsProvider>().listenEventsBox();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +150,7 @@ class _RemainderState extends State<RecurringRemainders> {
                   width: 1.sw*0.9,
                   child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5),
                       textColor: AppColors.whiteFFFFF, onPressed: (){
+
                         if(_eventController.text.replaceAll(' ', '').isEmpty){
                           EasyLoading.showInfo(AppMessages.eventNameRequired);
                           return;
