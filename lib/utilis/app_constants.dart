@@ -182,6 +182,8 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String clickHereToView = "Click Here To View";
   static const String today = "Today";
   static const String noEvents = "No Events";
+  static const String dailyWeeklyRemainder = "Daily/Weekly Remainder";
+
 
 
 }

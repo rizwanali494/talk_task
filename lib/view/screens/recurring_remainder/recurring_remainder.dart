@@ -9,6 +9,7 @@ import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../../view_model/call_picking_provider.dart';
 import '../../../view_model/events_listner_provider.dart';
+import '../../../view_model/recurring_days_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
@@ -31,13 +32,7 @@ class _RemainderState extends State<RecurringRemainders> {
   final TextEditingController _yearlyController= TextEditingController();
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
-  
-  @override
-  void initState() {
-    super.initState();
-    // context.read<CallPickingProvider>().startCall(callerName: 'Jawad');
-    // context.read<CallPickingProvider>().listenCallEvents(context: context);
-  }
+  final List<String>  _listDays = ["M", "Tu", "W", "Th", "F", "Sa", "Su"];
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +66,7 @@ class _RemainderState extends State<RecurringRemainders> {
 
   Widget _cardAddEvent(){
     return Container(
-      height: 1.sh*0.63,
+      height: 1.sh*0.66,
       width: 1.sw,
       margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 7.h),
       decoration: BoxDecoration(
@@ -81,14 +76,16 @@ class _RemainderState extends State<RecurringRemainders> {
       ),
       child: SingleChildScrollView(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 13.w),
+          padding:  EdgeInsets.symmetric(horizontal: 8.w),
           child: Column(
-            //  crossAxisAlignment: CrossAxisAlignment.center,
+             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 8.h,),
+              SizedBox(height: 4.h,),
               Center(child:CustomText(text: AppConstants.addTask,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
-              , Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,)
+              , Center(child: Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,))
               ,  CustomFields.field(title: AppConstants.event, onPressed: (){}, controller: _eventController),
+              CustomText(text:AppConstants.dailyWeeklyRemainder ,color: AppColors.grey787878, fontSize: 17.sp, fontWeight: FontWeight.w400),
+              daySelector(context),
               Row(children: [
                  Expanded(child: CustomFields.field(title: AppConstants.monthlyRemainder, onPressed: (){},controller: _monthlyController)),
                 SizedBox(width:10.w,),
@@ -132,4 +129,51 @@ class _RemainderState extends State<RecurringRemainders> {
   }
 
 
+
+  Widget daySelector(BuildContext context) {
+
+
+    return Consumer<DaySelectionProvider>(
+      builder: (context, provider, child) {
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(_listDays.length, (index) {
+              return GestureDetector(
+                onTap: () {
+                  provider.toggleDay(index);
+                },
+                child: Container(
+                  height: 54.h,
+                  width: 54.h,
+                  clipBehavior: Clip.antiAlias,
+                  margin: const EdgeInsets.all(1),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.blue05AAEC,
+                      width: 2.r,
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    radius: 25.0, // Inner circle radius
+                    backgroundColor: provider.selectedDays[index]
+                        ? AppColors.primary
+                        : AppColors.primary.withOpacity(0.2),
+                    child: CustomText(
+                      text: _listDays[index],
+                      color: provider.selectedDays[index]
+                          ? AppColors.whiteFFFFF
+                          : AppColors.black,
+                    ),
+                  ),
+                ),
+              );
+            }),
+          ),
+        );
+      },
+    );
+  }
 }

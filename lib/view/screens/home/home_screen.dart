@@ -242,7 +242,6 @@ Future<void> _addEventHive({required String eventTitle,required String eventTime
   Workmanager().registerOneOffTask(
     _eventController.text,
     _eventController.text,
-
     initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: eventDate),
     inputData: <String, dynamic>{'date': eventDate.toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
     constraints: Constraints(
