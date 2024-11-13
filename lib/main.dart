@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:talk_task/services/background_tasks.dart';
@@ -37,8 +38,7 @@ void callbackDispatcher() {
 }
 
 late SharedPreferences prefs;
-GlobalKey navigatorKey = GlobalKey();
-BuildContext ? initialContext;
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
    const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    initialContext=context;
+     get();
     _preChacheImages(context);
    return MultiProvider(
      providers: [
@@ -74,7 +74,6 @@ class MyApp extends StatelessWidget {
      child: ScreenUtilInit(
        designSize: const Size(432,923),
        child: MaterialApp(
-         key: navigatorKey,
          builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
@@ -93,5 +92,8 @@ class MyApp extends StatelessWidget {
     precacheImage(AssetImage(AppImages.imgSplash), context);
   }
 
-
+Future<void> get() async {
+  final directory = await getApplicationDocumentsDirectory();
+  print(directory.path);
+}
 }

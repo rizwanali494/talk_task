@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_callkit_incoming/entities/android_params.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/entities/call_kit_params.dart';
 import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'local_notification_service.dart';
 
@@ -15,10 +17,15 @@ class CallKitService {
    static final String _currentUuid = const Uuid().v4();
    static final StreamController<CallEvent?> _callEventController = StreamController<CallEvent?>.broadcast();
    static StreamSubscription<CallEvent?>? _subscription;
-
-  // Method to show incoming call notification
   static Future<void> showIncomingCall({required String nameCaller,}) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final mp3FilePath = '${directory.path}/incoming_call.mp3';
+    if (!await File(mp3FilePath).exists()) {
+      print("MP3 file does not exist at $mp3FilePath");
+      return;
+    }
 
+    // Create callKit parameters
     CallKitParams callKitParams = CallKitParams(
       id: _currentUuid,
       nameCaller: nameCaller,
@@ -38,11 +45,12 @@ class CallKitService {
       duration: 30000,  // duration in milliseconds
       extra: <String, dynamic>{'userId': '1a2b3c4d'},
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-      android: const AndroidParams(
+      android:  AndroidParams(
         isShowFullLockedScreen: true,
         isCustomNotification: true,
         isShowLogo: true,
-        ringtonePath: 'system_ringtone_default',
+        ringtonePath: mp3FilePath,
+        //'system_ringtone_default',
         backgroundColor: '#05AAEC',
        // backgroundUrl: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg',
         actionColor: '#4CAF50',

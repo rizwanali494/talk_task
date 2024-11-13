@@ -33,16 +33,24 @@ class RecurringvEventsProvider extends ChangeNotifier {
     context.read<RecurringvEventsProvider>().listenEventsBox();
    
     for(int i=0;i<30;i++){
-      Workmanager().registerOneOffTask(
-        eventTitle,
-        eventTitle,
-        initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add(Duration(days: i))),
+      Workmanager().registerPeriodicTask(eventTitle+i.toString(), eventTitle,frequency:Duration(days: 3),
+        initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add(Duration(days: 3))),
         inputData: <String, dynamic>{'date':  DateFormatting.getRecurringTime(timeString: eventTime).toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
         constraints: Constraints(
           networkType: NetworkType.not_required,
           requiresCharging: false,
-        ),
-      );
+        ),);
+
+      // Workmanager().registerOneOffTask(
+      //   eventTitle,
+      //   eventTitle,
+      //   initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add(Duration(seconds: 5))),
+      //   inputData: <String, dynamic>{'date':  DateFormatting.getRecurringTime(timeString: eventTime).toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
+      //   constraints: Constraints(
+      //     networkType: NetworkType.not_required,
+      //     requiresCharging: false,
+      //   ),
+      // );
     }
 
   }
