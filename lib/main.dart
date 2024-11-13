@@ -29,7 +29,7 @@ import 'package:workmanager/workmanager.dart';
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
     NotificationService.initialize();
-    NotificationService.showNotification(title: inputData?['title']??'', description: 'hb');
+    NotificationService.showNotification(title: inputData?['title']??'', description: inputData?['date']??'');
      simpleTaskCallback(task:task,data:inputData);
     return Future.value(true);
   });

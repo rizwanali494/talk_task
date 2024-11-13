@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/view/screens/dialogues/pick_date_dialogue.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_constants.dart';
 import '../../../view_model/events_listner_provider.dart';
@@ -37,7 +38,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CalenderScreen(),
+            const PickDateDialogue(),
           Padding(
             padding:  EdgeInsets.only(left: 16.w),
             child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),

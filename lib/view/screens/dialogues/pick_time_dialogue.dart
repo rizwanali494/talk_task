@@ -24,6 +24,7 @@ class _PickTimeDialogueState extends State<PickTimeDialogue> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       contentPadding: EdgeInsets.zero,
       content: Container(

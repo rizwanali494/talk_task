@@ -12,8 +12,7 @@ import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text.dart';
 
 class PickDateDialogue extends StatefulWidget {
-  final BuildContext parentContext;
-  const PickDateDialogue({Key? key,required this.parentContext}) ;
+  const PickDateDialogue({super.key}) ;
 
   @override
   State<PickDateDialogue> createState() => _PickDateDialogueState();
@@ -123,10 +122,8 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                         final DateTime date = details.date;
                         bool isSelected = _selectedDate != null && _selectedDate!.isAtSameMomentAs(date);
                         bool isBeforeToday = date.isBefore(today);
-
-                        // Set the text color for past dates (greyed-out text)
                         Color textColor = isBeforeToday
-                            ? AppColors.black.withOpacity(0.5) // Grey text for past dates
+                            ? AppColors.black.withOpacity(0.5)
                             : (isSelected
                             ? AppColors.whiteFFFFF // Selected date text color
                             : AppColors.black); // Default text color for future dates
@@ -171,7 +168,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                       backgroundColor: AppColors.whiteFFFFF,
                       textColor: AppColors.grey787878,
                       onPressed: () {
-                        Navigator.of(widget.parentContext, rootNavigator: true).pop();
+                        Navigator.of(context, rootNavigator: true).pop();
                         Provider.of<DatePickerProvider>(context, listen: false).selectedDate = null;
                       },
                     ),
@@ -186,7 +183,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                         if (_selectedDate != null) {
                           context.read<DatePickerProvider>().selectDate(_selectedDate!);
                         }
-                        Navigator.of(widget.parentContext, rootNavigator: true).pop();
+                        Navigator.of(context, rootNavigator: true).pop();
                       },
                     ),
                   ),
