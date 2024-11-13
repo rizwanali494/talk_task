@@ -138,7 +138,7 @@ Widget _cardAddEvent(){
                 if(value.selectedDate!=null){_dateController.text=value.selectedDate??"";}
                 return  CustomFields.field(title: AppConstants.date, onPressed: (){
                   showDialog(
-                    context: context, builder: (BuildContext context) =>   PickDateDialogue(),
+                    context: context, builder: (BuildContext context) =>   const PickDateDialogue(),
                   );
               },  controller: _dateController);}
             )
