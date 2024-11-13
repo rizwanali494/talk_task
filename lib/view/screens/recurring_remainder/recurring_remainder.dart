@@ -135,6 +135,7 @@ class _RemainderState extends State<RecurringRemainders> {
 
     return Consumer<DaySelectionProvider>(
       builder: (context, provider, child) {
+
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -142,7 +143,7 @@ class _RemainderState extends State<RecurringRemainders> {
             children: List.generate(_listDays.length, (index) {
               return GestureDetector(
                 onTap: () {
-                  provider.toggleDay(index);
+                  context.read<DaySelectionProvider>().toggleDay(index);
                 },
                 child: Container(
                   height: 54.h,
@@ -157,9 +158,9 @@ class _RemainderState extends State<RecurringRemainders> {
                     ),
                   ),
                   child: CircleAvatar(
-                    radius: 25.0, // Inner circle radius
+                    radius: 25.r, // Inner circle radius
                     backgroundColor: provider.selectedDays[index]
-                        ? AppColors.primary
+                        ? AppColors.blue05AAEC
                         : AppColors.primary.withOpacity(0.2),
                     child: CustomText(
                       text: _listDays[index],
