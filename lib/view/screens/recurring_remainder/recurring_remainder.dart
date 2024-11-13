@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
+import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
+import 'package:talk_task/view_model/recurring_event_provider.dart';
+import 'package:workmanager/workmanager.dart';
+import '../../../services/hive_service.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../utilis/app_mesages.dart';
 import '../../../view_model/call_picking_provider.dart';
 import '../../../view_model/events_listner_provider.dart';
+import '../../../view_model/provider_list.dart';
 import '../../../view_model/recurring_days_provider.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
+import '../../common_widgets/custom_snackbars.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../dialogues/pick_time_dialogue.dart';
 import '../notification_screen/notification_screen.dart';
@@ -129,7 +138,38 @@ class _RemainderState extends State<RecurringRemainders> {
               SizedBox(height: 8.h,)
               ,SizedBox(
                   width: 1.sw*0.9,
-                  child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5), textColor: AppColors.whiteFFFFF, onPressed: (){}))
+                  child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5),
+                      textColor: AppColors.whiteFFFFF, onPressed: (){
+                        if(_eventController.text.replaceAll(' ', '').isEmpty){
+                          EasyLoading.showInfo(AppMessages.eventNameRequired);
+                          return;
+                        }
+                        if(!context.read<DaySelectionProvider>().selectedDays.contains(true)){
+                          EasyLoading.showInfo(AppMessages.selectRepeatingDays);
+                          return;
+                        }
+
+                        if(_timeController.text.isEmpty){
+                          EasyLoading.showInfo(AppMessages.eventTimeRequired);
+                          return;
+                        }
+                        if(_remainderTimeController.text.isEmpty){
+                          EasyLoading.showInfo(AppMessages.eventRemainderRequired);
+                          return;
+                        }
+
+                        context.read<RecurringvEventsProvider>().addRecurringEventHive(
+                          eventTitle: _eventController.text,
+                          eventTime: _timeController.text,
+                          remainderTime: _remainderTimeController.text,
+                          repeatingDays: context.read<DaySelectionProvider>().selectedDays,
+                          context: context,
+                        );
+
+                        _resetFieldValues();
+
+
+                      }))
             ],),
         ),
       ),
@@ -138,20 +178,20 @@ class _RemainderState extends State<RecurringRemainders> {
 
 
   Widget _displayEvents() {
-    return Consumer<EventsListenerProvider>(
+    return Consumer<RecurringvEventsProvider>(
       builder: (BuildContext context, value, Widget? child) {
         return Column(children: [
-          if(value.allEvents.isEmpty)
+          if(value.allRecurringEvents.isEmpty)
             const Center(child: Padding(
               padding: EdgeInsets.all(38.0),
               child: Text(AppConstants.noEvents),
             )),
-          for(int i=0;i<value.allEvents.length;i++)
+          for(int i=0;i<value.allRecurringEvents.length;i++)
             CustomCards.eventCard(
-                event:value.allEvents[i].title,
-                date: value.allEvents[i].eventDate.toString().split(' ')[0],
-                time: value.allEvents[i].eventTime.toString(),
-                remainderTime: value.allEvents[i].remainderTime
+                event:value.allRecurringEvents[i].title,
+                date: value.allRecurringEvents[i].eventScheduledDate.toString().split(' ')[0],
+                time: value.allRecurringEvents[i].eventTime.toString(),
+                remainderTime: value.allRecurringEvents[i].remainderTime
             )
         ],);
       },
@@ -161,11 +201,8 @@ class _RemainderState extends State<RecurringRemainders> {
 
 
   Widget daySelector(BuildContext context) {
-
-
     return Consumer<DaySelectionProvider>(
       builder: (context, provider, child) {
-
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -207,4 +244,14 @@ class _RemainderState extends State<RecurringRemainders> {
       },
     );
   }
+
+  void _resetFieldValues(){
+    ResetProviders.resetHomeProviders(context: context);
+    _eventController.text='';
+    _timeController.text='';
+    _remainderTimeController.text='';
+
+  }
+
+
 }

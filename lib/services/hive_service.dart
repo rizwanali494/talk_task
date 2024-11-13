@@ -1,12 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/events_model.dart';
+
+
 
 class HiveHelper {
 
   static Future<void> initHive() async {
-    await Hive.initFlutter('jawad');
+    await Hive.initFlutter('TaskAiDatabase');
     Hive.registerAdapter(EventsModelAdapter());
+    Hive.registerAdapter(RecurringEventsModelAdapter());
   }
 
   static Future<void> addDataInBox({

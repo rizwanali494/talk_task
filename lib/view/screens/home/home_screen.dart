@@ -7,6 +7,7 @@ import 'package:talk_task/main.dart';
 import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
+import 'package:talk_task/utilis/app_mesages.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/utilis/hive_box_names.dart';
@@ -172,27 +173,28 @@ Widget _cardAddEvent(){
                 width: 1.sw*0.9,
                 child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5), textColor: AppColors.whiteFFFFF, onPressed: () async {
                           if(_eventController.text.replaceAll(' ', '').isEmpty){
-                            EasyLoading.showInfo('Event name required');
+                            EasyLoading.showInfo(AppMessages.eventNameRequired);
                             return;
                           }
                           if(_dateController.text.isEmpty){
-                            EasyLoading.showInfo('Event date required');
+                            EasyLoading.showInfo(AppMessages.eventDateRequired);
                             return;
                           }
                           if(_timeController.text.isEmpty){
-                            EasyLoading.showInfo('Event time required');
+                            EasyLoading.showInfo(AppMessages.eventTimeRequired);
                             return;
                           }
                           if(_remainderTimeController.text.isEmpty){
-                            EasyLoading.showInfo('Event remainder time required');
+                            EasyLoading.showInfo(AppMessages.eventRemainderRequired);
                             return;
                           }
 
-                          _addEventHive(eventTitle: _eventController.text, eventTime: _timeController.text,
-                              remainderTime: _remainderTimeController.text, eventDate:DateFormatting.createDateTimeFromString(date: _dateController.text, time: _timeController.text));
+                          context.read<EventsListenerProvider>().addEventInHive(eventTitle: _eventController.text, eventTime: _timeController.text,
+                              remainderTime: _remainderTimeController.text,
+                              eventDate:DateFormatting.createDateTimeFromString(date: _dateController.text, time: _timeController.text), context: context);
+
                           _resetFieldValues();
-                          List<dynamic> allEvents=await HiveHelper.getBox(boxName: HiveBoxNames.events);
-                          print(allEvents);
+
                 }))
           ],),
       ),
@@ -231,26 +233,6 @@ Widget _cardAddEvent(){
   _dateController.text='';
 }
 
-
-Future<void> _addEventHive({required String eventTitle,required String eventTime,
-  required String remainderTime,required DateTime eventDate}) async {
-  await HiveHelper.addEventInBox(boxName: 'events', key: _eventController.text, value:
-  EventsModel(title: _eventController.text, remainderTime: remainderTime,
-      eventDate:  eventDate, eventTime: eventTime));
-  ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: 'Event scheduled'));
-  context.read<EventsListenerProvider>().listenEventsBox();
-  Workmanager().registerOneOffTask(
-    _eventController.text,
-    _eventController.text,
-    initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: eventDate),
-    inputData: <String, dynamic>{'date': eventDate.toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
-    constraints: Constraints(
-      networkType: NetworkType.not_required,
-      requiresCharging: false,
-    ),
-  );
-
-}
 
 
 }

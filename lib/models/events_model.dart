@@ -34,3 +34,46 @@ class EventsModel extends HiveObject {
   }
 
 }
+
+
+
+
+
+
+
+
+
+@HiveType(typeId: 1)
+class RecurringEventsModel extends HiveObject {
+  @HiveField(0)
+  String title;
+
+  @HiveField(1)
+  String remainderTime;
+
+  @HiveField(2)
+  List<bool> repeatingDays;
+
+  @HiveField(3)
+  String eventTime;
+
+  @HiveField(4)
+  DateTime eventScheduledDate;
+
+  RecurringEventsModel({
+    required this.title,
+    required this.eventScheduledDate,
+    required this.remainderTime,
+    required this.repeatingDays,
+    required this.eventTime,
+  });
+
+
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Title:${title}    RemainderTime:${remainderTime}    RepeatingDays:${repeatingDays}  EventTime:${eventTime}";
+  }
+
+}

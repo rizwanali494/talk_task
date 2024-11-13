@@ -21,4 +21,21 @@ class DateFormatting{
     Duration difference = targetDateTime.difference(now);
     return Duration(seconds: difference.inSeconds);
   }
+
+
+ static DateTime getRecurringTime({required String timeString}) {
+    DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat("hh:mm a");
+    DateTime parsedTime = formatter.parse(timeString);
+    DateTime targetDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        parsedTime.hour,
+        parsedTime.minute
+    );
+    Duration difference = targetDateTime.difference(now);
+    return targetDateTime;
+  }
+
 }
