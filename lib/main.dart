@@ -43,7 +43,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs=await SharedPreferences.getInstance();
   NotificationService.initialize();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   HiveHelper.initHive();
   runApp( const MyApp());
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
