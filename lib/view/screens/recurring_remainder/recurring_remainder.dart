@@ -15,15 +15,12 @@ import '../../../services/hive_service.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../../utilis/app_mesages.dart';
-import '../../../view_model/call_picking_provider.dart';
-import '../../../view_model/events_listner_provider.dart';
 import '../../../view_model/provider_list.dart';
 import '../../../view_model/recurring_days_provider.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
-import '../../common_widgets/custom_snackbars.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../dialogues/pick_time_dialogue.dart';
 import '../notification_screen/notification_screen.dart';
@@ -39,6 +36,7 @@ class RecurringRemainders extends StatefulWidget {
 
 
 class _RemainderState extends State<RecurringRemainders> {
+  ValueNotifier<bool> _isFormValid = ValueNotifier<bool>(false);
   final TextEditingController _eventController= TextEditingController();
   final TextEditingController _monthlyController= TextEditingController();
   final TextEditingController _yearlyController= TextEditingController();
@@ -51,8 +49,19 @@ class _RemainderState extends State<RecurringRemainders> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((a){
+      _eventController.addListener(() => _checkFormValidity(context));
+      _timeController.addListener(() => _checkFormValidity(context));
+      _remainderTimeController.addListener(() => _checkFormValidity(context));
       context.read<RecurringvEventsProvider>().listenEventsBox();
     });
+  }
+
+  void _checkFormValidity(BuildContext context) {
+    bool isValid = _eventController.text.isNotEmpty &&
+        !context.read<DaySelectionProvider>().selectedDays.contains(true) &&
+        _timeController.text.isNotEmpty &&
+        _remainderTimeController.text.isNotEmpty;
+    _isFormValid.value = isValid;
   }
 
   @override
@@ -65,22 +74,22 @@ class _RemainderState extends State<RecurringRemainders> {
 
             Navigator.push(context, MyRoute(const NotificationScreen()));
           }, tailingOnpressed: (){
-        Navigator.push(context, MyRoute(const SettingScreen()));
+            Navigator.push(context, MyRoute(const SettingScreen()));
           }),
       body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 7.h,),
-        _cardAddEvent(),
-        Padding(
-          padding:  EdgeInsets.only(left: 16.w),
-          child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,),
+              _cardAddEvent(),
+              Padding(
+                padding:  EdgeInsets.only(left: 16.w),
+                child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,),
 
-        ),
-        SizedBox(height: 5.h,),
+              ),
+              SizedBox(height: 5.h,),
               _displayEvents()
-      ],)),
+            ],)),
     );
   }
 
@@ -99,7 +108,7 @@ class _RemainderState extends State<RecurringRemainders> {
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 8.w),
           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 4.h,),
               Center(child:CustomText(text: AppConstants.addTask,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
@@ -110,25 +119,25 @@ class _RemainderState extends State<RecurringRemainders> {
               CustomText(text:AppConstants.dailyWeeklyRemainder ,color: AppColors.grey787878, fontSize: 17.sp, fontWeight: FontWeight.w400),
               daySelector(context),
               Row(children: [
-                 Expanded(child: CustomFields.field(title: AppConstants.monthlyRemainder, onPressed: (){},controller: _monthlyController)),
+                Expanded(child: CustomFields.field(title: AppConstants.monthlyRemainder, onPressed: (){},controller: _monthlyController)),
                 SizedBox(width:10.w,),
                 Expanded(child: CustomFields.field(title: AppConstants.yearlyRemainder, onPressed: (){}, controller: _yearlyController)),
               ],),
               Row(children: [
-                   Consumer<TimePickerProvider>(
-                    builder: (BuildContext context,  value, Widget? child) {
-                      if(value.isTimeSelected){
-                        _timeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
-                      }
-                      return Expanded(
-                        child: CustomFields.field(title: AppConstants.time, onPressed: (){
-                          showDialog(context: context, builder: (context)=> const PickTimeDialogue(isRemainderTimePicker: false,));
-                        }, controller: _timeController),
-                      );
-                    },
+                Consumer<TimePickerProvider>(
+                  builder: (BuildContext context,  value, Widget? child) {
+                    if(value.isTimeSelected){
+                      _timeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
+                    }
+                    return Expanded(
+                      child: CustomFields.field(title: AppConstants.time, onPressed: (){
+                        showDialog(context: context, builder: (context)=> const PickTimeDialogue(isRemainderTimePicker: false,));
+                      }, controller: _timeController),
+                    );
+                  },
 
-                  )
-              ,
+                )
+                ,
                 SizedBox(width:10.w,),
                 Consumer<RemainderTimePickerProvider>(
                   builder: (BuildContext context,  value, Widget? child) {
@@ -141,46 +150,31 @@ class _RemainderState extends State<RecurringRemainders> {
                       }, controller: _remainderTimeController),
                     );
                   },
-
                 ),
 
               ],),
               SizedBox(height: 8.h,)
-              ,SizedBox(
-                  width: 1.sw*0.9,
-                  child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5),
-                      textColor: AppColors.whiteFFFFF, onPressed: (){
+              ,ValueListenableBuilder<bool>(
+                  valueListenable: _isFormValid,
+                  builder: (context,value,child) {
+                    return SizedBox(
+                        width: 1.sw*0.9,
+                        child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5),
+                            textColor: AppColors.whiteFFFFF, onPressed: (){
+                              context.read<RecurringvEventsProvider>().addRecurringEventHive(
+                                eventTitle: _eventController.text,
+                                eventTime: _timeController.text,
+                                remainderTime: _remainderTimeController.text,
+                                repeatingDays: context.read<DaySelectionProvider>().selectedDays,
+                                context: context,
+                              );
 
-                        if(_eventController.text.replaceAll(' ', '').isEmpty){
-                          EasyLoading.showInfo(AppMessages.eventNameRequired);
-                          return;
-                        }
-                        if(!context.read<DaySelectionProvider>().selectedDays.contains(true)){
-                          EasyLoading.showInfo(AppMessages.selectRepeatingDays);
-                          return;
-                        }
-
-                        if(_timeController.text.isEmpty){
-                          EasyLoading.showInfo(AppMessages.eventTimeRequired);
-                          return;
-                        }
-                        if(_remainderTimeController.text.isEmpty){
-                          EasyLoading.showInfo(AppMessages.eventRemainderRequired);
-                          return;
-                        }
-
-                        context.read<RecurringvEventsProvider>().addRecurringEventHive(
-                          eventTitle: _eventController.text,
-                          eventTime: _timeController.text,
-                          remainderTime: _remainderTimeController.text,
-                          repeatingDays: context.read<DaySelectionProvider>().selectedDays,
-                          context: context,
-                        );
-
-                        _resetFieldValues();
+                              _resetFieldValues();
 
 
-                      }))
+                            }, isDisabled: !_isFormValid.value));
+                  }
+              )
             ],),
         ),
       ),
@@ -266,3 +260,32 @@ class _RemainderState extends State<RecurringRemainders> {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+//
+// if(_eventController.text.replaceAll(' ', '').isEmpty){
+// EasyLoading.showInfo(AppMessages.eventNameRequired);
+// return;
+// }
+// if(!context.read<DaySelectionProvider>().selectedDays.contains(true)){
+// EasyLoading.showInfo(AppMessages.selectRepeatingDays);
+// return;
+// }
+//
+// if(_timeController.text.isEmpty){
+// EasyLoading.showInfo(AppMessages.eventTimeRequired);
+// return;
+// }
+// if(_remainderTimeController.text.isEmpty){
+// EasyLoading.showInfo(AppMessages.eventRemainderRequired);
+// return;
+// }

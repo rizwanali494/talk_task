@@ -39,21 +39,32 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  ValueNotifier<bool> _isFormValid = ValueNotifier<bool>(false);
   final TextEditingController _eventController= TextEditingController();
   final TextEditingController _dateController= TextEditingController();
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
 
+  void _checkFormValidity() {
+    bool isValid = _eventController.text.isNotEmpty &&
+        _dateController.text.isNotEmpty &&
+        _timeController.text.isNotEmpty &&
+        _remainderTimeController.text.isNotEmpty;
+    _isFormValid.value = isValid;
+  }
 
 
   @override
   void initState() {
     super.initState();
-   WidgetsBinding.instance.addPostFrameCallback((a){
-     ResetProviders.resetHomeProviders(context: context);
-     context.read<EventsListenerProvider>().listenEventsBox();
-   });
+    _eventController.addListener(_checkFormValidity);
+    _dateController.addListener(_checkFormValidity);
+    _timeController.addListener(_checkFormValidity);
+    _remainderTimeController.addListener(_checkFormValidity);
+    WidgetsBinding.instance.addPostFrameCallback((a){
+      ResetProviders.resetHomeProviders(context: context);
+      context.read<EventsListenerProvider>().listenEventsBox();
+    });
 
 
   }
@@ -65,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return  Scaffold(
       backgroundColor: AppColors.whiteFFFFF,
       appBar:_topBar() ,
-    body:_body() ,
+      body:_body() ,
     );
   }
 
@@ -97,111 +108,141 @@ class _HomeScreenState extends State<HomeScreen> {
 
   //body
 
-Widget _body(){
- return SingleChildScrollView(
-   child: Column(
-     crossAxisAlignment: CrossAxisAlignment.start,
-     children: [
-     _cardAddEvent(),
-     Padding(
-       padding:  EdgeInsets.only(left: 16.w),
-       child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
-       
-     ),
-      SizedBox(height: 5.h,),
-       _displayEvents()
-   ],),
- );
-}
+  Widget _body(){
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _cardAddEvent(),
+          Padding(
+            padding:  EdgeInsets.only(left: 16.w),
+            child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
+
+          ),
+          SizedBox(height: 5.h,),
+          _displayEvents()
+        ],),
+    );
+  }
 
 
-Widget _cardAddEvent(){
-  return Container(
-    height: 1.sh*0.63,
-    margin: EdgeInsets.symmetric(horizontal: 10.w,vertical: 7.h),
-    decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.r),
-        color: AppColors.whiteFFFFF,
-        boxShadow: const [BoxShadow(color: AppColors.blueBorder,spreadRadius: 0.4,blurRadius: 1.0)]
-    ),
-    child: SingleChildScrollView(
-      child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 13.w),
-        child: Column(
-          //  crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 8.h,),
-            Center(child: Text(AppConstants.addTask,style: AppTextStyles.poppins(color: AppColors.blueDark002055, fontSize: 20.sp, weight: FontWeight.w700),))
-            , Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,)
-            ,  CustomFields.field(title: AppConstants.event, onPressed: (){}, controller: _eventController,isReadOnly: false)
-            ,  Consumer<DatePickerProvider>(
-              builder: (BuildContext context,  value, Widget? child) {
-                if(value.selectedDate!=null){_dateController.text=value.selectedDate??"";}
-                return  CustomFields.field(title: AppConstants.date, onPressed: (){
-                  showDialog(
-                    context: context, builder: (BuildContext context) =>   const PickDateDialogue(),
-                  );
-              },  controller: _dateController);}
-            )
-            ,  Consumer<TimePickerProvider>(
-              builder: (BuildContext context,  value, Widget? child) {
-                if(value.isTimeSelected){
-                  _timeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
-                }
-                return CustomFields.field(title: AppConstants.time, onPressed: (){
-                  showDialog(context: context, builder: (context)=> const PickTimeDialogue(isRemainderTimePicker: false,));
-                }, controller: _timeController);
-              },
-
-            )
-
-            ,  Consumer<RemainderTimePickerProvider>(
-              builder: (BuildContext context,  value, Widget? child) {
-                if(value.isTimeSelected){
-                  _remainderTimeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
-                }
-                return CustomFields.field(title: AppConstants.reminderTime, onPressed: (){
-                  showDialog(context: context, builder: (context)=> const PickTimeDialogue(isRemainderTimePicker: true,));
-                }, controller: _remainderTimeController);
-              },
-
-            ),
-
-
-            SizedBox(height: 8.h,)
-            ,SizedBox(
-                width: 1.sw*0.9,
-                child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5), textColor: AppColors.whiteFFFFF, onPressed: () async {
-                          if(_eventController.text.replaceAll(' ', '').isEmpty){
-                            EasyLoading.showInfo(AppMessages.eventNameRequired);
-                            return;
-                          }
-                          if(_dateController.text.isEmpty){
-                            EasyLoading.showInfo(AppMessages.eventDateRequired);
-                            return;
-                          }
-                          if(_timeController.text.isEmpty){
-                            EasyLoading.showInfo(AppMessages.eventTimeRequired);
-                            return;
-                          }
-                          if(_remainderTimeController.text.isEmpty){
-                            EasyLoading.showInfo(AppMessages.eventRemainderRequired);
-                            return;
-                          }
-
-                          context.read<EventsListenerProvider>().addEventInHive(eventTitle: _eventController.text, eventTime: _timeController.text,
-                              remainderTime: _remainderTimeController.text,
-                              eventDate:DateFormatting.createDateTimeFromString(date: _dateController.text, time: _timeController.text), context: context);
-
-                          _resetFieldValues();
-
-                }))
-          ],),
+  Widget _cardAddEvent() {
+    return Container(
+      height: 1.sh * 0.63,
+      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 7.h),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15.r),
+          color: AppColors.whiteFFFFF,
+          boxShadow: const [
+            BoxShadow(
+                color: AppColors.blueBorder, spreadRadius: 0.4, blurRadius: 1.0)
+          ]
       ),
-    ),
-  );
-}
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 13.w),
+          child: Column(
+            //  crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 8.h,),
+              Center(child: Text(AppConstants.addTask,
+                style: AppTextStyles.poppins(color: AppColors.blueDark002055,
+                    fontSize: 20.sp,
+                    weight: FontWeight.w700),))
+              ,
+              Image.asset(AppImages.iconMicrophone, height: 200.h,
+                color: AppColors.secondary,)
+              ,
+              CustomFields.field(title: AppConstants.event,
+                  onPressed: () {},
+                  controller: _eventController,
+                  isReadOnly: false)
+              ,
+              Consumer<DatePickerProvider>(
+                  builder: (BuildContext context, value, Widget? child) {
+                    if (value.selectedDate != null) {
+                      _dateController.text = value.selectedDate ?? "";
+                    }
+                    return CustomFields.field(
+                        title: AppConstants.date, onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (
+                            BuildContext context) => const PickDateDialogue(),
+                      );
+                    }, controller: _dateController);
+                  }
+              )
+              ,
+              Consumer<TimePickerProvider>(
+                builder: (BuildContext context, value, Widget? child) {
+                  if (value.isTimeSelected) {
+                    _timeController.text =
+                    "${value.hours} : ${value.minutes} ${value.timeFormat}";
+                  }
+                  return CustomFields.field(
+                      title: AppConstants.time, onPressed: () {
+                    showDialog(context: context,
+                        builder: (context) =>
+                        const PickTimeDialogue(isRemainderTimePicker: false,));
+                  }, controller: _timeController);
+                },
+              )
 
+              ,
+              Consumer<RemainderTimePickerProvider>(
+                builder: (BuildContext context, value, Widget? child) {
+                  if (value.isTimeSelected) {
+                    _remainderTimeController.text =
+                    "${value.hours} : ${value.minutes} ${value.timeFormat}";
+                  }
+                  return CustomFields.field(
+                      title: AppConstants.reminderTime, onPressed: () {
+                    showDialog(context: context,
+                        builder: (context) =>
+                        const PickTimeDialogue(isRemainderTimePicker: true,));
+                  }, controller: _remainderTimeController);
+                },
+
+              ),
+
+
+              SizedBox(height: 8.h,)
+              ,
+              SizedBox(
+                  width: 1.sw * 0.9,
+                  child: ValueListenableBuilder<bool>(
+                      valueListenable: _isFormValid,
+                      builder: (context, value, child) {
+                        print('Button Validity: $value');
+                        return Buttons.customElevatedButton(
+                            title: AppConstants.addEvent,
+                            backgroundColor: value == true
+                                ? AppColors.blue05AAEC
+                                : AppColors.greyDark6C6D6D.withOpacity(0.5),
+                            textColor: AppColors.whiteFFFFF,
+                            onPressed: () async {
+                              context.read<EventsListenerProvider>()
+                                  .addEventInHive(eventTitle: _eventController
+                                  .text,
+                                  eventTime: _timeController.text,
+                                  remainderTime: _remainderTimeController.text,
+                                  eventDate: DateFormatting
+                                      .createDateTimeFromString(
+                                      date: _dateController.text,
+                                      time: _timeController.text),
+                                  context: context);
+
+                              _resetFieldValues();
+                            },
+                            isDisabled: !value);
+                      }
+                  ))
+            ],),
+        ),
+      ),
+    );
+  }
 
   Widget _displayEvents() {
     return Consumer<EventsListenerProvider>(
@@ -213,26 +254,36 @@ Widget _cardAddEvent(){
               child: Text(AppConstants.noEvents),
             )),
           for(int i=0;i<value.allEvents.length;i++)
-        CustomCards.eventCard(
-        event:value.allEvents[i].title,
-            date: value.allEvents[i].eventDate.toString().split(' ')[0],
-            time: value.allEvents[i].eventTime.toString(),
-            remainderTime: value.allEvents[i].remainderTime
-        )
+            CustomCards.eventCard(
+                event:value.allEvents[i].title,
+                date: value.allEvents[i].eventDate.toString().split(' ')[0],
+                time: value.allEvents[i].eventTime.toString(),
+                remainderTime: value.allEvents[i].remainderTime
+            )
         ],);
       },
     );
   }
 
 
-   void _resetFieldValues(){
-  ResetProviders.resetHomeProviders(context: context);
-  _eventController.text='';
-  _timeController.text='';
-  _remainderTimeController.text='';
-  _dateController.text='';
-}
+  void _resetFieldValues(){
+    ResetProviders.resetHomeProviders(context: context);
+    _eventController.text='';
+    _timeController.text='';
+    _remainderTimeController.text='';
+    _dateController.text='';
+  }
 
 
+
+  @override
+  void dispose() {
+    _eventController.dispose();
+    _dateController.dispose();
+    _timeController.dispose();
+    _remainderTimeController.dispose();
+    _isFormValid.dispose();
+    super.dispose();
+  }
 
 }

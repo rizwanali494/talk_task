@@ -33,16 +33,18 @@ class NotificationService {
     _notificationId++;
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
+        displayOnForeground: true,
         id: _notificationId,
         channelKey: 'jawad',
         title: title,
         body: description,
-        chronometer: const Duration(seconds: 0),
+        displayOnBackground: true,
+        //chronometer: const Duration(seconds: 0),
         color:AppColors.primary ,
-       // backgroundColor: Colors.pink,
-       // largeIcon: 'resource://drawable/lion',
-      //  bigPicture: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg'
-       // , notificationLayout: NotificationLayout.BigPicture,
+        // backgroundColor: Colors.pink,
+        // largeIcon: 'resource://drawable/lion',
+        //  bigPicture: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg'
+        // , notificationLayout: NotificationLayout.BigPicture,
       ),
 
       actionButtons: [NotificationActionButton(key: '1',label: 'Dismiss',isDangerousOption: true)],
