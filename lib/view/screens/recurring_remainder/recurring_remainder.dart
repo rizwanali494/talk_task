@@ -62,8 +62,10 @@ class _RemainderState extends State<RecurringRemainders> {
         _timeController.text.isNotEmpty &&
         _remainderTimeController.text.isNotEmpty;
     if (isValid) {
+      print(isValid);
       BooleanStreamManagerRecurringScreen.updateValue(true);
     } else {
+      print(isValid);
       BooleanStreamManagerRecurringScreen.updateValue(false);
     }
   }
@@ -135,6 +137,7 @@ class _RemainderState extends State<RecurringRemainders> {
                   builder: (BuildContext context,  value, Widget? child) {
                     if(value.isTimeSelected){
                       _timeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
+                      _checkFormValidity();
                     }
                     return Expanded(
                       child: CustomFields.field(title: AppConstants.time, onPressed: (){
@@ -150,6 +153,7 @@ class _RemainderState extends State<RecurringRemainders> {
                   builder: (BuildContext context,  value, Widget? child) {
                     if(value.isTimeSelected){
                       _remainderTimeController.text="${value.hours} : ${value.minutes} ${value.timeFormat}";
+                      _checkFormValidity();
                     }
                     return Expanded(
                       child: CustomFields.field(title: AppConstants.reminderTime, onPressed: (){
@@ -179,7 +183,7 @@ class _RemainderState extends State<RecurringRemainders> {
                               _resetFieldValues();
                               _checkFormValidity();
 
-                            }, isDisabled: snap.data??false));
+                            }, isDisabled: snap.data==true ? false:true ));
                   }, stream: null,
               )
             ],),

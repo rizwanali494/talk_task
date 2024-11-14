@@ -229,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               _resetFieldValues();
                               _checkFormValidity();
                             },
-                            isDisabled: snap.data==true?false:true );
+                            isDisabled: snap.data==true ? false:true );
                       }, stream: BooleanStreamManager.boolStream,
                   ))
             ],),
