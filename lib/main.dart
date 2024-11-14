@@ -23,6 +23,8 @@ import 'package:talk_task/view_model/setting_provider.dart';
 import 'package:talk_task/view_model/time_picking_provider.dart';
 import 'package:workmanager/workmanager.dart';
 
+import 'auth/sign_up.dart';
+
 
 
 
@@ -77,7 +79,7 @@ class MyApp extends StatelessWidget {
          builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
-          home: const SplashScreen(),
+          home: const SignUp(),
         ),
      ),
    );

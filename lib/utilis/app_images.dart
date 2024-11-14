@@ -54,4 +54,10 @@ class AppImages{
   static String iconForward='assets/icons/arrow_right_icon.png';
   static String iconBackArrow='assets/icons/arrow_left_icon.png';
 
+  //Sign up screens
+  static String iconAppLogo='assets/icons/logo.png';
+  static String iconGoogle='assets/icons/google_icon.png';
+  static String iconMail='assets/icons/mail_icon.png';
+  static String iconApple='assets/icons/apple_icon.png';
+
 }

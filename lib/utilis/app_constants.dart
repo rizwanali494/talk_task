@@ -186,5 +186,16 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String dailyWeeklyRemainder = "Daily/Weekly Remainder";
 
 
-
+  //Sign Up screen
+  static const String simplyfyRemainders = "Simplify Remainders with AI";
+  static const String continueWithApple = "Continue with Apple";
+  static const String continueWithGoogle = "Continue with Google";
+  static const String continueWithEmail = "Continue with Email";
+  static const String byContinuingYouAgree = "By  continuing you agree to our ";
+  static const String termsOfServices = "Terms of Service";
+  static const String and = " And ";
+  static const String continueText = "Continue";
+  static const String createUserName = "Create username";
+  static const String enterUserName = "Enter Username";
+  static const String createUniqueUserName = "Please enter your unique username";
 }
