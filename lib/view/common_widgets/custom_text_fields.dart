@@ -6,7 +6,8 @@ import '../../utilis/app_text_styles.dart';
 
 class CustomFields{
 
- static Widget field({required String title,required GestureTapCallback? onPressed, bool isReadOnly=true,required TextEditingController controller}){
+ static Widget field({required String title,required GestureTapCallback? onPressed, bool isReadOnly=true,required TextEditingController controller,
+ void Function(String)? onChanged,}){
     return Padding(
       padding:  EdgeInsets.symmetric(vertical: 3.h),
       child: GestureDetector(
@@ -24,6 +25,7 @@ class CustomFields{
              height: 45.h,
              child: TextField(
               readOnly: isReadOnly,
+              onChanged: onChanged,
               style: AppTextStyles.poppins(color: AppColors.black, fontSize: 15.sp, weight: FontWeight.w400),
               controller: controller,
               cursorColor: AppColors.secondary,

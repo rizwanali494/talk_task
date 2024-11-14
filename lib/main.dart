@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -69,6 +68,7 @@ class MyApp extends StatelessWidget {
        ChangeNotifierProvider(create: (context) => EventsListenerProvider(),),
        ChangeNotifierProvider(create: (context) => DaySelectionProvider(),),
        ChangeNotifierProvider(create: (context) => RecurringvEventsProvider(),),
+
 
      ],
      child: ScreenUtilInit(

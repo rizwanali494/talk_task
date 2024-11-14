@@ -1,28 +1,20 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:talk_task/main.dart';
-import 'package:talk_task/models/events_model.dart';
-import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/utilis/app_constants.dart';
-import 'package:talk_task/utilis/app_mesages.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
-import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
-import 'package:workmanager/workmanager.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../../utilis/date_formating.dart';
 import '../../../view_model/date_picker_provider.dart';
 import '../../../view_model/events_listner_provider.dart';
 import '../../../view_model/provider_list.dart';
+import '../../../view_model/stream_button.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
-import '../../common_widgets/custom_snackbars.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../dialogues/pick_date_dialogue.dart';
 import '../dialogues/pick_time_dialogue.dart';
@@ -39,37 +31,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  ValueNotifier<bool> _isFormValid = ValueNotifier<bool>(false);
   final TextEditingController _eventController= TextEditingController();
   final TextEditingController _dateController= TextEditingController();
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    BooleanStreamManager.updateValue(false);
+    WidgetsBinding.instance.addPostFrameCallback((a){
+      ResetProviders.resetHomeProviders(context: context);
+      context.read<EventsListenerProvider>().listenEventsBox();
+
+    });
+  }
+
 
   void _checkFormValidity() {
     bool isValid = _eventController.text.isNotEmpty &&
         _dateController.text.isNotEmpty &&
         _timeController.text.isNotEmpty &&
         _remainderTimeController.text.isNotEmpty;
-    _isFormValid.value = isValid;
+    if (isValid) {
+      BooleanStreamManager.updateValue(true);
+    } else {
+      BooleanStreamManager.updateValue(false);
+    }
   }
-
-
-  @override
-  void initState() {
-    super.initState();
-    _eventController.addListener(_checkFormValidity);
-    _dateController.addListener(_checkFormValidity);
-    _timeController.addListener(_checkFormValidity);
-    _remainderTimeController.addListener(_checkFormValidity);
-    WidgetsBinding.instance.addPostFrameCallback((a){
-      ResetProviders.resetHomeProviders(context: context);
-      context.read<EventsListenerProvider>().listenEventsBox();
-    });
-
-
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ,
               CustomFields.field(title: AppConstants.event,
                   onPressed: () {},
+                  onChanged: (a){
+                    _checkFormValidity();
+
+                  },
                   controller: _eventController,
                   isReadOnly: false)
               ,
@@ -162,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (BuildContext context, value, Widget? child) {
                     if (value.selectedDate != null) {
                       _dateController.text = value.selectedDate ?? "";
+                      _checkFormValidity();
                     }
                     return CustomFields.field(
                         title: AppConstants.date, onPressed: () {
@@ -179,6 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (value.isTimeSelected) {
                     _timeController.text =
                     "${value.hours} : ${value.minutes} ${value.timeFormat}";
+                    _checkFormValidity();
                   }
                   return CustomFields.field(
                       title: AppConstants.time, onPressed: () {
@@ -195,6 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (value.isTimeSelected) {
                     _remainderTimeController.text =
                     "${value.hours} : ${value.minutes} ${value.timeFormat}";
+                    _checkFormValidity();
                   }
                   return CustomFields.field(
                       title: AppConstants.reminderTime, onPressed: () {
@@ -211,20 +208,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ,
               SizedBox(
                   width: 1.sw * 0.9,
-                  child: ValueListenableBuilder<bool>(
-                      valueListenable: _isFormValid,
-                      builder: (context, value, child) {
-                        print('Button Validity: $value');
+                  child: StreamBuilder<bool>(
+                      builder: (context, snap) {
                         return Buttons.customElevatedButton(
                             title: AppConstants.addEvent,
-                            backgroundColor: value == true
+                            backgroundColor:snap.data== true
                                 ? AppColors.blue05AAEC
                                 : AppColors.greyDark6C6D6D.withOpacity(0.5),
                             textColor: AppColors.whiteFFFFF,
                             onPressed: () async {
-                              context.read<EventsListenerProvider>()
-                                  .addEventInHive(eventTitle: _eventController
-                                  .text,
+                              context.read<EventsListenerProvider>().addEventInHive(eventTitle: _eventController.text,
                                   eventTime: _timeController.text,
                                   remainderTime: _remainderTimeController.text,
                                   eventDate: DateFormatting
@@ -234,15 +227,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context: context);
 
                               _resetFieldValues();
+                              _checkFormValidity();
                             },
-                            isDisabled: !value);
-                      }
+                            isDisabled: snap.data==true?false:true );
+                      }, stream: BooleanStreamManager.boolStream,
                   ))
             ],),
         ),
       ),
     );
   }
+
+
 
   Widget _displayEvents() {
     return Consumer<EventsListenerProvider>(
@@ -282,7 +278,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _dateController.dispose();
     _timeController.dispose();
     _remainderTimeController.dispose();
-    _isFormValid.dispose();
     super.dispose();
   }
 

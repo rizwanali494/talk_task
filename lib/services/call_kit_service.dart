@@ -45,11 +45,11 @@ class CallKitService {
       duration: 30000,  // duration in milliseconds
       extra: <String, dynamic>{'userId': '1a2b3c4d'},
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-      android:  AndroidParams(
+      android:  const AndroidParams(
         isShowFullLockedScreen: true,
         isCustomNotification: true,
         isShowLogo: true,
-        ringtonePath: mp3FilePath,
+        ringtonePath: 'system_ringtone_default',
         //'system_ringtone_default',
         backgroundColor: '#05AAEC',
        // backgroundUrl: 'https://farm2.staticflickr.com/1533/26541536141_41abe98db3_z_d.jpg',

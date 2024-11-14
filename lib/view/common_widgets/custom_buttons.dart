@@ -16,6 +16,7 @@ class Buttons{
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: backgroundColor,
+            disabledBackgroundColor: backgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(13.r)
             )

@@ -10,6 +10,7 @@ import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
 import 'package:talk_task/view_model/recurring_event_provider.dart';
+import 'package:talk_task/view_model/stream_button.dart';
 import 'package:workmanager/workmanager.dart';
 import '../../../services/hive_service.dart';
 import '../../../utilis/app_colors.dart';
@@ -36,7 +37,7 @@ class RecurringRemainders extends StatefulWidget {
 
 
 class _RemainderState extends State<RecurringRemainders> {
-  ValueNotifier<bool> _isFormValid = ValueNotifier<bool>(false);
+
   final TextEditingController _eventController= TextEditingController();
   final TextEditingController _monthlyController= TextEditingController();
   final TextEditingController _yearlyController= TextEditingController();
@@ -48,22 +49,24 @@ class _RemainderState extends State<RecurringRemainders> {
   @override
   void initState() {
     super.initState();
+    BooleanStreamManagerRecurringScreen.updateValue(false);
     WidgetsBinding.instance.addPostFrameCallback((a){
-      _eventController.addListener(() => _checkFormValidity(context));
-      _timeController.addListener(() => _checkFormValidity(context));
-      _remainderTimeController.addListener(() => _checkFormValidity(context));
       context.read<RecurringvEventsProvider>().listenEventsBox();
     });
   }
 
-  void _checkFormValidity(BuildContext context) {
+
+  void _checkFormValidity() {
     bool isValid = _eventController.text.isNotEmpty &&
         !context.read<DaySelectionProvider>().selectedDays.contains(true) &&
         _timeController.text.isNotEmpty &&
         _remainderTimeController.text.isNotEmpty;
-    _isFormValid.value = isValid;
+    if (isValid) {
+      BooleanStreamManagerRecurringScreen.updateValue(true);
+    } else {
+      BooleanStreamManagerRecurringScreen.updateValue(false);
+    }
   }
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -115,7 +118,11 @@ class _RemainderState extends State<RecurringRemainders> {
               , Center(child: Image.asset(AppImages.iconMicrophone,height: 200.h,color: AppColors.secondary,))
               ,  CustomFields.field(
                   isReadOnly: false,
-                  title: AppConstants.event, onPressed: (){}, controller: _eventController),
+                  title: AppConstants.event, onPressed: (){}, controller: _eventController,
+              onChanged: (a){
+                _checkFormValidity();
+              }
+              ),
               CustomText(text:AppConstants.dailyWeeklyRemainder ,color: AppColors.grey787878, fontSize: 17.sp, fontWeight: FontWeight.w400),
               daySelector(context),
               Row(children: [
@@ -154,9 +161,9 @@ class _RemainderState extends State<RecurringRemainders> {
 
               ],),
               SizedBox(height: 8.h,)
-              ,ValueListenableBuilder<bool>(
-                  valueListenable: _isFormValid,
-                  builder: (context,value,child) {
+              ,StreamBuilder<bool>(
+
+                  builder: (context,snap) {
                     return SizedBox(
                         width: 1.sw*0.9,
                         child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5),
@@ -170,10 +177,10 @@ class _RemainderState extends State<RecurringRemainders> {
                               );
 
                               _resetFieldValues();
+                              _checkFormValidity();
 
-
-                            }, isDisabled: !_isFormValid.value));
-                  }
+                            }, isDisabled: snap.data??false));
+                  }, stream: null,
               )
             ],),
         ),
@@ -216,6 +223,7 @@ class _RemainderState extends State<RecurringRemainders> {
               return GestureDetector(
                 onTap: () {
                   context.read<DaySelectionProvider>().toggleDay(index);
+                  _checkFormValidity();
                 },
                 child: Container(
                   height: 54.h,
