@@ -33,12 +33,12 @@ class NotificationService {
     _notificationId++;
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
-        displayOnForeground: true,
+       // displayOnForeground: true,
         id: _notificationId,
         channelKey: 'jawad',
         title: title,
         body: description,
-        displayOnBackground: true,
+       // displayOnBackground: true,
         //chronometer: const Duration(seconds: 0),
         color:AppColors.primary ,
         // backgroundColor: Colors.pink,

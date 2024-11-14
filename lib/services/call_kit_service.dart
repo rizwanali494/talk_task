@@ -1,31 +1,21 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter_callkit_incoming/entities/android_params.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/entities/call_kit_params.dart';
 import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'local_notification_service.dart';
 
 
 
 class CallKitService {
-  // Instance to hold the current UUID for the call
+
    static final String _currentUuid = const Uuid().v4();
    static final StreamController<CallEvent?> _callEventController = StreamController<CallEvent?>.broadcast();
    static StreamSubscription<CallEvent?>? _subscription;
   static Future<void> showIncomingCall({required String nameCaller,}) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final mp3FilePath = '${directory.path}/incoming_call.mp3';
-    if (!await File(mp3FilePath).exists()) {
-      print("MP3 file does not exist at $mp3FilePath");
-      return;
-    }
-
-    // Create callKit parameters
     CallKitParams callKitParams = CallKitParams(
       id: _currentUuid,
       nameCaller: nameCaller,
@@ -79,7 +69,7 @@ class CallKitService {
     );
     // Call FlutterCallkitIncoming to display the incoming call
     await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
-    NotificationService.showNotification(title: 'upcoming event ', description: 'hello');
+
   }
 
 
@@ -101,3 +91,11 @@ class CallKitService {
     return _subscription;
   }
 }
+
+
+// final directory = await getApplicationDocumentsDirectory();
+// final mp3FilePath = '${directory.path}/incoming_call.mp3';
+// if (!await File(mp3FilePath).exists()) {
+// print("MP3 file does not exist at $mp3FilePath");
+// return;
+// }
