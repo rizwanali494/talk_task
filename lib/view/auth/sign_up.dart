@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
-import '../utilis/app_colors.dart';
-import '../utilis/app_constants.dart';
-import '../utilis/app_images.dart';
-import '../view/common_widgets/custom_app_bars.dart';
+import '../../utilis/app_colors.dart';
+import '../../utilis/app_constants.dart';
+import '../../utilis/app_images.dart';
+import '../common_widgets/custom_app_bars.dart';
 import 'create_user.dart';
 
 class SignUp extends StatelessWidget {
@@ -18,64 +18,71 @@ class SignUp extends StatelessWidget {
       backgroundColor: AppColors.whiteFFFFF,
       appBar: AppBars.authAppBars(
           bgColor: AppColors.whiteFFFFF, iconBrightness: Brightness.dark),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 17.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Center(
-                child: Image.asset(
-              AppImages.iconAppLogo,
-              height: 1.sh * 0.18,
-            )),
-            SizedBox(
-              height: 10.h,
-            ),
-            Center(
-                child: CustomText(
-              text: AppConstants.taskAi,
-              fontSize: 26.sp,
-              color: AppColors.blueDark002055,
-              fontWeight: FontWeight.bold,
-            )),
-            SizedBox(
-              height: 10.h,
-            ),
-            Center(
-                child: CustomText(
-                    text: AppConstants.simplyfyRemainders,
-                    fontSize: 24.sp,
+      body: ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            child: SizedBox(
+              height: 1.sh*0.94,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Center(
+                      child: Image.asset(
+                    AppImages.iconAppLogo,
+                    height: 1.sh * 0.18,
+                  )),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Center(
+                      child: CustomText(
+                    text: AppConstants.taskAi,
+                    fontSize: 26.sp,
                     color: AppColors.blueDark002055,
-                    fontWeight: FontWeight.w700)),
-            const Spacer(),
-            _continueButton(
-                title: AppConstants.continueWithGoogle,
-                onPressed: () {},
-                icon: AppImages.iconGoogle),
-            SizedBox(
-              height: 13.h,
+                    fontWeight: FontWeight.bold,
+                  )),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Center(
+                      child: CustomText(
+                          text: AppConstants.simplyfyRemainders,
+                          fontSize: 24.sp,
+                          color: AppColors.blueDark002055,
+                          fontWeight: FontWeight.w700)),
+                  const Spacer(),
+                  _continueButton(
+                      title: AppConstants.continueWithGoogle,
+                      onPressed: () {},
+                      icon: AppImages.iconGoogle),
+                  SizedBox(
+                    height: 13.h,
+                  ),
+                  _continueButton(
+                      title: AppConstants.continueWithApple,
+                      onPressed: () {},
+                      icon: AppImages.iconApple),
+                  SizedBox(
+                    height: 13.h,
+                  ),
+                  _continueButton(
+                      title: AppConstants.continueWithEmail,
+                      onPressed: () {
+                        Navigator.push(context, MyRoute( CreateUserName()));
+                      },
+                      icon: AppImages.iconMail),
+                  const Spacer(),
+                  _endingText(),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                ],
+              ),
             ),
-            _continueButton(
-                title: AppConstants.continueWithApple,
-                onPressed: () {},
-                icon: AppImages.iconApple),
-            SizedBox(
-              height: 13.h,
-            ),
-            _continueButton(
-                title: AppConstants.continueWithEmail,
-                onPressed: () {
-                  Navigator.push(context, MyRoute( CreateUserName()));
-                },
-                icon: AppImages.iconMail),
-            const Spacer(),
-            _endingText(),
-            SizedBox(
-              height: 30.h,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

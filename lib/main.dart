@@ -12,6 +12,7 @@ import 'package:talk_task/services/local_notification_service.dart';
 import 'package:talk_task/splash_screen.dart';
 import 'package:talk_task/utilis/app_images.dart';
 import 'package:talk_task/utilis/app_themes.dart';
+import 'package:talk_task/view/auth/sign_up.dart';
 import 'package:talk_task/view_model/bottom_nav_bar_provider.dart';
 import 'package:talk_task/view_model/call_picking_provider.dart';
 import 'package:talk_task/view_model/customization_screen_provider.dart';
@@ -23,7 +24,6 @@ import 'package:talk_task/view_model/setting_provider.dart';
 import 'package:talk_task/view_model/time_picking_provider.dart';
 import 'package:workmanager/workmanager.dart';
 
-import 'auth/sign_up.dart';
 
 
 
