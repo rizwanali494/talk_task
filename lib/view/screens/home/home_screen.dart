@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     BooleanStreamManager.updateValue(false);
     WidgetsBinding.instance.addPostFrameCallback((a){
       ResetProviders.resetHomeProviders(context: context);
+      _resetFieldValues();
       context.read<EventsListenerProvider>().listenEventsBox();
 
     });

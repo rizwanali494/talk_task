@@ -51,6 +51,7 @@ class _RemainderState extends State<RecurringRemainders> {
     super.initState();
     BooleanStreamManagerRecurringScreen.updateValue(false);
     WidgetsBinding.instance.addPostFrameCallback((a){
+      _resetFieldValues();
       context.read<RecurringvEventsProvider>().listenEventsBox();
     });
   }
@@ -58,7 +59,7 @@ class _RemainderState extends State<RecurringRemainders> {
 
   void _checkFormValidity() {
     bool isValid = _eventController.text.isNotEmpty &&
-        !context.read<DaySelectionProvider>().selectedDays.contains(true) &&
+        context.read<DaySelectionProvider>().selectedDays.contains(true) &&
         _timeController.text.isNotEmpty &&
         _remainderTimeController.text.isNotEmpty;
     if (isValid) {
@@ -166,11 +167,13 @@ class _RemainderState extends State<RecurringRemainders> {
               ],),
               SizedBox(height: 8.h,)
               ,StreamBuilder<bool>(
-
                   builder: (context,snap) {
                     return SizedBox(
                         width: 1.sw*0.9,
-                        child: Buttons.customElevatedButton(title: AppConstants.addEvent, backgroundColor: AppColors.greyDark6C6D6D.withOpacity(0.5),
+                        child: Buttons.customElevatedButton(title: AppConstants.addEvent,
+                            backgroundColor:snap.data== true
+                                ? AppColors.blue05AAEC
+                                : AppColors.greyDark6C6D6D.withOpacity(0.5),
                             textColor: AppColors.whiteFFFFF, onPressed: (){
                               context.read<RecurringvEventsProvider>().addRecurringEventHive(
                                 eventTitle: _eventController.text,
@@ -184,7 +187,7 @@ class _RemainderState extends State<RecurringRemainders> {
                               _checkFormValidity();
 
                             }, isDisabled: snap.data==true ? false:true ));
-                  }, stream: null,
+                  }, stream: BooleanStreamManagerRecurringScreen.boolStream,
               )
             ],),
         ),
