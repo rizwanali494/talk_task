@@ -7,6 +7,7 @@ import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
+import 'package:talk_task/view_model/event_title_provider.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../../utilis/date_formating.dart';
@@ -176,14 +177,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )
               ,
-              CustomFields.field(title: AppConstants.event,
-                  onPressed: () {},
-                  onChanged: (a){
-                    _checkFormValidity();
+              Consumer<EventTitleProvider>(
+                builder: (context,value,child) {
+                  if(value.title.isNotEmpty){
+                    _eventController.text=value.title;
+                  }
+                  return CustomFields.field(title: AppConstants.event,
+                      onPressed: () {},
+                      onChanged: (a){
+                   // context.read()
+                        _checkFormValidity();
 
-                  },
-                  controller: _eventController,
-                  isReadOnly: false)
+                      },
+                      controller: _eventController,
+                      isReadOnly: false);
+                }
+              )
               ,
               Consumer<DatePickerProvider>(
                   builder: (BuildContext context, value, Widget? child) {

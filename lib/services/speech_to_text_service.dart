@@ -26,50 +26,68 @@ class SpeechToTextService {
   static Future<bool> requestPermissions() async {
     return PermissionHelper.checkAndRequestPermissions();
   }
-
   static Future<void> startListening(BuildContext context) async {
     bool hasPermission = await requestPermissions();
     if (!hasPermission) {
       return;
     }
+
+    // Set the status listener to capture the listening state
     speechToText.statusListener = (status) {
-    print(status);
+      print(status);
       _listeningStatusController.add(speechToText.isListening);
     };
 
+    // Start listening with the specified settings
     speechToText.listen(
       onResult: (result) async {
         text = result.recognizedWords;
-        //hitApi(_text);
-        if(result.finalResult){
-          //try{
-            Map result= await hitApi(text);
-            Map eventTime= DateFormatting.formatAudioGivenTimeToHours(result['time']);
-            Map eventRemainderTime= DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
-            context.read<EventTitleProvider>().setTitle((result['event']));
-           context.read<DatePickerProvider>().selectDate(DateFormatting.formatDateToDateTime(result['date'], eventTime['hours'], eventTime['hours'], eventTime['amPm']));
 
-            context.read<TimePickerProvider>().selectTime( hour: eventTime['hours'], minute: eventTime['minutes'], timeAmOrPm: eventTime['amPm']);
+        if (result.finalResult) {
+          try {
+            // Hit the API and process the response
+            Map result = await hitApi(text);
 
-            context.read<RemainderTimePickerProvider>().selectTime(  minute: eventRemainderTime['minutes'], timeAmOrPm: eventRemainderTime['amPm'],
-                hour: eventRemainderTime['hours']);
+            // Format the event time and remainder time
+            Map eventTime = DateFormatting.formatAudioGivenTimeToHours(result['time']);
+            Map eventRemainderTime = DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
+
+            // Update the context providers with event details
+            context.read<EventTitleProvider>().setTitle(result['event']);
+            context.read<DatePickerProvider>().selectDate(
+                DateFormatting.formatDateToDateTime(
+                    result['date'],
+                    eventTime['hours'],
+                    eventTime['minutes'],
+                    eventTime['amPm']
+                )
+            );
+
+            context.read<TimePickerProvider>().selectTime(
+                hour: eventTime['hours'],
+                minute: eventTime['minutes'],
+                timeAmOrPm: eventTime['amPm']
+            );
+
+            context.read<RemainderTimePickerProvider>().selectTime(
+                hour: eventRemainderTime['hours'],
+                minute: eventRemainderTime['minutes'],
+                timeAmOrPm: eventRemainderTime['amPm']
+            );
+          } catch (e) {
+            print(e.toString());
           }
-          // catch(e){
-          //   print(e.toString());
-          // }
-
-
-
+        }
       },
       listenFor: const Duration(minutes: 5),
       pauseFor: const Duration(seconds: 7),
 
       onSoundLevelChange: (level) {
-        // if (level < -2 && _isListening) {
-        //   stopListening();
-        // }
+        // You can add any logic here if needed
       },
     );
+
+    // Set the listening status to true
     _isListening = true;
     _listeningStatusController.add(_isListening);
   }
