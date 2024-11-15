@@ -46,7 +46,7 @@ class SpeechToTextService {
          Map eventRemainderTime= DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
          print("${eventTime['hours']}:${eventTime['minutes']} AM");
           context.read<DatePickerProvider>().selectDate(DateFormatting.
-          createDateTimeFromString(date: result['date'], time: "${eventTime['hours']}:${eventTime['minutes']} AM"));
+          createDateTimeFromString(date: result['date'], time: "${eventTime['hours']} : ${eventTime['minutes']} AM"));
 
           context.read<TimePickerProvider>().selectTime( hour: eventTime['hours'], minute: eventTime['minutes'], timeAmOrPm: eventTime['amPm']);
 
