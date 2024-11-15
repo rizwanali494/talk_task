@@ -7,18 +7,19 @@ class SpeechToTextService {
   static bool _isListening = false;
   static String _text = "";
 
+  static final _listeningStatusController = StreamController<bool>.broadcast();
+
+
+  static Stream<bool> get listeningStatusStream => _listeningStatusController.stream;
 
   static Future<bool> initialize() async {
     bool available = await _speechToText.initialize();
     return available;
   }
 
-
   static Future<bool> requestPermissions() async {
     return PermissionHelper.checkAndRequestPermissions();
-
   }
-
 
   static Future<void> startListening() async {
     bool hasPermission = await requestPermissions();
@@ -33,21 +34,25 @@ class SpeechToTextService {
       },
     );
     _isListening = true;
+    _listeningStatusController.add(_isListening);
   }
-
 
   static Future<void> stopListening() async {
     await _speechToText.stop();
     _isListening = false;
+    _listeningStatusController.add(_isListening);
   }
-
 
   static bool isListening() {
     return _isListening;
   }
 
-
   static String getText() {
     return _text;
+  }
+
+
+  static void dispose() {
+    _listeningStatusController.close();
   }
 }

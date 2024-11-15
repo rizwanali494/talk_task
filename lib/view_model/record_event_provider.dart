@@ -1,24 +1,30 @@
 import 'package:flutter/cupertino.dart';
-import '../services/audio_recording_service.dart';
+import '../services/speech_to_text_service.dart';
 
-class RecordEventProvider extends ChangeNotifier{
-   bool isRecording=false;
-   initializeRecorder(){
-     SpeechToTextService.initialize();
-   }
+class RecordEventProvider extends ChangeNotifier {
+  bool isRecording = false;
 
+  RecordEventProvider() {
+    listenToListeningStatus();
+  }
 
-   startRecording(){
-     isRecording=true;
-     SpeechToTextService.startListening();
-     notifyListeners();
-   }
+  void listenToListeningStatus() {
+    SpeechToTextService.listeningStatusStream.listen((isListening) {
+      isRecording = isListening;
 
-   stopRecording(){
-     isRecording=false;
-     SpeechToTextService.stopListening();
-     notifyListeners();
-   }
+      notifyListeners();
+    });
+  }
 
+  void initializeRecorder() {
+    SpeechToTextService.initialize();
+  }
 
+  void startRecording() {
+    SpeechToTextService.startListening();
+  }
+
+  void stopRecording() {
+    SpeechToTextService.stopListening();
+  }
 }

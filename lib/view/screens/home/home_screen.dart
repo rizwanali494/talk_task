@@ -7,7 +7,6 @@ import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
-import '../../../services/audio_recording_service.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../../utilis/date_formating.dart';
@@ -163,12 +162,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   else{
                     context.read<RecordEventProvider>().initializeRecorder();
                     context.read<RecordEventProvider>().startRecording();
+                    context.read<RecordEventProvider>().listenToListeningStatus();
 
                   }
 
                 },
                 child: Consumer<RecordEventProvider>(
                   builder: (context,value,child) {
+                    print('its still ${value.isRecording}');
                     return Image.asset(AppImages.iconMicrophone, height: 200.h,
                       color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,);
                   }
