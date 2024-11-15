@@ -1,47 +1,52 @@
-import 'dart:io';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+import 'dart:async';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:talk_task/services/permission_handler.dart';
 
-class AudioService {
-  FlutterSoundRecorder? _audioRecorder;
-  bool _isRecording = false;
-  String? _audioFilePath;
+class SpeechToTextService {
+  static stt.SpeechToText _speechToText = stt.SpeechToText();
+  static bool _isListening = false;
+  static String _text = "";
 
-  AudioService() {
-    _audioRecorder = FlutterSoundRecorder();
+
+  static Future<bool> initialize() async {
+    bool available = await _speechToText.initialize();
+    return available;
   }
 
-  // Initialize the recorder
-  Future<void> init() async {
-    await _audioRecorder!.openRecorder(isBGService: true);
+
+  static Future<bool> requestPermissions() async {
+    return PermissionHelper.checkAndRequestPermissions();
+
   }
 
-  // Start recording audio
-  Future<void> startRecording() async {
-    if (_isRecording) return;
-    final dir = await getApplicationDocumentsDirectory();
-    _audioFilePath = join(dir.path, 'audio_${DateTime.now().millisecondsSinceEpoch}.aac');
 
-    await _audioRecorder?.startRecorder(
-      toFile: _audioFilePath,
-      codec: Codec.aacADTS,
+  static Future<void> startListening() async {
+    bool hasPermission = await requestPermissions();
+    if (!hasPermission) {
+      return;
+    }
+
+    _speechToText.listen(
+      onResult: (result) {
+        _text = result.recognizedWords;
+      },
     );
-
-    _isRecording = true;
+    _isListening = true;
   }
 
-  // Stop recording audio
-  Future<String?> stopRecording() async {
-    if (!_isRecording) return null;
 
-    final result = await _audioRecorder?.stopRecorder();
-    _isRecording = false;
-    return _audioFilePath; // Returns the file path of the recorded audio
+  static Future<void> stopListening() async {
+    await _speechToText.stop();
+    _isListening = false;
   }
 
-  // Dispose of the recorder
-  Future<void> dispose() async {
-    await _audioRecorder?.closeRecorder();
+
+  static bool isListening() {
+    return _isListening;
+  }
+
+
+  static String getText() {
+    return _text;
   }
 }

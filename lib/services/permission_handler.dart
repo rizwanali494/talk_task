@@ -1,7 +1,12 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../utilis/app_constants.dart';
+import '../utilis/app_images.dart';
+import '../view/dialogues/permissions_dialogue.dart';
 
 class PermissionHelper {
 
@@ -55,8 +60,7 @@ class PermissionHelper {
 
 
   static void _showSettingsPrompt(String permissionType) async {
-    EasyLoading.showInfo('Please enable $permissionType permission in settings.');
-    await Future.delayed(const Duration(seconds: 3));
+    EasyLoading.showInfo('$permissionType permissions required ');
     await AppSettings.openAppSettings();
   }
 }

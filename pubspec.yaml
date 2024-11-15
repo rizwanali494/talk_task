@@ -56,7 +56,9 @@ dependencies:
   app_settings: ^5.1.1
   flutter_callkit_incoming: ^2.0.4+2
   permission_handler: ^10.2.0
-  flutter_sound: ^9.17.0
+  speech_to_text:
+  flutter_tts: ^4.0.2
+  audio_service: ^0.18.15
 
 
 

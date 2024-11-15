@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/services/permission_handler.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
+import '../../../services/audio_recording_service.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
 import '../../../utilis/date_formating.dart';
 import '../../../view_model/date_picker_provider.dart';
 import '../../../view_model/events_listner_provider.dart';
 import '../../../view_model/provider_list.dart';
+import '../../../view_model/record_event_provider.dart';
 import '../../../view_model/stream_button.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
@@ -143,11 +146,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     weight: FontWeight.w700),))
               ,
               InkWell(
-                onTap: (){
-                  showDialog(context: context, builder: (context)=>PermissionsDialogue(title: AppConstants.allowMicrophone, iconPath: AppImages.iconPermissionMicrophone, callBack: () {  },));
+                onTap: () async {
+                  bool permissionsGranted=false;
+                  permissionsGranted=await PermissionHelper.checkAndRequestPermissions();
+                  if(!permissionsGranted) {
+                    showDialog(context: context, builder: (context) =>
+                        PermissionsDialogue(title: AppConstants.allowMicrophone,
+                          iconPath: AppImages.iconPermissionMicrophone,
+                          callBack: () async {
+                            permissionsGranted=await PermissionHelper.checkAndRequestPermissions();
+                            if (permissionsGranted) {
+                              Navigator.of(context).pop();
+                            }
+                          },));
+                  }
+                  else{
+                    context.read<RecordEventProvider>().initializeRecorder();
+                    context.read<RecordEventProvider>().startRecording();
+
+                  }
+
                 },
-                child: Image.asset(AppImages.iconMicrophone, height: 200.h,
-                  color: AppColors.secondary,),
+                child: Consumer<RecordEventProvider>(
+                  builder: (context,value,child) {
+                    return Image.asset(AppImages.iconMicrophone, height: 200.h,
+                      color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,);
+                  }
+                ),
               )
               ,
               CustomFields.field(title: AppConstants.event,

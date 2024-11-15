@@ -18,6 +18,7 @@ import 'package:talk_task/view_model/call_picking_provider.dart';
 import 'package:talk_task/view_model/customization_screen_provider.dart';
 import 'package:talk_task/view_model/date_picker_provider.dart';
 import 'package:talk_task/view_model/events_listner_provider.dart';
+import 'package:talk_task/view_model/record_event_provider.dart';
 import 'package:talk_task/view_model/recurring_days_provider.dart';
 import 'package:talk_task/view_model/recurring_event_provider.dart';
 import 'package:talk_task/view_model/setting_provider.dart';
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
        ChangeNotifierProvider(create: (context) => EventsListenerProvider(),),
        ChangeNotifierProvider(create: (context) => DaySelectionProvider(),),
        ChangeNotifierProvider(create: (context) => RecurringvEventsProvider(),),
+       ChangeNotifierProvider(create: (context) => RecordEventProvider(),),
 
 
      ],
