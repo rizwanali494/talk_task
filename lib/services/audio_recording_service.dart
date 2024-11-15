@@ -29,6 +29,7 @@ class SpeechToTextService {
     _speechToText.listen(
       onResult: (result) {
         _text = result.recognizedWords;
+        print(_text);
       },
     );
     _isListening = true;
