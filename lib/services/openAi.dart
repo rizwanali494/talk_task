@@ -84,7 +84,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart'; // Import for formatting date and time
 
 Future<Map<String, String?>> extractFieldsUsingGPT(String input) async {
-  final apiKey = 'sk-OUdXCj-i-r45z9W9mgtRmCh1oKWSFJbEEZsZ-Iiw3dT3BlbkFJSyipG0Zu1CNUGuyP3d8oUsliy19vqvetGAVROdX0kA'; // Replace with your OpenAI API key
+  const apiKey = 'sk-OUdXCj-i-r45z9W9mgtRmCh1oKWSFJbEEZsZ-Iiw3dT3BlbkFJSyipG0Zu1CNUGuyP3d8oUsliy19vqvetGAVROdX0kA'; // Replace with your OpenAI API key
   final url = Uri.parse('https://api.openai.com/v1/chat/completions');
   final currentYear = DateTime.now().year;
    String now = DateTime.now().toString();
@@ -93,8 +93,8 @@ Future<Map<String, String?>> extractFieldsUsingGPT(String input) async {
 Extract the following fields from the input text:
 1. Event: A description of the event.
 2. Date: The date of the event (in YYYY-MM-DD format). If phrases like "today," "tomorrow," "next week," or "next month" are used, calculate according  to current date  which is  $now and convert them to the actual date.
-3. Time: The time of the event (in h:mm a format, e.g., 5:05 PM). If the time is described relative to the current time (e.g., "5 minutes from now"), calculate the correct time.
-4. Reminder Time: The time to send the reminder (in h:mm a format, e.g., 3:05 PM). Calculate it based on the time of the event and any time offset given (e.g., "30 minutes before").
+3. Time: The time of the event (in h:mm a format, e.g., 05:05 PM). If the time is described relative to the current time (e.g., "5 minutes from now"), calculate the correct time.
+4. Reminder Time: The time to send the reminder (in h:mm a format, e.g., 03:05 PM). Calculate it based on the time of the event and any time offset given (e.g., "30 minutes before").
 If a field is missing, return null for that field. The fields may appear in any order in the input. Always give hours in two digits like if its 5 give 05
 
 Input: "$input"
@@ -170,9 +170,9 @@ String? _handleRelativeDate(String? date) {
     case 'today':
       return DateFormat('yyyy-MM-dd').format(now);
     case 'tomorrow':
-      return DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 1)));
+      return DateFormat('yyyy-MM-dd').format(now.add(const Duration(days: 1)));
     case 'next week':
-      return DateFormat('yyyy-MM-dd').format(now.add(Duration(days: 7)));
+      return DateFormat('yyyy-MM-dd').format(now.add(const Duration(days: 7)));
     case 'next month':
       return DateFormat('yyyy-MM-dd').format(DateTime(now.year, now.month + 1, now.day));
     default:

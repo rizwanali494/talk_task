@@ -7,6 +7,7 @@ import 'package:talk_task/services/permission_handler.dart';
 import 'package:talk_task/utilis/date_formating.dart';
 
 import '../view_model/date_picker_provider.dart';
+import '../view_model/event_title_provider.dart';
 import '../view_model/time_picking_provider.dart';
 import 'openAi.dart';
 
@@ -45,7 +46,7 @@ class SpeechToTextService {
             Map result= await hitApi(text);
             Map eventTime= DateFormatting.formatAudioGivenTimeToHours(result['time']);
             Map eventRemainderTime= DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
-
+            context.read<EventTitleProvider>().setTitle((result['event']));
            context.read<DatePickerProvider>().selectDate(DateFormatting.formatDateToDateTime(result['date'], eventTime['hours'], eventTime['hours'], eventTime['amPm']));
 
             context.read<TimePickerProvider>().selectTime( hour: eventTime['hours'], minute: eventTime['minutes'], timeAmOrPm: eventTime['amPm']);
