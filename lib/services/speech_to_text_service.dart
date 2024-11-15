@@ -6,10 +6,7 @@ class SpeechToTextService {
   static stt.SpeechToText _speechToText = stt.SpeechToText();
   static bool _isListening = false;
   static String _text = "";
-
   static final _listeningStatusController = StreamController<bool>.broadcast();
-
-
   static Stream<bool> get listeningStatusStream => _listeningStatusController.stream;
 
   static Future<bool> initialize() async {
@@ -26,21 +23,37 @@ class SpeechToTextService {
     if (!hasPermission) {
       return;
     }
+    _speechToText.statusListener = (status) {
+    print(status);
+      _listeningStatusController.add(_speechToText.isListening);
+    };
 
     _speechToText.listen(
       onResult: (result) {
         _text = result.recognizedWords;
         print(_text);
       },
+      listenFor: const Duration(minutes: 5),
+      pauseFor: const Duration(seconds: 7),
+
+      onSoundLevelChange: (level) {
+        // if (level < -2 && _isListening) {
+        //   stopListening();
+        // }
+      },
     );
+    print(_speechToText.statusListener.runtimeType);
     _isListening = true;
     _listeningStatusController.add(_isListening);
   }
+
+
 
   static Future<void> stopListening() async {
     await _speechToText.stop();
     _isListening = false;
     _listeningStatusController.add(_isListening);
+    print("Stopped listening due to silence.");
   }
 
   static bool isListening() {
@@ -50,7 +63,6 @@ class SpeechToTextService {
   static String getText() {
     return _text;
   }
-
 
   static void dispose() {
     _listeningStatusController.close();
