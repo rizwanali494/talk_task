@@ -198,4 +198,11 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String createUserName = "Create username";
   static const String enterUserName = "Enter Username";
   static const String createUniqueUserName = "Please enter your unique username";
+
+  //dialogues permissions
+  static const String allowAccess = "Allow Access";
+  static const String allowMicrophone = "Please allow microphone permissions to use this feature";
+  static const String permissionRequired = "Permission Required";
+  static const String allowNotification = "Please allow notification permissions to use this feature";
+
 }

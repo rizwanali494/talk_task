@@ -16,8 +16,9 @@ import '../../../view_model/stream_button.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
-import '../dialogues/pick_date_dialogue.dart';
-import '../dialogues/pick_time_dialogue.dart';
+import '../../dialogues/permissions_dialogue.dart';
+import '../../dialogues/pick_date_dialogue.dart';
+import '../../dialogues/pick_time_dialogue.dart';
 import '../notification_screen/notification_screen.dart';
 
 
@@ -141,8 +142,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 20.sp,
                     weight: FontWeight.w700),))
               ,
-              Image.asset(AppImages.iconMicrophone, height: 200.h,
-                color: AppColors.secondary,)
+              InkWell(
+                onTap: (){
+                  showDialog(context: context, builder: (context)=>PermissionsDialogue(title: AppConstants.allowMicrophone, iconPath: AppImages.iconPermissionMicrophone, callBack: () {  },));
+                },
+                child: Image.asset(AppImages.iconMicrophone, height: 200.h,
+                  color: AppColors.secondary,),
+              )
               ,
               CustomFields.field(title: AppConstants.event,
                   onPressed: () {},

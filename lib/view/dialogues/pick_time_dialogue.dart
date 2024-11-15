@@ -213,8 +213,10 @@ import 'package:provider/provider.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_colors.dart';
 import 'package:talk_task/view_model/time_picking_provider.dart';
-import '../../common_widgets/custom_buttons.dart';
-import '../../common_widgets/custom_text.dart';
+
+import '../common_widgets/custom_buttons.dart';
+import '../common_widgets/custom_text.dart';
+
 
 class PickTimeDialogue extends StatefulWidget {
   final bool isRemainderTimePicker;

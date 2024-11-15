@@ -60,4 +60,9 @@ class AppImages{
   static String iconMail='assets/icons/mail_icon.png';
   static String iconApple='assets/icons/apple_icon.png';
 
+  //Permissions
+  static String iconPermissionMicrophone='assets/icons/microphone_permission_icon.png';
+  static String iconPermissionNotification='assets/icons/notification_permission_icon.png';
+
+
 }

@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
-import 'package:talk_task/utilis/date_formating.dart';
-import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
 import 'package:talk_task/view_model/recurring_event_provider.dart';
 import 'package:talk_task/view_model/stream_button.dart';
-import 'package:workmanager/workmanager.dart';
-import '../../../services/hive_service.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
-import '../../../utilis/app_mesages.dart';
 import '../../../view_model/provider_list.dart';
 import '../../../view_model/recurring_days_provider.dart';
 import '../../../view_model/time_picking_provider.dart';
@@ -23,7 +16,7 @@ import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
 import '../../common_widgets/custom_text_fields.dart';
-import '../dialogues/pick_time_dialogue.dart';
+import '../../dialogues/pick_time_dialogue.dart';
 import '../notification_screen/notification_screen.dart';
 
 

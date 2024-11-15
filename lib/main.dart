@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
          builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
           theme: lightTheme,
-          home: const SignUp(),
+          home: const SplashScreen(),
         ),
      ),
    );
