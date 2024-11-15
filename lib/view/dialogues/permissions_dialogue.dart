@@ -53,7 +53,7 @@ class PermissionsDialogue extends StatelessWidget{
              fontSize: 18.sp,fontWeight: FontWeight.bold,),
          SizedBox(height: 10.h,),
            CustomText(text: title,color: AppColors.blueDark002055,
-               fontSize: 16.sp,fontWeight: FontWeight.w500,),
+               fontSize: 16.sp,fontWeight: FontWeight.w500,textAlign: TextAlign.center,),
            SizedBox(height: 20.h,),
          SizedBox(
            width: double.infinity,
