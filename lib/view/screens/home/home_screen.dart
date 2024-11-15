@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                   else{
                     context.read<RecordEventProvider>().initializeRecorder();
-                    context.read<RecordEventProvider>().startRecording();
+                    context.read<RecordEventProvider>().startRecording(context);
                     context.read<RecordEventProvider>().listenToListeningStatus();
 
                   }

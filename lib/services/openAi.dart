@@ -95,7 +95,7 @@ Extract the following fields from the input text:
 2. Date: The date of the event (in YYYY-MM-DD format). If phrases like "today," "tomorrow," "next week," or "next month" are used, calculate according  to current date  which is  $now and convert them to the actual date.
 3. Time: The time of the event (in h:mm a format, e.g., 5:05 PM). If the time is described relative to the current time (e.g., "5 minutes from now"), calculate the correct time.
 4. Reminder Time: The time to send the reminder (in h:mm a format, e.g., 3:05 PM). Calculate it based on the time of the event and any time offset given (e.g., "30 minutes before").
-If a field is missing, return null for that field. The fields may appear in any order in the input.
+If a field is missing, return null for that field. The fields may appear in any order in the input. Always give hours in two digits like if its 5 give 05
 
 Input: "$input"
 

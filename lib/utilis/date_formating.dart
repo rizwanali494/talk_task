@@ -42,4 +42,31 @@ class DateFormatting{
     }
   }
 
+
+  static Map formatAudioGivenTimeToHours(String time){
+      final RegExp timeRegex = RegExp(r'(\d{1,2}):(\d{2})\s([APM]{2})');
+      final match = timeRegex.firstMatch(time);
+     try{
+       if (match != null) {
+         // Extracting hours, minutes, and AM/PM from the match
+         String hours = match.group(1)!;  // First group is the hours
+         String minutes = match.group(2)!;  // Second group is the minutes
+         String amPm = match.group(3)!;  // Third group is AM/PM
+
+         return {
+           'hours': hours,
+           'minutes': minutes,
+           'amPm': amPm,
+         };
+       } else {
+         throw FormatException('Invalid time format. Expected format: "h:mm AM/PM"');
+       }
+     }
+     catch(e){
+       return {};
+       print(e.toString());
+     }
+
+  }
+
 }
