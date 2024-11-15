@@ -41,18 +41,23 @@ class SpeechToTextService {
         text = result.recognizedWords;
         //hitApi(_text);
         if(result.finalResult){
-         Map result= await hitApi(text);
-        Map eventTime= DateFormatting.formatAudioGivenTimeToHours(result['time']);
-         Map eventRemainderTime= DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
-         print("${eventTime['hours']}:${eventTime['minutes']} AM");
-          context.read<DatePickerProvider>().selectDate(DateFormatting.
-          createDateTimeFromString(date: result['date'], time: "${eventTime['hours']} : ${eventTime['minutes']} AM"));
+          //try{
+            Map result= await hitApi(text);
+            Map eventTime= DateFormatting.formatAudioGivenTimeToHours(result['time']);
+            Map eventRemainderTime= DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
 
-          context.read<TimePickerProvider>().selectTime( hour: eventTime['hours'], minute: eventTime['minutes'], timeAmOrPm: eventTime['amPm']);
+           context.read<DatePickerProvider>().selectDate(DateFormatting.formatDateToDateTime(result['date'], eventTime['hours'], eventTime['hours'], eventTime['amPm']));
 
-          context.read<RemainderTimePickerProvider>().selectTime(  minute: eventRemainderTime['minutes'], timeAmOrPm: eventRemainderTime['amPm'],
-              hour: eventRemainderTime['hours']);
-        }
+            context.read<TimePickerProvider>().selectTime( hour: eventTime['hours'], minute: eventTime['minutes'], timeAmOrPm: eventTime['amPm']);
+
+            context.read<RemainderTimePickerProvider>().selectTime(  minute: eventRemainderTime['minutes'], timeAmOrPm: eventRemainderTime['amPm'],
+                hour: eventRemainderTime['hours']);
+          }
+          // catch(e){
+          //   print(e.toString());
+          // }
+
+
 
       },
       listenFor: const Duration(minutes: 5),
