@@ -64,6 +64,7 @@ class _RemainderState extends State<RecurringRemainders> {
       BooleanStreamManagerRecurringScreen.updateValue(false);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

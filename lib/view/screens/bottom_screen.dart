@@ -13,14 +13,15 @@ import '../../utilis/app_colors.dart';
 import '../../utilis/app_images.dart';
 import '../../view_model/bottom_nav_bar_provider.dart';
 import '../common_widgets/custom_app_bars.dart';
+import 'location_remainder/location_remainder.dart';
 
 
 
 
 class BottomScreen extends StatelessWidget{
    BottomScreen({super.key});
-  final List<String> _listIcons=[AppImages.iconNotes,AppImages.iconHome,AppImages.iconCalender];
-final List<Widget> _screens=[const RecurringRemainders(),const HomeScreen(),const CalenderScreen()];
+  final List<String> _listIcons=[AppImages.iconHome,AppImages.iconNotes,AppImages.iconMapsHome,AppImages.iconCalender];
+final List<Widget> _screens=[const HomeScreen(),const RecurringRemainders(),LocationRemainder(),const CalenderScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,7 @@ final List<Widget> _screens=[const RecurringRemainders(),const HomeScreen(),cons
                      _bottomIconBtn(iconPath: _listIcons[0], isSelected:value.selectedIndex!=0? false:true, index: 0, context: context),
                      _bottomIconBtn(iconPath: _listIcons[1], isSelected: value.selectedIndex!=1? false:true, index: 1, context: context),
                      _bottomIconBtn(iconPath: _listIcons[2], isSelected: value.selectedIndex!=2? false:true, index: 2, context: context),
+                     _bottomIconBtn(iconPath: _listIcons[3], isSelected: value.selectedIndex!=3? false:true, index: 3, context: context),
                    ],
                  );
                },

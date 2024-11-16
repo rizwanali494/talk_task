@@ -204,11 +204,19 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String createUserName = "Create username";
   static const String enterUserName = "Enter Username";
   static const String createUniqueUserName = "Please enter your unique username";
+  static const String locationRemainder = "Location Remainder";
+
 
   //dialogues permissions
   static const String allowAccess = "Allow Access";
   static const String allowMicrophone = "Please allow microphone permissions to use this feature";
   static const String permissionRequired = "Permission Required";
   static const String allowNotification = "Please allow notification permissions to use this feature";
+
+
+  //Location remainder
+  static const String location = "Location";
+  static const String notes = "Notes";
+
 
 }

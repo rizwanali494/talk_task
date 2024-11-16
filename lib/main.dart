@@ -12,6 +12,7 @@ import 'package:talk_task/services/local_notification_service.dart';
 import 'package:talk_task/splash_screen.dart';
 import 'package:talk_task/utilis/app_images.dart';
 import 'package:talk_task/utilis/app_themes.dart';
+import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/auth/sign_up.dart';
 import 'package:talk_task/view_model/bottom_nav_bar_provider.dart';
 import 'package:talk_task/view_model/call_picking_provider.dart';
@@ -35,6 +36,8 @@ void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) {
     NotificationService.initialize();
     NotificationService.showNotification(title: inputData?['title']??'', description: inputData?['date']??'');
+    HiveHelper.initHive();
+    HiveHelper.deleteDataFromBox(boxName: HiveBoxNames.events, key: inputData?['title']);
      simpleTaskCallback(task:task,data:inputData);
     return Future.value(true);
   });

@@ -80,10 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                barrierColor: AppColors.transparent,
                barrierDismissible: true,
                context: context, builder: (context)=>const HomeMenuDialogue());
-
           }) ,
       body:_body() ,
-      //drawer: Drawers.homeScreensDrawer(),
+
     );
   }
 

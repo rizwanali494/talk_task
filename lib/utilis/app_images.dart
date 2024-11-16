@@ -33,7 +33,7 @@ class AppImages{
   static String iconCalenderSync='assets/icons/calender_sync_icon.png';
   static String iconSignOut='assets/icons/sign_out_icon.png';
   static String iconSettingsHome='assets/icons/setting_home_icon.png';
-
+  static String iconMapsHome='assets/icons/maps_icon.png';
 
 
   //settings
