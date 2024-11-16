@@ -6,7 +6,9 @@ import '../../utilis/app_text_styles.dart';
 
 class CustomFields{
 
- static Widget field({required String title,required GestureTapCallback? onPressed, bool isReadOnly=true,required TextEditingController controller,
+ static Widget field({
+   int maxLines=1,
+   required String title,required GestureTapCallback? onPressed, bool isReadOnly=true,required TextEditingController controller,
  void Function(String)? onChanged,}){
     return Padding(
       padding:  EdgeInsets.symmetric(vertical: 3.h),
@@ -22,9 +24,11 @@ class CustomFields{
           ),
            SizedBox(height: 4.h,),
            SizedBox(
-             height: 45.h,
+             height:maxLines==1? 45.h:90.h,
              child: TextField(
               readOnly: isReadOnly,
+              maxLines: maxLines,
+              minLines: maxLines,
               onChanged: onChanged,
               style: AppTextStyles.poppins(color: AppColors.black, fontSize: 15.sp, weight: FontWeight.w400),
               controller: controller,

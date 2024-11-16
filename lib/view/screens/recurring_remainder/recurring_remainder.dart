@@ -113,7 +113,7 @@ class _RemainderState extends State<RecurringRemainders> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 4.h,),
-              Center(child:CustomText(text: AppConstants.addTask,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
+              Center(child:CustomText(text: AppConstants.addEvent,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
               , Center(child: Image.asset(AppImages.iconMicrophone,height: 185.h,color: AppColors.secondary,)),
               const SelectableButtonWidget(),
                SizedBox(height: 15.h,),

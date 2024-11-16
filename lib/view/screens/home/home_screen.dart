@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //  crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 8.h,),
-              Center(child: Text(AppConstants.addTask,
+              Center(child: Text(AppConstants.addEvent,
                 style: AppTextStyles.poppins(color: AppColors.blueDark002055,
                     fontSize: 20.sp,
                     weight: FontWeight.w700),))
