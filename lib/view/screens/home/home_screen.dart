@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Consumer<RecordEventProvider>(
                   builder: (context,value,child) {
                     print('its still ${value.isRecording}');
-                    return Image.asset(AppImages.iconMicrophone, height: 200.h,
+                    return Image.asset(AppImages.iconMicrophone, height: 185.h,
                       color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,);
                   }
                 ),

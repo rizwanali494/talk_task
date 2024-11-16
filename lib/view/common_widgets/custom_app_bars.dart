@@ -35,10 +35,15 @@ class AppBars {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
          children: [
-           Buttons.customIconButton(onPressed: (){
-             Navigator.pop(context);
-           }, icon: AppImages.iconBack),
 
+            InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: SizedBox(
+                    height: 44.h,
+                    width: 44.h,
+                    child: Image.asset(AppImages.iconSettingsBack))),
             CustomText(
               color: AppColors.blueDark002055,
               text: title,

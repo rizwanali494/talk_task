@@ -28,25 +28,6 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   String iosLink = "abc@gmail.com";
   String androidLink = "abc@gmail.com";
-  @override
-  void initState() {
-   // init();
-    super.initState();
-  }
-  //
-  // init() async {
-  //   await FirebaseFirestore.instance
-  //       .collection("Constants")
-  //       .doc("AppLinks")
-  //       .get()
-  //       .then((doc) {
-  //     iosLink = doc["IOS"];
-  //     androidLink = doc["Android"];
-  //   });
-  //   setState(() {
-  //
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

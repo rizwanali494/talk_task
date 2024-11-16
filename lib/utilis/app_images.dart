@@ -46,6 +46,7 @@ class AppImages{
   static String iconSettings='assets/icons/setting.png';
   static String iconCheck='assets/icons/check_icon.png';
   static String iconArchive='assets/icons/archived.png';
+  static String iconSettingsBack='assets/icons/settings_back_icon.png';
 
 
   //call screens
