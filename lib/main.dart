@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,10 +35,10 @@ import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) {
+  Workmanager().executeTask((task, inputData) async {
     NotificationService.initialize();
     NotificationService.showNotification(title: inputData?['title']??'', description: inputData?['date']??'');
-    HiveHelper.initHive();
+    await HiveHelper.initHive();
     HiveHelper.deleteDataFromBox(boxName: HiveBoxNames.events, key: inputData?['title']);
      simpleTaskCallback(task:task,data:inputData);
     return Future.value(true);
