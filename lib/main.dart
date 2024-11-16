@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
    const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-     get();
+    get();
     _preChacheImages(context);
    return MultiProvider(
      providers: [
@@ -98,8 +98,8 @@ class MyApp extends StatelessWidget {
     precacheImage(AssetImage(AppImages.imgSplash), context);
   }
 
-Future<void> get() async {
-  final directory = await getApplicationDocumentsDirectory();
-  print(directory.path);
-}
+   Future<void> get() async {
+     final directory = await getApplicationDocumentsDirectory();
+     print(directory.path);
+   }
 }

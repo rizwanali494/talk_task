@@ -114,7 +114,8 @@ class _RemainderState extends State<RecurringRemainders> {
               SizedBox(height: 4.h,),
               Center(child:CustomText(text: AppConstants.addTask,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
               , Center(child: Image.asset(AppImages.iconMicrophone,height: 185.h,color: AppColors.secondary,)),
-              buildSelectableButtonRow(),
+              const SelectableButtonWidget(),
+               SizedBox(height: 15.h,),
                CustomFields.field(
                   isReadOnly: false,
                   title: AppConstants.event, onPressed: (){}, controller: _eventController,
@@ -122,13 +123,10 @@ class _RemainderState extends State<RecurringRemainders> {
                 _checkFormValidity();
               }
               ),
+              SizedBox(height: 5.h,),
               CustomText(text:AppConstants.dailyWeeklyRemainder ,color: AppColors.grey787878, fontSize: 17.sp, fontWeight: FontWeight.w400),
               daySelector(context),
-              Row(children: [
-                Expanded(child: CustomFields.field(title: AppConstants.monthlyRemainder, onPressed: (){},controller: _monthlyController)),
-                SizedBox(width:10.w,),
-                Expanded(child: CustomFields.field(title: AppConstants.yearlyRemainder, onPressed: (){}, controller: _yearlyController)),
-              ],),
+              SizedBox(height: 5.h,),
               Row(children: [
                 Consumer<TimePickerProvider>(
                   builder: (BuildContext context,  value, Widget? child) {
@@ -263,33 +261,6 @@ class _RemainderState extends State<RecurringRemainders> {
 
 
 
-  Widget buildSelectableButtonRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        SelectableButton(
-          title: AppConstants.weekly,
-          onPressed: () {
-          },
-        ),
-        const SizedBox(width: 10),
-        SelectableButton(
-          title: AppConstants.monthly,
-          onPressed: () {
-
-          },
-        ),
-        const SizedBox(width: 10),
-        SelectableButton(
-          title: AppConstants.yearly,
-          onPressed: () {
-
-          },
-        ),
-      ],
-    );
-  }
-
 
   void _resetFieldValues(){
     ResetProviders.resetHomeProviders(context: context);
@@ -311,61 +282,52 @@ class _RemainderState extends State<RecurringRemainders> {
 
 
 
-class SelectableButton extends StatefulWidget {
-  final String title;
-  final VoidCallback onPressed;
-
-  const SelectableButton({
-    Key? key,
-    required this.title,
-    required this.onPressed,
-  }) : super(key: key);
+class SelectableButtonWidget extends StatefulWidget {
+  const SelectableButtonWidget({Key? key}) : super(key: key);
 
   @override
-  _SelectableButtonState createState() => _SelectableButtonState();
+  _SelectableButtonWidgetState createState() => _SelectableButtonWidgetState();
 }
 
-class _SelectableButtonState extends State<SelectableButton> {
-  bool _isSelected = false; // Track if the button is selected
+class _SelectableButtonWidgetState extends State<SelectableButtonWidget> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildSelectableButton(0, AppConstants.weekly),
+        _buildSelectableButton(1, AppConstants.monthly),
+        _buildSelectableButton(2, AppConstants.yearly),
+      ],
+    );
+  }
+
+  Widget _buildSelectableButton(int index, String title) {
+    bool isSelected = _selectedIndex == index;
+
     return ElevatedButton(
       onPressed: () {
         setState(() {
-          _isSelected = !_isSelected; // Toggle the selection state
+          _selectedIndex = index;
         });
-
-        // Call the provided onPressed function
-        widget.onPressed();
       },
       style: ElevatedButton.styleFrom(
-        foregroundColor: _isSelected ? Colors.white : AppColors.primary, backgroundColor: _isSelected ? AppColors.primary : Colors.white, // Text color
+        foregroundColor: isSelected ? AppColors.whiteFFFFF : AppColors.black,
+        backgroundColor: isSelected ? AppColors.blue05AAEC : AppColors.whiteFFFFF,
         side: BorderSide(
-          color: _isSelected ? AppColors.primary : AppColors.primary.withOpacity(0.3), // Border color
+          width: 1.4,
+          color: isSelected ? AppColors.blue05AAEC : AppColors.blue05AAEC.withOpacity(0.9),
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(20.r),
         ),
       ),
-      child: CustomText(
-        text: widget.title,
-        fontSize: 16, // Adjust based on your design
-        fontWeight: FontWeight.w400,
-        color: _isSelected ? Colors.white : AppColors.primary, // Text color
-      ),
+      child: CustomText(text: title,color:isSelected ? AppColors.whiteFFFFF : AppColors.black,fontSize: 16.sp,fontWeight: FontWeight.w400,)
     );
   }
 }
-
-
-
-
-
-
-
-
-
 
 //
 // if(_eventController.text.replaceAll(' ', '').isEmpty){
