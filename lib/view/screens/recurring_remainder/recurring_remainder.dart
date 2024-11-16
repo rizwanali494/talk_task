@@ -68,7 +68,7 @@ class _RemainderState extends State<RecurringRemainders> {
     return  Scaffold(
       backgroundColor: AppColors.whiteFFFFF,
       appBar: AppBars.appBarHomeScreens(title: AppConstants.recurringRemainders,
-          leadingBtnIcon: AppImages.iconNotifications, trailingBtnIcon: AppImages.iconSettings,
+          leadingBtnIcon: AppImages.iconUserPlus, trailingBtnIcon: AppImages.iconMenu,
           leadingOnpressed: (){
 
             Navigator.push(context, MyRoute(const NotificationScreen()));

@@ -17,6 +17,7 @@ import '../../../view_model/provider_list.dart';
 import '../../../view_model/record_event_provider.dart';
 import '../../../view_model/stream_button.dart';
 import '../../../view_model/time_picking_provider.dart';
+import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../../dialogues/permissions_dialogue.dart';
@@ -70,34 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: AppColors.whiteFFFFF,
-      appBar:_topBar() ,
+      appBar:AppBars.appBarHomeScreens(title: AppConstants.taskAi,
+          leadingBtnIcon: AppImages.iconUserPlus, trailingBtnIcon: AppImages.iconMenu, leadingOnpressed: (){}, tailingOnpressed: (){}) ,
       body:_body() ,
     );
   }
 
-
-
-  //top appbar
-  AppBar _topBar(){
-    return AppBar(
-      backgroundColor: AppColors.whiteFFFFF,
-      surfaceTintColor: AppColors.whiteFFFFF,
-      flexibleSpace: Padding(
-        padding:  EdgeInsets.only(top: 8.h),
-        child: Row(
-          children: [
-            SizedBox(width: 20.w,),
-            Text(AppConstants.taskAi,style: AppTextStyles.poppins(color: AppColors.blueDark002055, fontSize: 20.sp, weight: FontWeight.w700),),
-            const Spacer(),
-            Buttons.customIconButton(onPressed: (){
-              Navigator.push(context, MyRoute(const NotificationScreen()));
-            }, icon: AppImages.iconNotifications),
-            SizedBox(width: 20.w,),
-          ],),
-      ),
-
-    );
-  }
 
 
 

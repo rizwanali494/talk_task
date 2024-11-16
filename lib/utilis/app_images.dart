@@ -27,6 +27,9 @@ class AppImages{
   static String iconNotes='assets/icons/note.png';
   static String iconMicrophone='assets/images/microphone.png';
   static String iconCalender='assets/icons/calendar.png';
+  static String iconUserPlus='assets/icons/user_plus_icon.png';
+  static String iconMenu='assets/icons/menu_icon.png';
+
 
 
 

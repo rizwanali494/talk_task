@@ -38,7 +38,10 @@ class Buttons{
             color: AppColors.primary,
             shape: BoxShape.circle
         ),
-        child: Image.asset(icon,height: 45.h,),
+        child: Padding(
+          padding:  EdgeInsets.all(9.r),
+          child: Image.asset(icon,height: 45.h,color: AppColors.whiteFFFFF,),
+        ),
       ),
     );
   }

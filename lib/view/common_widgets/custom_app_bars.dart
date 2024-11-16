@@ -68,19 +68,20 @@ class AppBars {
       flexibleSpace: Padding(
         padding: EdgeInsets.only(top: 8.h),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
+            SizedBox(width: 12.w,),
+            CustomText(text: title,fontSize: 20.sp,fontWeight: FontWeight.w700,color: AppColors.blueDark002055,),
+            const Spacer(),
             Padding(
               padding:  EdgeInsets.only(left: 13.w),
               child: Buttons.customIconButton(onPressed: leadingOnpressed, icon: leadingBtnIcon),
             ),
-           CustomText(text: title,fontSize: 20.sp,fontWeight: FontWeight.w700,color: AppColors.blueDark002055,),
+            SizedBox(width: 7.w,),
             Padding(
               padding:  EdgeInsets.only(right: 13.w),
               child: Buttons.customIconButton(onPressed: tailingOnpressed, icon: trailingBtnIcon),
             ),
-
+            SizedBox(width: 10.w,),
 
           ],
         ),
