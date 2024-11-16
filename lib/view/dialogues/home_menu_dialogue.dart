@@ -26,7 +26,7 @@ class HomeMenuDialogue extends StatelessWidget{
 
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.r),side: BorderSide(color: AppColors.greyLight.withOpacity(0.1))),
       child: Container(
-        height: 390.h,
+        //height: 390.h,
         width: 200.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9.r),
@@ -39,10 +39,12 @@ class HomeMenuDialogue extends StatelessWidget{
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _button(title: AppConstants.settings, onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(MyRoute(const SettingScreen()));
               }, iconPath: AppImages.iconSettingsHome),
               _button(title: AppConstants.calenderSync, onPressed: () {  }, iconPath: AppImages.iconCalenderSync),
               _button(title: AppConstants.notifications, onPressed: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).push(MyRoute(const NotificationScreen()));
               }, iconPath: AppImages.iconNotificationHome),
               _button(title: AppConstants.signOut, onPressed: () {  }, iconPath: AppImages.iconSignOut),
