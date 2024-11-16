@@ -16,6 +16,7 @@ import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_cards.dart';
 import '../../common_widgets/custom_text_fields.dart';
+import '../../dialogues/home_menu_dialogue.dart';
 import '../../dialogues/pick_time_dialogue.dart';
 import '../notification_screen/notification_screen.dart';
 
@@ -70,10 +71,11 @@ class _RemainderState extends State<RecurringRemainders> {
       appBar: AppBars.appBarHomeScreens(title: AppConstants.recurringRemainders,
           leadingBtnIcon: AppImages.iconUserPlus, trailingBtnIcon: AppImages.iconMenu,
           leadingOnpressed: (){
-
-            Navigator.push(context, MyRoute(const NotificationScreen()));
           }, tailingOnpressed: (){
-            Navigator.push(context, MyRoute(const SettingScreen()));
+            showDialog(
+                barrierColor: AppColors.transparent,
+                barrierDismissible: true,
+                context: context, builder: (context)=>const HomeMenuDialogue());
           }),
       body: SingleChildScrollView(
           child: Column(

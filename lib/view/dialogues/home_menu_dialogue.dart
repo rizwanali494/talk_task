@@ -19,19 +19,19 @@ class HomeMenuDialogue extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 390.h,
-      width: 200.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(9.r),
+    return Dialog(
+      alignment: Alignment.topRight,
+      backgroundColor: AppColors.whiteFFFFF,
+         elevation: 2,
 
-      ),
-      child: Dialog(
-        alignment: Alignment.topRight,
-        backgroundColor: AppColors.whiteFFFFF,
-     elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.r),side: BorderSide(color: AppColors.greyLight.withOpacity(0.1))),
+      child: Container(
+        height: 390.h,
+        width: 200.w,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(9.r),
 
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.r),side: BorderSide(color: AppColors.greyLight.withOpacity(0.1))),
+        ),
         child: Padding(
           padding:  EdgeInsets.symmetric(horizontal: 10.w),
           child:  Column(
@@ -58,8 +58,9 @@ class HomeMenuDialogue extends StatelessWidget{
     return  GestureDetector(
       onTap: onPressed,
       child: SizedBox(
-          height: 45.h,
+          height: 55.h,
         child: Row(children: [
+          SizedBox(width: 5.w,),
           Image.asset(iconPath,height: 23.h,color: AppColors.black,),
           SizedBox(width: 10.w,),
           CustomText(text: title,fontSize: 16.sp,fontWeight: FontWeight.w400,color: AppColors.black,),
