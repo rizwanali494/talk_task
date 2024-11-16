@@ -29,7 +29,10 @@ class AppImages{
   static String iconCalender='assets/icons/calendar.png';
   static String iconUserPlus='assets/icons/user_plus_icon.png';
   static String iconMenu='assets/icons/menu_icon.png';
-
+  static String iconNotificationHome='assets/icons/notification_home_icon.png';
+  static String iconCalenderSync='assets/icons/calender_sync_icon.png';
+  static String iconSignOut='assets/icons/sign_out_icon.png';
+  static String iconSettingsHome='assets/icons/setting_home_icon.png';
 
 
 

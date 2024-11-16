@@ -67,4 +67,5 @@ class Buttons{
   static Widget textButton({required String title,required VoidCallback ? onPressed,}){
     return TextButton(onPressed: onPressed, child: Text(title,style: AppTextStyles.poppins(color: AppColors.primary, fontSize: 15.sp, weight: FontWeight.w500,shouldUnderline: true),));
   }
+
 }

@@ -19,7 +19,9 @@ import '../../../view_model/stream_button.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
+import '../../common_widgets/custom_drawer.dart';
 import '../../common_widgets/custom_text_fields.dart';
+import '../../dialogues/home_menu_dialogue.dart';
 import '../../dialogues/permissions_dialogue.dart';
 import '../../dialogues/pick_date_dialogue.dart';
 import '../../dialogues/pick_time_dialogue.dart';
@@ -40,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _dateController= TextEditingController();
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -70,10 +72,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppColors.whiteFFFFF,
       appBar:AppBars.appBarHomeScreens(title: AppConstants.taskAi,
-          leadingBtnIcon: AppImages.iconUserPlus, trailingBtnIcon: AppImages.iconMenu, leadingOnpressed: (){}, tailingOnpressed: (){}) ,
+          leadingBtnIcon: AppImages.iconUserPlus, trailingBtnIcon: AppImages.iconMenu, leadingOnpressed: (){}, tailingOnpressed: (){
+           showDialog(
+               barrierColor: AppColors.transparent,
+               barrierDismissible: true,
+               context: context, builder: (context)=>const HomeMenuDialogue());
+
+          }) ,
       body:_body() ,
+      //drawer: Drawers.homeScreensDrawer(),
     );
   }
 

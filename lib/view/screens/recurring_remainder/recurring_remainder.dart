@@ -226,10 +226,10 @@ class _RemainderState extends State<RecurringRemainders> {
                   _checkFormValidity();
                 },
                 child: Container(
-                  height: 54.h,
-                  width: 54.h,
+                  height: 51.h,
+                  width: 51.h,
                   clipBehavior: Clip.antiAlias,
-                  margin: const EdgeInsets.all(1),
+                  margin: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(

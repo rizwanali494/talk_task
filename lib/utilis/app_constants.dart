@@ -162,6 +162,9 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String setTime = "Set Time";
   static const String save = "Save";
   static const String cancel = "Cancel";
+  static const String calenderSync = "Sync google calender";
+  static const String notifications = "Notifications";
+  static const String signOut = "Sign out";
 
   //recurring remainders
   static const String recurringRemainders = "Recurring Remainders ";
