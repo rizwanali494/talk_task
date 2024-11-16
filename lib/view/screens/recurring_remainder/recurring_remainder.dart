@@ -113,8 +113,9 @@ class _RemainderState extends State<RecurringRemainders> {
             children: [
               SizedBox(height: 4.h,),
               Center(child:CustomText(text: AppConstants.addTask,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
-              , Center(child: Image.asset(AppImages.iconMicrophone,height: 185.h,color: AppColors.secondary,))
-              ,  CustomFields.field(
+              , Center(child: Image.asset(AppImages.iconMicrophone,height: 185.h,color: AppColors.secondary,)),
+              buildSelectableButtonRow(),
+               CustomFields.field(
                   isReadOnly: false,
                   title: AppConstants.event, onPressed: (){}, controller: _eventController,
               onChanged: (a){
@@ -260,6 +261,36 @@ class _RemainderState extends State<RecurringRemainders> {
     );
   }
 
+
+
+  Widget buildSelectableButtonRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SelectableButton(
+          title: AppConstants.weekly,
+          onPressed: () {
+          },
+        ),
+        const SizedBox(width: 10),
+        SelectableButton(
+          title: AppConstants.monthly,
+          onPressed: () {
+
+          },
+        ),
+        const SizedBox(width: 10),
+        SelectableButton(
+          title: AppConstants.yearly,
+          onPressed: () {
+
+          },
+        ),
+      ],
+    );
+  }
+
+
   void _resetFieldValues(){
     ResetProviders.resetHomeProviders(context: context);
     _eventController.text='';
@@ -271,6 +302,61 @@ class _RemainderState extends State<RecurringRemainders> {
 
 }
 
+
+
+
+
+
+
+
+
+
+class SelectableButton extends StatefulWidget {
+  final String title;
+  final VoidCallback onPressed;
+
+  const SelectableButton({
+    Key? key,
+    required this.title,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  _SelectableButtonState createState() => _SelectableButtonState();
+}
+
+class _SelectableButtonState extends State<SelectableButton> {
+  bool _isSelected = false; // Track if the button is selected
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _isSelected = !_isSelected; // Toggle the selection state
+        });
+
+        // Call the provided onPressed function
+        widget.onPressed();
+      },
+      style: ElevatedButton.styleFrom(
+        foregroundColor: _isSelected ? Colors.white : AppColors.primary, backgroundColor: _isSelected ? AppColors.primary : Colors.white, // Text color
+        side: BorderSide(
+          color: _isSelected ? AppColors.primary : AppColors.primary.withOpacity(0.3), // Border color
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      child: CustomText(
+        text: widget.title,
+        fontSize: 16, // Adjust based on your design
+        fontWeight: FontWeight.w400,
+        color: _isSelected ? Colors.white : AppColors.primary, // Text color
+      ),
+    );
+  }
+}
 
 
 

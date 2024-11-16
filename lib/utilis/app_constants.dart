@@ -170,6 +170,9 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String recurringRemainders = "Recurring Remainders ";
   static const String monthlyRemainder = "Monthly Remainders: ";
   static const String yearlyRemainder = "Yearly Remainders: ";
+  static const String weekly = "Weekly";
+  static const String monthly = "Monthly";
+  static const String yearly = "Yearly";
 
 
   //call screens
