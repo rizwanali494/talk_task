@@ -35,7 +35,7 @@ class Buttons{
         width:45.h ,
         clipBehavior: Clip.antiAlias,
         decoration:  const BoxDecoration(
-            color: AppColors.primary,
+            color: AppColors.blue05AAEC,
             shape: BoxShape.circle
         ),
         child: Padding(
