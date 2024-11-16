@@ -105,7 +105,7 @@ class _PickDateDialogueState extends State<PickDateDialogue> {
                       view: CalendarView.month,
                       cellBorderColor: AppColors.transparent,
                       firstDayOfWeek: 1,
-                      showNavigationArrow: false, // Disable default navigation arrows
+                      showNavigationArrow: true, // Disable default navigation arrows
                       onSelectionChanged: (calenderDetails) {
                         final DateTime selectedDate = calenderDetails.date!;
                         if (selectedDate.isBefore(today)) {

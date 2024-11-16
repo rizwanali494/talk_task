@@ -19,15 +19,11 @@ Future<void> simpleTask({required String task,required Map<String, dynamic>? dat
     if (event!.event == Event.actionCallAccept) {
       print('accpted');
     }
-
     else if (event.event == Event.actionCallIncoming) {
       // Navigator.of(initialContext!).push(MyRoute(
       //     CallScreen(date: data?['date'] ?? "", time: data?['time'] ?? "",)));
     }
   });
-
-
-
 }
 
 

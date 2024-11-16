@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/services/permission_handler.dart';
 import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
+import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view_model/event_title_provider.dart';
@@ -75,7 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
       key: _scaffoldKey,
       backgroundColor: AppColors.whiteFFFFF,
       appBar:AppBars.appBarHomeScreens(title: AppConstants.taskAi,
-          leadingBtnIcon: AppImages.iconUserPlus, trailingBtnIcon: AppImages.iconMenu, leadingOnpressed: (){}, tailingOnpressed: (){
+          leadingBtnIcon: AppImages.iconUserPlus, trailingBtnIcon: AppImages.iconMenu, leadingOnpressed: (){
+          }, tailingOnpressed: (){
            showDialog(
                barrierColor: AppColors.transparent,
                barrierDismissible: true,

@@ -48,7 +48,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
               fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
           ),
           SizedBox(height: 5.h,),
-          _displayEvents()
+          //_displayEvents()
         ],),
       ),
     );

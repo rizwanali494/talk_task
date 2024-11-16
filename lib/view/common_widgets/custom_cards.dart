@@ -25,7 +25,9 @@ class CustomCards{
         SizedBox(height: 5.h,),
         Row(children: [
           CustomText(text: AppConstants.event,color: AppColors.grey787878.withOpacity(0.9), fontSize: 20.sp, fontWeight: FontWeight.w500),
-          Text(event,style: eventStyle,),
+          Container(
+              width: 1.sw*0.7,
+              child: Text(event,style: eventStyle,maxLines: 2,overflow: TextOverflow.ellipsis,)),
         ],),
         SizedBox(height: 5.h,),
         Row(children: [
