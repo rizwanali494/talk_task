@@ -181,19 +181,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context,value,child) {
                   if(value.title.isNotEmpty){
                     _eventController.text=value.title;
+                    _checkFormValidity();
                   }
                   return CustomFields.field(title: AppConstants.event,
                       onPressed: () {},
                       onChanged: (a){
                    // context.read()
                         _checkFormValidity();
-
                       },
                       controller: _eventController,
                       isReadOnly: false);
                 }
               )
               ,
+
               Consumer<DatePickerProvider>(
                   builder: (BuildContext context, value, Widget? child) {
                     if (value.selectedDate != null) {
