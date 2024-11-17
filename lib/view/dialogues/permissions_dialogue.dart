@@ -57,7 +57,7 @@ class PermissionsDialogue extends StatelessWidget{
            SizedBox(height: 20.h,),
          SizedBox(
            width: double.infinity,
-           height: 54.h,
+           height: 50.h,
            child: Buttons.customElevatedButton(title: AppConstants.allowAccess,
                backgroundColor: AppColors.blue05AAEC, textColor: AppColors.whiteFFFFF,
                onPressed: callBack, isDisabled: false),

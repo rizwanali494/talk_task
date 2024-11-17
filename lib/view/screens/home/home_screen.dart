@@ -1,12 +1,10 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:talk_task/services/hive_service.dart';
 import 'package:talk_task/services/permission_handler.dart';
 import 'package:talk_task/utilis/app_constants.dart';
-import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
-import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view_model/event_title_provider.dart';
@@ -21,13 +19,11 @@ import '../../../view_model/stream_button.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
-import '../../common_widgets/custom_drawer.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../../dialogues/home_menu_dialogue.dart';
 import '../../dialogues/permissions_dialogue.dart';
 import '../../dialogues/pick_date_dialogue.dart';
 import '../../dialogues/pick_time_dialogue.dart';
-import '../notification_screen/notification_screen.dart';
 
 
 
@@ -139,17 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
               InkWell(
                 onTap: () async {
                   bool permissionsGranted=false;
-                  permissionsGranted=await PermissionHelper.checkAndRequestPermissions();
+                  permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
                   if(!permissionsGranted) {
-                    showDialog(context: context, builder: (context) =>
-                        PermissionsDialogue(title: AppConstants.allowMicrophone,
-                          iconPath: AppImages.iconPermissionMicrophone,
-                          callBack: () async {
-                            permissionsGranted=await PermissionHelper.checkAndRequestPermissions();
-                            if (permissionsGranted) {
-                              Navigator.of(context).pop();
-                            }
-                          },));
+                    print('denied bro');
+                   // await PermissionHelper.openAppSettings();
                   }
                   else{
                     context.read<RecordEventProvider>().initializeRecorder();

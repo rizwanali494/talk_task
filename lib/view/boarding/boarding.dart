@@ -23,11 +23,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  @override
-  initState(){
-    super.initState();
-    PermissionHelper.checkAndRequestPermissions();
-  }
 
   Future<void> _onNextPressed() async {
     if (_currentPage < 2) {
@@ -36,8 +31,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-     bool permissionsGranted=await PermissionHelper.checkAndRequestPermissions();
-     if(!permissionsGranted){
+
+      bool isNotificationAllowed = await PermissionHelper.checkAndRequestNotificationPermission(context: context);
+     if(!isNotificationAllowed){
        return;
      }
       await prefs.setBool(AppPrefs.onBoardingShown, true);

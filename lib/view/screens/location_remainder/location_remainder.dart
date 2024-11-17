@@ -89,17 +89,9 @@ class LocationRemainder extends StatelessWidget{
               InkWell(
                 onTap: () async {
                   bool permissionsGranted=false;
-                  permissionsGranted=await PermissionHelper.checkAndRequestPermissions();
+                  permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
                   if(!permissionsGranted) {
-                    showDialog(context: context, builder: (context) =>
-                        PermissionsDialogue(title: AppConstants.allowMicrophone,
-                          iconPath: AppImages.iconPermissionMicrophone,
-                          callBack: () async {
-                            permissionsGranted=await PermissionHelper.checkAndRequestPermissions();
-                            if (permissionsGranted) {
-                              Navigator.of(context).pop();
-                            }
-                          },));
+                   print('denied');
                   }
                   else{
                     context.read<RecordEventProvider>().initializeRecorder();

@@ -2,10 +2,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:talk_task/main.dart';
 import 'package:talk_task/services/permission_handler.dart';
 import 'package:talk_task/utilis/date_formating.dart';
-
 import '../view_model/date_picker_provider.dart';
 import '../view_model/event_title_provider.dart';
 import '../view_model/time_picking_provider.dart';
@@ -23,11 +21,11 @@ class SpeechToTextService {
     return available;
   }
 
-  static Future<bool> requestPermissions() async {
-    return PermissionHelper.checkAndRequestPermissions();
+  static Future<bool> requestPermissions({required BuildContext context}) async {
+    return PermissionHelper.checkAndRequestPermissions(context: context);
   }
   static Future<void> startListening(BuildContext context) async {
-    bool hasPermission = await requestPermissions();
+    bool hasPermission = await requestPermissions( context: context);
     if (!hasPermission) {
       return;
     }
