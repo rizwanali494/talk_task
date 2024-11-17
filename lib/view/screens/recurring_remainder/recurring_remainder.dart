@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/utilis/app_constants.dart';
-import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
+import 'package:talk_task/view/screens/recurring_remainder/select_monthly_weekly.dart';
 import 'package:talk_task/view_model/recurring_event_provider.dart';
 import 'package:talk_task/view_model/stream_button.dart';
+import '../../../services/permission_handler.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../view_model/event_title_provider.dart';
 import '../../../view_model/provider_list.dart';
+import '../../../view_model/record_event_provider.dart';
 import '../../../view_model/recurring_days_provider.dart';
 import '../../../view_model/time_picking_provider.dart';
 import '../../common_widgets/custom_app_bars.dart';
@@ -31,8 +34,6 @@ class RecurringRemainders extends StatefulWidget {
 class _RemainderState extends State<RecurringRemainders> {
 
   final TextEditingController _eventController= TextEditingController();
-  final TextEditingController _monthlyController= TextEditingController();
-  final TextEditingController _yearlyController= TextEditingController();
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
   final List<String>  _listDays = ["M", "Tu", "W", "Th", "F", "Sa", "Su"];
@@ -112,15 +113,24 @@ class _RemainderState extends State<RecurringRemainders> {
             children: [
               SizedBox(height: 4.h,),
               Center(child:CustomText(text: AppConstants.addEvent,color: AppColors.blueDark002055,fontSize: 20.sp,fontWeight: FontWeight.w700,))
-              , Center(child: Image.asset(AppImages.iconMicrophone,height: 185.h,color: AppColors.secondary,)),
+              ,_microphone(),
               const SelectableButtonWidget(),
                SizedBox(height: 15.h,),
-               CustomFields.field(
-                  isReadOnly: false,
-                  title: AppConstants.event, onPressed: (){}, controller: _eventController,
-              onChanged: (a){
-                _checkFormValidity();
-              }
+              Consumer<EventTitleProvider>(
+                  builder: (context,value,child) {
+                    if(value.title.isNotEmpty){
+                      _eventController.text=value.title;
+                      _checkFormValidity();
+                    }
+                    return CustomFields.field(title: AppConstants.event,
+                        onPressed: () {},
+                        onChanged: (a){
+                          // context.read()
+                          _checkFormValidity();
+                        },
+                        controller: _eventController,
+                        isReadOnly: false);
+                  }
               ),
               SizedBox(height: 5.h,),
               CustomText(text:AppConstants.dailyWeeklyRemainder ,color: AppColors.grey787878, fontSize: 17.sp, fontWeight: FontWeight.w400),
@@ -159,34 +169,77 @@ class _RemainderState extends State<RecurringRemainders> {
 
               ],),
               SizedBox(height: 8.h,)
-              ,StreamBuilder<bool>(
-                  builder: (context,snap) {
-                    return SizedBox(
-                        width: 1.sw*0.9,
-                        child: Buttons.customElevatedButton(title: AppConstants.addEvent,
-                            backgroundColor:snap.data== true
-                                ? AppColors.blue05AAEC
-                                : AppColors.greyDark6C6D6D.withOpacity(0.5),
-                            textColor: AppColors.whiteFFFFF, onPressed: (){
-                              context.read<RecurringvEventsProvider>().addRecurringEventHive(
-                                eventTitle: _eventController.text,
-                                eventTime: _timeController.text,
-                                remainderTime: _remainderTimeController.text,
-                                repeatingDays: context.read<DaySelectionProvider>().selectedDays,
-                                context: context,
-                              );
-
-                              _resetFieldValues();
-                              _checkFormValidity();
-
-                            }, isDisabled: snap.data==true ? false:true ));
-                  }, stream: BooleanStreamManagerRecurringScreen.boolStream,
-              )
+              ,
+              _addButton()
             ],),
         ),
       ),
     );
   }
+
+
+
+
+  Widget _microphone(){
+    return  InkWell(
+      onTap: () async {
+
+        bool permissionsGranted=false;
+        permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
+        if(!permissionsGranted  ) {
+          await PermissionHelper.openAppSettings();
+        }
+        else{
+          context.read<RecordEventProvider>().initializeRecorder();
+          context.read<RecordEventProvider>().startRecording(context);
+          context.read<RecordEventProvider>().listenToListeningStatus();
+
+        }
+
+      },
+      child: Consumer<RecordEventProvider>(
+          builder: (context,value,child) {
+            print('its still ${value.isRecording}');
+            return Center(
+              child: Image.asset(AppImages.iconMicrophone, height: 185.h,
+                color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,),
+            );
+          }
+      ),
+    );
+  }
+
+
+
+
+
+  Widget _addButton(){
+    return StreamBuilder<bool>(
+      builder: (context,snap) {
+        return SizedBox(
+            width: 1.sw*0.9,
+            child: Buttons.customElevatedButton(title: AppConstants.addEvent,
+                backgroundColor:snap.data== true
+                    ? AppColors.blue05AAEC
+                    : AppColors.greyDark6C6D6D.withOpacity(0.5),
+                textColor: AppColors.whiteFFFFF, onPressed: (){
+                  context.read<RecurringvEventsProvider>().addRecurringEventHive(
+                    eventTitle: _eventController.text,
+                    eventTime: _timeController.text,
+                    remainderTime: _remainderTimeController.text,
+                    repeatingDays: context.read<DaySelectionProvider>().selectedDays,
+                    context: context,
+                  );
+
+                  _resetFieldValues();
+                  _checkFormValidity();
+
+                }, isDisabled: snap.data==true ? false:true ));
+      }, stream: BooleanStreamManagerRecurringScreen.boolStream,
+    );
+  }
+
+
 
 
   Widget _displayEvents() {
@@ -280,63 +333,6 @@ class _RemainderState extends State<RecurringRemainders> {
 
 
 
-
-class SelectableButtonWidget extends StatefulWidget {
-  const SelectableButtonWidget({Key? key}) : super(key: key);
-
-  @override
-  _SelectableButtonWidgetState createState() => _SelectableButtonWidgetState();
-}
-
-class _SelectableButtonWidgetState extends State<SelectableButtonWidget> {
-  int _selectedIndex = 0;
- final List<String> _listBoxNames=[
-    HiveBoxNames.weeklyEvents,
-    HiveBoxNames.monthlyEvents,
-    HiveBoxNames.yearlyEvents
-  ];
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildSelectableButton(0, AppConstants.weekly),
-        _buildSelectableButton(1, AppConstants.monthly),
-        _buildSelectableButton(2, AppConstants.yearly),
-      ],
-    );
-  }
-
-  Widget _buildSelectableButton(int index, String title) {
-    bool isSelected = _selectedIndex == index;
-
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          _selectedIndex = index;
-          context.read<RecurringvEventsProvider>().selectedTenure=_listBoxNames[index];
-          context.read<RecurringvEventsProvider>().listenEventsBox();
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        foregroundColor: isSelected ? AppColors.whiteFFFFF : AppColors.black,
-        backgroundColor: isSelected ? AppColors.blue05AAEC : AppColors.whiteFFFFF,
-        side: BorderSide(
-          width: 1.4,
-          color: isSelected ? AppColors.blue05AAEC : AppColors.blue05AAEC.withOpacity(0.9),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-      ),
-      child: CustomText(text: title,color:isSelected ? AppColors.whiteFFFFF : AppColors.black,fontSize: 16.sp,fontWeight: FontWeight.w400,)
-    );
-  }
-
-
-}
 
 //
 // if(_eventController.text.replaceAll(' ', '').isEmpty){

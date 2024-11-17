@@ -1,4 +1,3 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +20,6 @@ import '../../common_widgets/custom_app_bars.dart';
 import '../../common_widgets/custom_buttons.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../../dialogues/home_menu_dialogue.dart';
-import '../../dialogues/permissions_dialogue.dart';
 import '../../dialogues/pick_date_dialogue.dart';
 import '../../dialogues/pick_time_dialogue.dart';
 
@@ -41,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-   int isAskedPermission=0;
+
   @override
   void initState() {
     super.initState();
@@ -132,32 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 20.sp,
                     weight: FontWeight.w700),))
               ,
-              InkWell(
-                onTap: () async {
-
-                 isAskedPermission++;
-                  bool permissionsGranted=false;
-                  permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
-                  if(!permissionsGranted  ) {
-                    await PermissionHelper.openAppSettings();
-                  }
-                  else{
-                    context.read<RecordEventProvider>().initializeRecorder();
-                    context.read<RecordEventProvider>().startRecording(context);
-                    context.read<RecordEventProvider>().listenToListeningStatus();
-
-                  }
-
-                },
-                child: Consumer<RecordEventProvider>(
-                  builder: (context,value,child) {
-                    print('its still ${value.isRecording}');
-                    return Image.asset(AppImages.iconMicrophone, height: 185.h,
-                      color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,);
-                  }
-                ),
-              )
-              ,
+              _microphone(),
               Consumer<EventTitleProvider>(
                 builder: (context,value,child) {
                   if(value.title.isNotEmpty){
@@ -228,39 +201,78 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
 
-              SizedBox(height: 8.h,)
-              ,
-              SizedBox(
-                  width: 1.sw * 0.9,
-                  child: StreamBuilder<bool>(
-                      builder: (context, snap) {
-                        return Buttons.customElevatedButton(
-                            title: AppConstants.addEvent,
-                            backgroundColor:snap.data== true
-                                ? AppColors.blue05AAEC
-                                : AppColors.greyDark6C6D6D.withOpacity(0.5),
-                            textColor: AppColors.whiteFFFFF,
-                            onPressed: () async {
-                              context.read<EventsListenerProvider>().addEventInHive(eventTitle: _eventController.text,
-                                  eventTime: _timeController.text,
-                                  remainderTime: _remainderTimeController.text,
-                                  eventDate: DateFormatting
-                                      .createDateTimeFromString(
-                                      date: _dateController.text,
-                                      time: _timeController.text),
-                                  context: context);
+              SizedBox(height: 8.h,),
+              _addButton()
 
-                              _resetFieldValues();
-                              _checkFormValidity();
-                            },
-                            isDisabled: snap.data==true ? false:true );
-                      }, stream: BooleanStreamManager.boolStream,
-                  ))
             ],),
         ),
       ),
     );
   }
+
+
+
+Widget _microphone(){
+    return InkWell(
+      onTap: () async {
+
+        bool permissionsGranted=false;
+        permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
+        if(!permissionsGranted  ) {
+          await PermissionHelper.openAppSettings();
+        }
+        else{
+          context.read<RecordEventProvider>().initializeRecorder();
+          context.read<RecordEventProvider>().startRecording(context);
+          context.read<RecordEventProvider>().listenToListeningStatus();
+
+        }
+
+      },
+      child: Consumer<RecordEventProvider>(
+          builder: (context,value,child) {
+            print('its still ${value.isRecording}');
+            return Center(
+              child: Image.asset(AppImages.iconMicrophone, height: 185.h,
+                color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,),
+            );
+          }
+      ),
+    );
+}
+
+
+
+
+Widget _addButton(){
+    return SizedBox(
+        width: 1.sw * 0.9,
+        child: StreamBuilder<bool>(
+          builder: (context, snap) {
+            return Buttons.customElevatedButton(
+                title: AppConstants.addEvent,
+                backgroundColor:snap.data== true
+                    ? AppColors.blue05AAEC
+                    : AppColors.greyDark6C6D6D.withOpacity(0.5),
+                textColor: AppColors.whiteFFFFF,
+                onPressed: () async {
+                  context.read<EventsListenerProvider>().addEventInHive(eventTitle: _eventController.text,
+                      eventTime: _timeController.text,
+                      remainderTime: _remainderTimeController.text,
+                      eventDate: DateFormatting
+                          .createDateTimeFromString(
+                          date: _dateController.text,
+                          time: _timeController.text),
+                      context: context);
+
+                  _resetFieldValues();
+                  _checkFormValidity();
+                },
+                isDisabled: snap.data==true ? false:true );
+          }, stream: BooleanStreamManager.boolStream,
+        ));
+}
+
 
 
 
