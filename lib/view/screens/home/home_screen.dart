@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+   int isAskedPermission=0;
   @override
   void initState() {
     super.initState();
@@ -134,11 +134,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ,
               InkWell(
                 onTap: () async {
+
+                 isAskedPermission++;
                   bool permissionsGranted=false;
                   permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
-                  if(!permissionsGranted) {
-                    print('denied bro');
-                   // await PermissionHelper.openAppSettings();
+                  if(!permissionsGranted  ) {
+                    await PermissionHelper.openAppSettings();
                   }
                   else{
                     context.read<RecordEventProvider>().initializeRecorder();

@@ -38,8 +38,6 @@ void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     NotificationService.initialize();
     NotificationService.showNotification(title: inputData?['title']??'', description: inputData?['date']??'');
-    await HiveHelper.initHive();
-    HiveHelper.deleteDataFromBox(boxName: HiveBoxNames.events, key: inputData?['title']);
      simpleTaskCallback(task:task,data:inputData);
     return Future.value(true);
   });

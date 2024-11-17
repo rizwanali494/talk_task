@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/services/hive_service.dart';
+import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_mesages.dart';
 import 'package:talk_task/utilis/date_formating.dart';
 import 'package:talk_task/utilis/hive_box_names.dart';
@@ -10,10 +11,11 @@ import '../view/common_widgets/custom_snackbars.dart';
 
 class RecurringvEventsProvider extends ChangeNotifier {
   List<RecurringEventsModel> allRecurringEvents = [];
+  String selectedTenure=HiveBoxNames.weeklyEvents;
 
   Future<void> listenEventsBox() async {
     try {
-      List<dynamic> all = await HiveHelper.getBox(boxName: HiveBoxNames.recurringEvents);
+      List<dynamic> all = await HiveHelper.getBox(boxName: selectedTenure);
       allRecurringEvents = all.cast<RecurringEventsModel>();
       allRecurringEvents.sort((a, b) => a.title.compareTo(b.title));
       notifyListeners();
@@ -26,7 +28,7 @@ class RecurringvEventsProvider extends ChangeNotifier {
 
   Future<void> addRecurringEventHive({required String eventTitle,required String eventTime,
     required String remainderTime,required List<bool> repeatingDays,required BuildContext context}) async {
-    await HiveHelper.addDataInBox(boxName: HiveBoxNames.recurringEvents, key: eventTitle, value:
+    await HiveHelper.addDataInBox(boxName: selectedTenure, key: eventTitle, value:
     RecurringEventsModel(title: eventTitle, remainderTime: remainderTime,
         repeatingDays:  repeatingDays, eventTime: eventTime, eventScheduledDate: DateFormatting.getRecurringTime(timeString: eventTime)));
     ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: AppMessages.recurringEventScheduled));

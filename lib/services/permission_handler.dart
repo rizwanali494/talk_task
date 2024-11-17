@@ -13,7 +13,6 @@ class PermissionHelper {
   static Future<bool> checkAndRequestPermissions({required BuildContext context}) async {
     bool isNotificationAllowed = await checkAndRequestNotificationPermission(context: context);
     bool isMicrophoneAllowed = await _checkAndRequestMicrophonePermission(context: context);
-    print('Yes microphone $isMicrophoneAllowed');
     return  isNotificationAllowed && isMicrophoneAllowed;
   }
 
@@ -36,7 +35,7 @@ class PermissionHelper {
 
   static Future<bool> _checkAndRequestMicrophonePermission({required BuildContext context}) async {
     var microphoneStatus = await Permission.microphone.status;
-    print(microphoneStatus.name);
+    print("${microphoneStatus.name} Hello g");
     if (microphoneStatus.isDenied) {
       await showPermissionDialogue(
         permissionType: AppConstants.allowMicrophone,

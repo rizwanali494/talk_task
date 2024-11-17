@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/utilis/app_constants.dart';
-import 'package:talk_task/utilis/app_routes.dart';
+import 'package:talk_task/utilis/hive_box_names.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
-import 'package:talk_task/view/screens/setting_screen/setting_screen.dart';
 import 'package:talk_task/view_model/recurring_event_provider.dart';
 import 'package:talk_task/view_model/stream_button.dart';
 import '../../../utilis/app_colors.dart';
@@ -18,7 +17,6 @@ import '../../common_widgets/custom_cards.dart';
 import '../../common_widgets/custom_text_fields.dart';
 import '../../dialogues/home_menu_dialogue.dart';
 import '../../dialogues/pick_time_dialogue.dart';
-import '../notification_screen/notification_screen.dart';
 
 
 class RecurringRemainders extends StatefulWidget {
@@ -292,6 +290,12 @@ class SelectableButtonWidget extends StatefulWidget {
 
 class _SelectableButtonWidgetState extends State<SelectableButtonWidget> {
   int _selectedIndex = 0;
+ final List<String> _listBoxNames=[
+    HiveBoxNames.weeklyEvents,
+    HiveBoxNames.monthlyEvents,
+    HiveBoxNames.yearlyEvents
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -312,6 +316,8 @@ class _SelectableButtonWidgetState extends State<SelectableButtonWidget> {
       onPressed: () {
         setState(() {
           _selectedIndex = index;
+          context.read<RecurringvEventsProvider>().selectedTenure=_listBoxNames[index];
+          context.read<RecurringvEventsProvider>().listenEventsBox();
         });
       },
       style: ElevatedButton.styleFrom(
@@ -328,6 +334,8 @@ class _SelectableButtonWidgetState extends State<SelectableButtonWidget> {
       child: CustomText(text: title,color:isSelected ? AppColors.whiteFFFFF : AppColors.black,fontSize: 16.sp,fontWeight: FontWeight.w400,)
     );
   }
+
+
 }
 
 //

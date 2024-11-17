@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:talk_task/services/call_kit_service.dart';
 
+import '../utilis/hive_box_names.dart';
+import 'hive_service.dart';
+
 
 void simpleTaskCallback({required String task,required Map<String, dynamic>? data}) {
   simpleTask(task: task, data: data);
@@ -10,7 +13,12 @@ void simpleTaskCallback({required String task,required Map<String, dynamic>? dat
 
 Future<void> simpleTask({required String task,required Map<String, dynamic>? data}) async {
   CallKitService.showIncomingCall(nameCaller: data?['title'] ?? '');
-//   LaunchApp.openApp(
+  print('hello first ${data?['title']}');
+  await HiveHelper.initHive();
+  print('hello seccond');
+  HiveHelper.deleteDataFromBox(boxName: HiveBoxNames.events, key: data?['title']);
+  print('hello third');
+  //   LaunchApp.openApp(
 // androidPackageName: 'talktask://',
 // iosUrlScheme: 'talktask://',
 // );
