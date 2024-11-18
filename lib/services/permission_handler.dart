@@ -33,6 +33,23 @@ class PermissionHelper {
     return true;
   }
 
+  static Future<bool> checkAndRequesLocationPermission({required BuildContext context}) async {
+    var locationStatus = await Permission.locationWhenInUse.status;
+    if (locationStatus.isDenied) {
+      await showPermissionDialogue(permissionType: AppConstants.allowLocation, context: context, iconPath: AppImages.iconPermissionNotification);
+      await AwesomeNotifications().requestPermissionToSendNotifications();
+      bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+      return isAllowed;
+    }
+
+    if (locationStatus.isPermanentlyDenied) {
+      openAppSettings();
+      return false;
+    }
+
+    return true;
+  }
+
   static Future<bool> _checkAndRequestMicrophonePermission({required BuildContext context}) async {
     var microphoneStatus = await Permission.microphone.status;
     print("${microphoneStatus.name} Hello g");

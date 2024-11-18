@@ -17,7 +17,7 @@ class RecurringvEventsProvider extends ChangeNotifier {
 
   Future<void> listenEventsBox() async {
     try {
-      await clearOldEventsFromHive();
+     // await clearOldEventsFromHive();
       List<dynamic> all = await HiveHelper.getBox(boxName: selectedTenure);
       allRecurringEvents = all.cast<RecurringEventsModel>();
       allRecurringEvents.sort((a, b) => a.title.compareTo(b.title));

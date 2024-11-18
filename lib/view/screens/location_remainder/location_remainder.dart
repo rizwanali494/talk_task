@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:talk_task/utilis/app_routes.dart';
+import 'package:talk_task/view/screens/location_remainder/location_search.dart';
 
 import '../../../services/permission_handler.dart';
 import '../../../utilis/app_colors.dart';
@@ -56,6 +58,8 @@ class LocationRemainder extends StatelessWidget{
          // _displayEvents()
         ],),
       ),
+
+
     );
   }
 
@@ -129,13 +133,19 @@ class LocationRemainder extends StatelessWidget{
               ,
 
               CustomFields.field(title: AppConstants.location,
-                  onPressed: () {},
+                  onPressed: () async {
+               bool locationPermissionGranted=await PermissionHelper.checkAndRequesLocationPermission(context: context);
+               if(!locationPermissionGranted){
+                 return;
+               }
+                    Navigator.push(context, MyRoute(const AddressSuggestionScreen()));
+                  },
                   onChanged: (a){
                     // context.read()
                     _checkFormValidity();
                   },
                   controller: _locationController,
-                  isReadOnly: false),
+                  isReadOnly: true),
 
               SizedBox(height: 8.h,),
               CustomFields.field(title: AppConstants.notes,

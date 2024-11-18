@@ -70,6 +70,19 @@
 <string>We need access to your camera for video calls</string>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>We need access to your photo library to save audio files</string>
+<key>IOSTargetedDevices</key>
+<array>
+  <string>iPhone</string>
+  <string>iPad</string>
+</array>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location</string>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>We need your location</string>
+<key>GMSPlacesAPIKey</key>
+<string>Your-API-Key</string>
+<key>GMSPlacesAPIKey</key>
+<string>AIzaSyDO2VyNH8vC2ZhZX8BhwpkvzxKaSLAE0ic</string>
 
 </dict>
 </plist>
