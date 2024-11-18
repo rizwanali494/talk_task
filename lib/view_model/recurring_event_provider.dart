@@ -26,46 +26,98 @@ class RecurringvEventsProvider extends ChangeNotifier {
   }
 
 
+  Future<void> addRecurringEventHive({
+    required String eventTitle,
+    required String eventTime,
+    required String remainderTime,
+    required List<bool> repeatingDays,
+    required BuildContext context,
+  }) async {
+    await HiveHelper.addDataInBox(
+      boxName: selectedTenure,
+      key: eventTitle,
+      value: RecurringEventsModel(
+        title: eventTitle,
+        remainderTime: remainderTime,
+        repeatingDays: repeatingDays,
+        eventTime: eventTime,
+        eventScheduledDate: DateFormatting.getRecurringTime(timeString: eventTime),
+      ),
+    );
 
-  Future<void> addRecurringEventHive({required String eventTitle,required String eventTime,
-    required String remainderTime,required List<bool> repeatingDays,required BuildContext context}) async {
-    await HiveHelper.addDataInBox(boxName: selectedTenure, key: eventTitle, value:
-    RecurringEventsModel(title: eventTitle, remainderTime: remainderTime,
-        repeatingDays:  repeatingDays, eventTime: eventTime, eventScheduledDate: DateFormatting.getRecurringTime(timeString: eventTime)));
-    ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: AppMessages.recurringEventScheduled));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBars.showSnackBar(message: AppMessages.recurringEventScheduled),
+    );
+
     context.read<RecurringvEventsProvider>().listenEventsBox();
-    List<bool> selectedDays= context.read<DaySelectionProvider>().selectedDays;
-    //schedule weekly notifications
-   if(selectedTenure==HiveBoxNames.weeklyEvents){
-    for(int i=0;i<7;i++){
-      if(selectedDays[i]==true){
-        Workmanager().registerOneOffTask(eventTitle+i.toString(), eventTitle,
-          initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add( Duration(days: i+1))),
-          inputData: <String, dynamic>{'date':  DateFormatting.getRecurringTime(timeString: eventTime).toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
-          constraints: Constraints(
-            networkType: NetworkType.not_required,
-            requiresCharging: false,
-          ),);
+    List<bool> selectedDays = context.read<DaySelectionProvider>().selectedDays;
+    DateTime getNextOccurrence(DateTime currentDate, int targetDayIndex) {
+      int currentDayIndex = currentDate.weekday - 1;
+      int daysToAdd = (targetDayIndex - currentDayIndex + 7) % 7;
+      if (daysToAdd == 0) daysToAdd = 7;
+      return currentDate.add(Duration(days: daysToAdd));
+    }
+    if (selectedTenure == HiveBoxNames.weeklyEvents) {
+      DateTime currentDate = DateTime.now();
+      for (int i = 0; i < 7; i++) {
+        if (selectedDays[i]) {
+          DateTime nextOccurrence = getNextOccurrence(currentDate, i);
+          DateTime eventDateTime = DateTime(
+            nextOccurrence.year,
+            nextOccurrence.month,
+            nextOccurrence.day,
+            int.parse(eventTime.split(":")[0]),
+            int.parse(eventTime.split(":")[1]),
+          );
+
+          Workmanager().registerOneOffTask(
+            eventTitle,
+            eventTitle,
+            initialDelay: DateFormatting.getDurationInSeconds(targetDateTime: eventDateTime),
+            inputData: <String, dynamic>{
+              'date': eventDateTime.toString().split(' ')[0],
+              'time': eventTime,
+              'title': eventTitle,
+            },
+            constraints: Constraints(
+              networkType: NetworkType.not_required,
+              requiresCharging: false,
+            ),
+          );
+        }
       }
     }
-   }
 
-   if(selectedTenure==HiveBoxNames.monthlyEvents){
-     for(int i=0;i<30;i++){
-       if(selectedDays[i%7]==true){
-         Workmanager().registerOneOffTask(eventTitle+i.toString(), eventTitle,
-           initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add(const Duration(days: 1))),
-           inputData: <String, dynamic>{'date':  DateFormatting.getRecurringTime(timeString: eventTime).toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
-           constraints: Constraints(
-             networkType: NetworkType.not_required,
-             requiresCharging: false,
-           ),);
-       }
-     }
-   }
+    if (selectedTenure == HiveBoxNames.monthlyEvents) {
+      DateTime currentDate = DateTime.now();
+      for (int i = 0; i < 30; i++) {
+        if (selectedDays[i % 7]) {
+          DateTime nextOccurrence = getNextOccurrence(currentDate, i % 7);
+          DateTime eventDateTime = DateTime(
+            nextOccurrence.year,
+            nextOccurrence.month,
+            nextOccurrence.day,
+            int.parse(eventTime.split(":")[0]),
+            int.parse(eventTime.split(":")[1]),
+          );
+          Workmanager().registerOneOffTask(
+            eventTitle + i.toString(),  // Unique task ID
+            eventTitle,                  // Task name
+            initialDelay: DateFormatting.getDurationInSeconds(targetDateTime: eventDateTime),
+            inputData: <String, dynamic>{
+              'date': eventDateTime.toString().split(' ')[0],
+              'time': eventTime,
+              'title': eventTitle,
+            },
+            constraints: Constraints(
+              networkType: NetworkType.not_required,
+              requiresCharging: false,
+            ),
+          );
+        }
+      }
+    }
   }
-
-
 
 
 

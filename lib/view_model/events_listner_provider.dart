@@ -21,6 +21,7 @@ class EventsListenerProvider extends ChangeNotifier {
 
   Future<void> listenEventsBox() async {
     try {
+      await clearOldEventsFromHive();
       List<dynamic> all = await HiveHelper.getBox(boxName: HiveBoxNames.events);
       allEvents = all.cast<EventsModel>();
       allEvents.sort((a, b) => a.eventDate.compareTo(b.eventDate));
@@ -50,8 +51,25 @@ class EventsListenerProvider extends ChangeNotifier {
         requiresCharging: false,
       ),
     );
+  }
+
+
+   Future<bool> clearOldEventsFromHive() async {
+    Box box= await HiveHelper.getBoxObject(boxName: HiveBoxNames.events);
+    List  _listValues=box.values.toList() ;
+    List boxKeys=await box.keys.toList();
+
+    for(int i=0;i<_listValues.length;i++){
+      print(_listValues[i]);
+      if(_listValues[i].eventDate.isBefore(DateTime.now())){
+       await HiveHelper.deleteDataFromBox(boxName: HiveBoxNames.events, key: boxKeys[i]);
+      }
+    }
+     return true;
 
   }
+
+
 
 
 }

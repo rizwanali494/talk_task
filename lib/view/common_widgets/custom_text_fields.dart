@@ -26,6 +26,7 @@ class CustomFields{
            SizedBox(
              height:maxLines==1? 45.h:90.h,
              child: TextField(
+
               readOnly: isReadOnly,
               maxLines: maxLines,
               minLines: maxLines,
@@ -35,6 +36,7 @@ class CustomFields{
               cursorColor: AppColors.secondary,
               onTap: onPressed,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 10.w),
                 border: OutlineInputBorder(
                   borderSide: const BorderSide(width: 0.8,color: AppColors.blueBorder),
                    borderRadius: BorderRadius.circular(15.r)

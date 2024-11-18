@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,14 +12,13 @@ import 'package:talk_task/services/local_notification_service.dart';
 import 'package:talk_task/splash_screen.dart';
 import 'package:talk_task/utilis/app_images.dart';
 import 'package:talk_task/utilis/app_themes.dart';
-import 'package:talk_task/utilis/hive_box_names.dart';
-import 'package:talk_task/view/auth/sign_up.dart';
 import 'package:talk_task/view_model/bottom_nav_bar_provider.dart';
 import 'package:talk_task/view_model/call_picking_provider.dart';
 import 'package:talk_task/view_model/customization_screen_provider.dart';
 import 'package:talk_task/view_model/date_picker_provider.dart';
 import 'package:talk_task/view_model/event_title_provider.dart';
 import 'package:talk_task/view_model/events_listner_provider.dart';
+import 'package:talk_task/view_model/provider_list.dart';
 import 'package:talk_task/view_model/record_event_provider.dart';
 import 'package:talk_task/view_model/recurring_days_provider.dart';
 import 'package:talk_task/view_model/recurring_event_provider.dart';
@@ -64,7 +61,7 @@ class MyApp extends StatelessWidget {
     get();
     _preChacheImages(context);
    return MultiProvider(
-     providers: [
+     providers:[
        ChangeNotifierProvider(create: (context) => SettingProvider(),),
        ChangeNotifierProvider(create: (context) => CustomizationProvider(),),
        ChangeNotifierProvider(create: (context) => BottomNavBarProvider(),),
