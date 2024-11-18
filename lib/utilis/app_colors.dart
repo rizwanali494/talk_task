@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color primary =Color(0xff009BD9);
+  static const Color primary =skyBlue00AAEE;
   static const Color secondary =Color(0xff01AAEE);
   //on surface text color
 

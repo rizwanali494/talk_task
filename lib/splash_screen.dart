@@ -13,6 +13,7 @@ import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/utilis/customize_easyloading.dart';
 import 'package:talk_task/view/boarding/boarding.dart';
 import 'package:talk_task/view/common_widgets/custom_app_bars.dart';
+import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/demo_screen/demo_screen.dart';
 import 'package:talk_task/view/screens/bottom_screen.dart';
 
@@ -41,32 +42,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBars.authAppBars(bgColor: AppColors.primary, iconBrightness: Brightness.dark),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            color: AppColors.whiteFFFFF,
-          gradient: LinearGradient(
-            colors: [
-               AppColors.primary,
-              AppColors.skyBlueFFA6E5FF,
-               AppColors.lightBlueBAEBFE,
-              AppColors.whiteFFFFF
-              
-            ],
-           // stops: [0.23, 0.82, 0.97],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      backgroundColor: AppColors.whiteFFFFF,
+      appBar: AppBars.authAppBars(bgColor: AppColors.whiteFFFFF, iconBrightness: Brightness.dark),
+      body: SizedBox(
+          height: 1.sh,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          //mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Spacer(),
             SizedBox(
-              height: 180.h,
-              width: 180.h,
+              height: 150.h,
+              width: 150.h,
               child: Center(
                 child: Image.asset(
                 //  fit: BoxFit.fill,
@@ -77,21 +64,32 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: 50.h,
             ),
-            Text(
-              AppConstants.taskUp,
-              style: AppTextStyles.righteous(
-                fontSize: 35.sp,
-                color: AppColors.darkBlue1642DB,
-                 weight: FontWeight.w500,
+            ShaderMask(
+              shaderCallback: (bounds) {
+                return const LinearGradient(
+                  colors: [AppColors.blueLightA5E5FF, AppColors.primary, AppColors.blue05AAEC], // Gradient colors
+                  tileMode: TileMode.mirror, // Optional, defines how the gradient tiles
+                ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height));
+              },
+              child: Text( AppConstants.task+AppConstants.ai, style: AppTextStyles.righteous(fontSize: 37.sp,
+                color: AppColors.primary,
+                weight: FontWeight.w500,),),
+            ),
+            const Spacer(),
+        SpinKitFadingCircle(
+          size: 50.h,
+          itemBuilder: (context, index) {
+            return Container(
+              height: 30,
+              width: 10,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(20),
               ),
-            ),
-            SizedBox(
-              height: 150.h,
-            ),
-             SpinKitFadingCircle(
-               color: AppColors.darkBlue1642DB,
-              size: 50.h,
-            ),
+            );
+          },
+        ),
+
             SizedBox(
               height: 75.h,
             ),

@@ -2,12 +2,15 @@ class AppConstants {
   //boarding screen
   static const String titleBoardingOne =
       "Add Daily, Weekly and Monthly Reminders";
-  static const String titleBoardingTwo = "Get Phone Call Alerts on Reminders";
-  static const String titleBoardingThree = "View Complete Schedule on Calendar";
+  static const String titleBoardingTwo = "Get Phone Call Alerts on\nReminders";
+  static const String titleBoardingThree = "View Complete Schedule on the Calendar";
   static const String getStarted = " Get Started";
   static const String next = " Next";
   static const String taskUp = " TASK-UP";
+  static const String task = " Task";
   static const String taskAi = " Task AI";
+  static const String ai = "-AI";
+
 
 
 
