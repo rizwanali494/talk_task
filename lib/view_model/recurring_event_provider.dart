@@ -40,7 +40,7 @@ class RecurringvEventsProvider extends ChangeNotifier {
     for(int i=0;i<7;i++){
       if(selectedDays[i]==true){
         Workmanager().registerOneOffTask(eventTitle+i.toString(), eventTitle,
-          initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add(const Duration(days: 1))),
+          initialDelay:  DateFormatting.getDurationInSeconds(targetDateTime: DateFormatting.getRecurringTime(timeString: eventTime).add( Duration(days: i+1))),
           inputData: <String, dynamic>{'date':  DateFormatting.getRecurringTime(timeString: eventTime).toString().split(' ')[0],'time':eventTime,'title':eventTitle}, // Optional data for the task
           constraints: Constraints(
             networkType: NetworkType.not_required,
