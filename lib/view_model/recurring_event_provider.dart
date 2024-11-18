@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:talk_task/models/events_model.dart';
 import 'package:talk_task/services/hive_service.dart';
@@ -16,6 +17,7 @@ class RecurringvEventsProvider extends ChangeNotifier {
 
   Future<void> listenEventsBox() async {
     try {
+      await clearOldEventsFromHive();
       List<dynamic> all = await HiveHelper.getBox(boxName: selectedTenure);
       allRecurringEvents = all.cast<RecurringEventsModel>();
       allRecurringEvents.sort((a, b) => a.title.compareTo(b.title));
@@ -122,6 +124,20 @@ class RecurringvEventsProvider extends ChangeNotifier {
 
 
 
+  Future<bool> clearOldEventsFromHive() async {
+    Box box= await HiveHelper.getBoxObject(boxName: selectedTenure);
+    List  _listValues=box.values.toList() ;
+    List boxKeys=await box.keys.toList();
+
+    for(int i=0;i<_listValues.length;i++){
+      print(_listValues[i]);
+      if(_listValues[i].eventScheduledDate.isBefore(DateTime.now())){
+        await HiveHelper.deleteDataFromBox(boxName: selectedTenure, key: boxKeys[i]);
+      }
+    }
+    return true;
+
+  }
 
 
 
