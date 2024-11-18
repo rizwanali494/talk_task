@@ -26,6 +26,7 @@ class _AddressSuggestionScreenState extends State<AddressSuggestionScreen> {
       context.read<LocationSuggestionProvider>().fetchLocationSuggestions('Pakistan');
     });
   }
+
   @override
   Widget build(BuildContext context) {
      const CameraPosition _initialCameraPosition = CameraPosition(
