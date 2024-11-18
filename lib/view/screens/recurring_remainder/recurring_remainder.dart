@@ -125,7 +125,6 @@ class _RemainderState extends State<RecurringRemainders> {
                     return CustomFields.field(title: AppConstants.event,
                         onPressed: () {},
                         onChanged: (a){
-                          // context.read()
                           _checkFormValidity();
                         },
                         controller: _eventController,
