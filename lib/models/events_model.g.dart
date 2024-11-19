@@ -21,13 +21,14 @@ class EventsModelAdapter extends TypeAdapter<EventsModel> {
       remainderTime: fields[1] as String,
       eventDate: fields[2] as DateTime,
       eventTime: fields[3] as String,
+      regDate: fields[4] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, EventsModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class EventsModelAdapter extends TypeAdapter<EventsModel> {
       ..writeByte(2)
       ..write(obj.eventDate)
       ..writeByte(3)
-      ..write(obj.eventTime);
+      ..write(obj.eventTime)
+      ..writeByte(4)
+      ..write(obj.regDate);
   }
 
   @override

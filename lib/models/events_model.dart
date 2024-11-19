@@ -18,11 +18,15 @@ class EventsModel extends HiveObject {
   @HiveField(3)
   String eventTime;
 
+  @HiveField(4)
+  DateTime regDate;
+
   EventsModel({
     required this.title,
     required this.remainderTime,
     required this.eventDate,
     required this.eventTime,
+    required this.regDate,
   });
 
 
@@ -59,6 +63,7 @@ class RecurringEventsModel extends HiveObject {
 
   @HiveField(4)
   DateTime eventScheduledDate;
+
 
   RecurringEventsModel({
     required this.title,

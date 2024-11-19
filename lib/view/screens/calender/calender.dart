@@ -43,7 +43,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
             const CalenderDateUI(),
           Padding(
             padding:  EdgeInsets.only(left: 16.w),
-            child: CustomText(text: AppConstants.upcomingEvents,
+            child: CustomText(text: AppConstants.recentlyAdded,
               fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
           ),
           SizedBox(height: 5.h,),

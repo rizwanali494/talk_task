@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+   bool microphoneClicked=false;
 
   @override
   void initState() {
@@ -98,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _cardAddEvent(),
           Padding(
             padding:  EdgeInsets.only(left: 16.w),
-            child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
+            child: CustomText(text: AppConstants.recentlyAdded,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
 
           ),
           SizedBox(height: 5.h,),
@@ -221,12 +222,20 @@ Widget _microphone(){
         bool permissionsGranted=false;
         permissionsGranted=await PermissionHelper.checkAndRequestMicrophonePermission(context: context);
         if(!permissionsGranted  ) {
-          //await PermissionHelper.openAppSettings();
+         return;
         }
         else{
-          context.read<RecordEventProvider>().initializeRecorder();
-          context.read<RecordEventProvider>().startRecording(context);
-          context.read<RecordEventProvider>().listenToListeningStatus();
+          microphoneClicked=!microphoneClicked;
+          if(microphoneClicked){
+            context.read<RecordEventProvider>().initializeRecorder();
+            context.read<RecordEventProvider>().startRecording(context);
+            context.read<RecordEventProvider>().listenToListeningStatus();
+          }
+          else{
+            context.read<RecordEventProvider>().stopRecording(context);
+            context.read<RecordEventProvider>().listenToListeningStatus();
+          }
+
 
         }
 

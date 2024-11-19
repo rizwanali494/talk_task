@@ -24,7 +24,7 @@ class RecordEventProvider extends ChangeNotifier {
     SpeechToTextService.startListening(context);
   }
 
-  void stopRecording() {
+  void stopRecording(BuildContext context) {
     SpeechToTextService.stopListening();
   }
 

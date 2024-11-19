@@ -51,7 +51,7 @@ class LocationRemainder extends StatelessWidget{
           _cardAddEvent(context),
           Padding(
             padding:  EdgeInsets.only(left: 16.w),
-            child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
+            child: CustomText(text: AppConstants.recurringEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,color: AppColors.blueDark002055,),
 
           ),
           SizedBox(height: 5.h,),

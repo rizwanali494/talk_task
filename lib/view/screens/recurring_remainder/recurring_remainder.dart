@@ -39,7 +39,7 @@ class _RemainderState extends State<RecurringRemainders> {
   final TextEditingController _timeController= TextEditingController();
   final TextEditingController _remainderTimeController= TextEditingController();
   final List<String>  _listDays = ["M", "Tu", "W", "Th", "F", "Sa", "Su"];
-
+  bool microphoneClicked=false;
 
   @override
   void initState() {
@@ -87,7 +87,7 @@ class _RemainderState extends State<RecurringRemainders> {
               _cardAddEvent(),
               Padding(
                 padding:  EdgeInsets.only(left: 16.w),
-                child: CustomText(text: AppConstants.upcomingEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,),
+                child: CustomText(text: AppConstants.recurringEvents,fontWeight: FontWeight.w700,fontSize: 20.sp,),
 
               ),
               SizedBox(height: 5.h,),
@@ -184,19 +184,25 @@ class _RemainderState extends State<RecurringRemainders> {
   Widget _microphone(){
     return  InkWell(
       onTap: () async {
-
         bool permissionsGranted=false;
         permissionsGranted=await PermissionHelper.checkAndRequestMicrophonePermission(context: context);
         if(!permissionsGranted  ) {
-          await PermissionHelper.openAppSettings();
+          return;
         }
         else{
-          context.read<RecordEventProvider>().initializeRecorder();
-          context.read<RecordEventProvider>().startRecording(context);
-          context.read<RecordEventProvider>().listenToListeningStatus();
+          microphoneClicked=!microphoneClicked;
+          if(microphoneClicked){
+            context.read<RecordEventProvider>().initializeRecorder();
+            context.read<RecordEventProvider>().startRecording(context);
+            context.read<RecordEventProvider>().listenToListeningStatus();
+          }
+          else{
+            context.read<RecordEventProvider>().stopRecording(context);
+            context.read<RecordEventProvider>().listenToListeningStatus();
+          }
+
 
         }
-
       },
       child: Consumer<RecordEventProvider>(
           builder: (context,value,child) {

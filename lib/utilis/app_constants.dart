@@ -160,7 +160,8 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String date = "Date: ";
   static const String time = "Time: ";
   static const String reminderTime = "Reminder Time: ";
-  static const String upcomingEvents = "Upcoming Events";
+  static const String recentlyAdded = "Recently added";
+  static const String recurringEvents = "Recurring Events:";
   static const String setDate = "Set Date";
   static const String setTime = "Set Time";
   static const String save = "Save";

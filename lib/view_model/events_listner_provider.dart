@@ -24,7 +24,7 @@ class EventsListenerProvider extends ChangeNotifier {
       await clearOldEventsFromHive();
       List<dynamic> all = await HiveHelper.getBox(boxName: HiveBoxNames.events);
       allEvents = all.cast<EventsModel>();
-      allEvents.sort((a, b) => a.eventDate.compareTo(b.eventDate));
+      allEvents.sort((a, b) => a.regDate.compareTo(b.regDate));
       notifyListeners();
     } catch (e) {
       print(e.toString());
@@ -38,7 +38,7 @@ class EventsListenerProvider extends ChangeNotifier {
     required String remainderTime,required DateTime eventDate,required BuildContext context}) async {
     await HiveHelper.addEventInBox(boxName: HiveBoxNames.events, key: eventTitle, value:
     EventsModel(title: eventTitle, remainderTime: remainderTime,
-        eventDate:  eventDate, eventTime: eventTime));
+        eventDate:  eventDate, eventTime: eventTime, regDate: DateTime.now()));
     ScaffoldMessenger.of(context).showSnackBar(SnackBars.showSnackBar(message: AppMessages.eventScheduled));
     context.read<EventsListenerProvider>().listenEventsBox();
     Workmanager().registerOneOffTask(

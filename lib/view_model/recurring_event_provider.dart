@@ -20,7 +20,7 @@ class RecurringvEventsProvider extends ChangeNotifier {
      // await clearOldEventsFromHive();
       List<dynamic> all = await HiveHelper.getBox(boxName: selectedTenure);
       allRecurringEvents = all.cast<RecurringEventsModel>();
-      allRecurringEvents.sort((a, b) => a.title.compareTo(b.title));
+      allRecurringEvents.sort((a, b) => a.eventScheduledDate.compareTo(b.eventScheduledDate));
       notifyListeners();
     } catch (e) {
       print(e.toString());

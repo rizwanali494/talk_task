@@ -47,6 +47,7 @@ class SpeechToTextService {
         if (result.finalResult) {
           try {
             Map result = await hitApi(text);
+            print(" hello gg ${result['date']=='null' && result['date']=='null' && result['date']=='null' && result['date']=='null'}");
             if(result['date']=='null' && result['date']=='null' && result['date']=='null' && result['date']=='null' ){
              await showDialog(context: context, builder: (context)=>const MessageDialogue(title: AppConstants.messageMicrophone));
             }
