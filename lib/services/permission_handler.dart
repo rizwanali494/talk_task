@@ -48,23 +48,6 @@ class PermissionHelper {
   }
 
 
-  static Future<bool> checkAndRequesLocationPermission({required BuildContext context}) async {
-    var locationStatus = await Permission.locationWhenInUse.status;
-    if (locationStatus.isDenied) {
-      await showPermissionDialogue(permissionType: AppConstants.allowLocation, context: context, iconPath: AppImages.iconPermissionNotification);
-      await AwesomeNotifications().requestPermissionToSendNotifications();
-      bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
-      return isAllowed;
-    }
-
-    if (locationStatus.isPermanentlyDenied) {
-      openAppSettings();
-      return false;
-    }
-
-    return true;
-  }
-
 
 
   static Future<bool> checkAndRequestMicrophonePermission({required BuildContext context}) async {
@@ -89,6 +72,40 @@ class PermissionHelper {
         permissionType: AppConstants.allowMicrophone,
         context: context,
         iconPath: AppImages.iconPermissionMicrophone,
+      );
+      if(result){ await AppSettings.openAppSettings();}
+
+      return false;
+    }
+
+    return true;
+  }
+
+
+
+
+  static Future<bool> checkAndRequesLocationPermission({required BuildContext context}) async {
+    var locationStatus = await Permission.location.status;
+    int permissionCount=prefs.getInt(AppPrefs.locationClicked)??0;
+    permissionCount++;
+    prefs.setInt(AppPrefs.locationClicked,permissionCount);
+    if (locationStatus.isDenied && permissionCount<=2 ) {
+      var result = await Permission.location.request();
+      var newMicrophoneStatus = await Permission.location.status;
+
+      if (!newMicrophoneStatus.isDenied) {
+        prefs.setInt(AppPrefs.locationClicked,0);
+        return true;
+      }
+
+      return false;
+    }
+
+    if (locationStatus.isDenied && permissionCount>2) {
+      bool result=await showPermissionDialogue(
+        permissionType: AppConstants.allowLocation,
+        context: context,
+        iconPath: AppImages.iconPermissionNotification,
       );
       if(result){ await AppSettings.openAppSettings();}
 

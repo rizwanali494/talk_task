@@ -27,6 +27,7 @@ class LocationRemainder extends StatelessWidget{
   final TextEditingController _eventController= TextEditingController();
   final TextEditingController _locationController= TextEditingController();
   final TextEditingController _notesController= TextEditingController();
+  bool microphoneClicked=false;
    LocationRemainder({super.key});
 
   @override
@@ -90,29 +91,7 @@ class LocationRemainder extends StatelessWidget{
                     fontSize: 20.sp,
                     weight: FontWeight.w700),))
               ,
-              InkWell(
-                onTap: () async {
-                  bool permissionsGranted=false;
-                  permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
-                  if(!permissionsGranted) {
-                   print('denied');
-                  }
-                  else{
-                    context.read<RecordEventProvider>().initializeRecorder();
-                    context.read<RecordEventProvider>().startRecording(context);
-                    context.read<RecordEventProvider>().listenToListeningStatus();
-
-                  }
-
-                },
-                child: Consumer<RecordEventProvider>(
-                    builder: (context,value,child) {
-                      print('its still ${value.isRecording}');
-                      return Image.asset(AppImages.iconMicrophone, height: 185.h,
-                        color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,);
-                    }
-                ),
-              )
+              _microphone(context: context)
               ,
               Consumer<EventTitleProvider>(
                   builder: (context,value,child) {
@@ -225,6 +204,45 @@ class LocationRemainder extends StatelessWidget{
   //     },
   //   );
   // }
+
+
+  Widget _microphone({required BuildContext context}){
+    return InkWell(
+      onTap: () async {
+
+        bool permissionsGranted=false;
+        permissionsGranted=await PermissionHelper.checkAndRequestMicrophonePermission(context: context);
+        if(!permissionsGranted  ) {
+          return;
+        }
+        else{
+          microphoneClicked=!microphoneClicked;
+          if(microphoneClicked){
+            context.read<RecordEventProvider>().initializeRecorder();
+            context.read<RecordEventProvider>().startRecording(context);
+            context.read<RecordEventProvider>().listenToListeningStatus();
+          }
+          else{
+            context.read<RecordEventProvider>().stopRecording(context);
+            context.read<RecordEventProvider>().listenToListeningStatus();
+          }
+
+
+        }
+
+      },
+      child: Consumer<RecordEventProvider>(
+          builder: (context,value,child) {
+            print('its still ${value.isRecording}');
+            return Center(
+              child: Image.asset(AppImages.iconMicrophone, height: 185.h,
+                color: value.isRecording ? AppColors.redFF0000:AppColors.secondary,),
+            );
+          }
+      ),
+    );
+  }
+
 
 
   void _resetFieldValues(BuildContext context){
