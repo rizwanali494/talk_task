@@ -18,11 +18,11 @@ class PermissionHelper {
 
 
   static Future<bool> checkAndRequestNotificationPermission({required BuildContext context}) async {
-    var microphoneStatus = await Permission.notification.status;
+    var notificationStatus = await Permission.notification.status;
     int permissionCount=prefs.getInt(AppPrefs.notificationClicked)??0;
     permissionCount++;
     prefs.setInt(AppPrefs.notificationClicked,permissionCount);
-    if (microphoneStatus.isGranted && permissionCount<=2 ) {
+    if (notificationStatus.isDenied && permissionCount<=2 ) {
       var result = await Permission.microphone.request();
       var newMicrophoneStatus = await Permission.microphone.status;
       if (!newMicrophoneStatus.isDenied) {

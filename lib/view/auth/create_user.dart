@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:talk_task/view/demo_screen/demo_bg.dart';
-
 import '../../utilis/app_colors.dart';
 import '../../utilis/app_constants.dart';
 import '../../utilis/app_images.dart';

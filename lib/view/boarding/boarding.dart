@@ -4,7 +4,7 @@ import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/app_prefs.dart';
 import 'package:talk_task/utilis/app_routes.dart';
 import 'package:talk_task/utilis/app_text_styles.dart';
-import 'package:talk_task/view/demo_screen/demo_screen.dart';
+import 'package:talk_task/view/screens/bottom_screen.dart';
 import '../../main.dart';
 import '../../services/permission_handler.dart';
 import '../../utilis/app_colors.dart';
@@ -39,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
        return;
      }
       await prefs.setBool(AppPrefs.onBoardingShown, true);
-      Navigator.pushReplacement(context, MyRoute( const DemoScreen()));
+      Navigator.pushReplacement(context, MyRoute(  BottomScreen()));
 
     }
   }
