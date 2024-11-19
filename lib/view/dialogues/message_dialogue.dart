@@ -54,7 +54,7 @@ class MessageDialogue extends StatelessWidget{
             SizedBox(
               width: double.infinity,
               height: 50.h,
-              child: Buttons.customElevatedButton(title: AppConstants.allowAccess,
+              child: Buttons.customElevatedButton(title: AppConstants.ok,
                   backgroundColor: AppColors.blue05AAEC, textColor: AppColors.whiteFFFFF,
                   onPressed: (){
                 Navigator.of(context).pop();

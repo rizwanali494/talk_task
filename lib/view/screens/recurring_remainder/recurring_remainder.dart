@@ -6,9 +6,11 @@ import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view/screens/recurring_remainder/select_monthly_weekly.dart';
 import 'package:talk_task/view_model/recurring_event_provider.dart';
 import 'package:talk_task/view_model/stream_button.dart';
+import '../../../main.dart';
 import '../../../services/permission_handler.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../utilis/app_prefs.dart';
 import '../../../view_model/event_title_provider.dart';
 import '../../../view_model/provider_list.dart';
 import '../../../view_model/record_event_provider.dart';
@@ -182,7 +184,9 @@ class _RemainderState extends State<RecurringRemainders> {
   Widget _microphone(){
     return  InkWell(
       onTap: () async {
-
+        int permissionCount=prefs.getInt(AppPrefs.microphoneClicked)??0;
+        permissionCount++;
+        prefs.setInt(AppPrefs.microphoneClicked,permissionCount);
         bool permissionsGranted=false;
         permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
         if(!permissionsGranted  ) {

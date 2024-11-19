@@ -6,7 +6,6 @@ import '../../../utilis/app_constants.dart';
 import '../../../view_model/events_listner_provider.dart';
 import '../../../view_model/provider_list.dart';
 import '../../common_widgets/custom_app_bars.dart';
-import '../../common_widgets/custom_cards.dart';
 import '../../common_widgets/custom_text.dart';
 import 'date_calender.dart';
 
@@ -35,7 +34,7 @@ class _CalenderScreenState extends State<CalenderScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: AppColors.whiteFFFFF,
-      appBar: AppBars.settingsAppBar(context: context, title: AppConstants.tasks),
+      appBar: AppBars.settingsAppBar(context: context, title: AppConstants.tasks,showLeading: false),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,25 +53,6 @@ class _CalenderScreenState extends State<CalenderScreen> {
     );
   }
 
-  Widget _displayEvents() {
-    return Consumer<EventsListenerProvider>(
-      builder: (BuildContext context, value, Widget? child) {
-        return Column(children: [
-          if(value.allEvents.isEmpty)
-             const Center(child: Padding(
-              padding: EdgeInsets.all(38.0),
-              child: Text(AppConstants.noEvents),
-            )),
-          for(int i=0;i<value.allEvents.length;i++)
-            CustomCards.eventCard(
-                event:value.allEvents[i].title,
-                date: value.allEvents[i].eventDate.toString().split(' ')[0],
-                time: value.allEvents[i].eventTime.toString(),
-                remainderTime: value.allEvents[i].remainderTime
-            )
-        ],);
-      },
-    );
-  }
+
 
 }

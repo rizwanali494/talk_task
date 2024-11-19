@@ -7,8 +7,10 @@ import 'package:talk_task/utilis/app_text_styles.dart';
 import 'package:talk_task/view/common_widgets/custom_cards.dart';
 import 'package:talk_task/view/common_widgets/custom_text.dart';
 import 'package:talk_task/view_model/event_title_provider.dart';
+import '../../../main.dart';
 import '../../../utilis/app_colors.dart';
 import '../../../utilis/app_images.dart';
+import '../../../utilis/app_prefs.dart';
 import '../../../utilis/date_formating.dart';
 import '../../../view_model/date_picker_provider.dart';
 import '../../../view_model/events_listner_provider.dart';
@@ -215,11 +217,13 @@ class _HomeScreenState extends State<HomeScreen> {
 Widget _microphone(){
     return InkWell(
       onTap: () async {
-
+        int permissionCount=prefs.getInt(AppPrefs.microphoneClicked)??0;
+        permissionCount++;
+        prefs.setInt(AppPrefs.microphoneClicked,permissionCount);
         bool permissionsGranted=false;
         permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
         if(!permissionsGranted  ) {
-          await PermissionHelper.openAppSettings();
+          //await PermissionHelper.openAppSettings();
         }
         else{
           context.read<RecordEventProvider>().initializeRecorder();

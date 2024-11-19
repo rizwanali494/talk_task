@@ -19,7 +19,7 @@ class AppBars {
   }
 
   static AppBar settingsAppBar(
-      {required BuildContext context, required String title}) {
+      {required BuildContext context, required String title,bool showLeading=true}) {
     return AppBar(
       elevation: 0,
       backgroundColor: AppColors.whiteFFFFF,
@@ -35,7 +35,10 @@ class AppBars {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
          children: [
+           if(!showLeading)
+           const SizedBox(),
 
+           if(showLeading)
             InkWell(
                 onTap: (){
                   Navigator.pop(context);

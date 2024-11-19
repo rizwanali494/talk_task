@@ -1,9 +1,9 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:talk_task/main.dart';
+import 'package:talk_task/utilis/app_prefs.dart';
 import '../utilis/app_constants.dart';
 import '../utilis/app_images.dart';
 import '../view/dialogues/permissions_dialogue.dart';
@@ -50,30 +50,43 @@ class PermissionHelper {
     return true;
   }
 
+
+
   static Future<bool> _checkAndRequestMicrophonePermission({required BuildContext context}) async {
     var microphoneStatus = await Permission.microphone.status;
+    int permissionCount=prefs.getInt(AppPrefs.microphoneClicked)??0;
     print("${microphoneStatus.name} Hello g");
-    if (microphoneStatus.isDenied) {
-      await showPermissionDialogue(
-        permissionType: AppConstants.allowMicrophone,
-        context: context,
-        iconPath: AppImages.iconPermissionMicrophone,
-      );
+
+    if (microphoneStatus.isDenied && permissionCount<=2 ) {
       var result = await Permission.microphone.request();
       var newMicrophoneStatus = await Permission.microphone.status;
+
       if (!newMicrophoneStatus.isDenied) {
         return true;
       }
 
-      if (newMicrophoneStatus.isPermanentlyDenied) {
-        await AppSettings.openAppSettings();
+      if (permissionCount>2) {
+       bool result= await showPermissionDialogue(
+          permissionType: AppConstants.allowMicrophone,
+          context: context,
+          iconPath: AppImages.iconPermissionMicrophone,
+        );
+       if(result){ await AppSettings.openAppSettings();}
+
         return false;
       }
+
       return false;
     }
 
-    if (microphoneStatus.isPermanentlyDenied) {
-      await AppSettings.openAppSettings();
+    if (permissionCount>2) {
+      bool result=await showPermissionDialogue(
+        permissionType: AppConstants.allowMicrophone,
+        context: context,
+        iconPath: AppImages.iconPermissionMicrophone,
+      );
+      if(result){ await AppSettings.openAppSettings();}
+
       return false;
     }
 
@@ -81,14 +94,21 @@ class PermissionHelper {
   }
 
 
+
   static Future<void> openAppSettings() async {
     await AppSettings.openAppSettings();
   }
 
-  static Future<void> showPermissionDialogue({ required String permissionType,required BuildContext context,required String iconPath}) async {
-    await showDialog(context: context, builder: (context)=>PermissionsDialogue(title:permissionType, iconPath:iconPath , callBack: (){
-       Navigator.of(context).pop(true);
-    }));
+  static Future<bool> showPermissionDialogue({ required String permissionType,required BuildContext context,required String iconPath}) async {
+    bool permissionGranted=false;
+    try{
+      permissionGranted = await showDialog(context: context, builder: (context)=>PermissionsDialogue(title:permissionType, iconPath:iconPath , callBack: (){
+        Navigator.of(context).pop(true);
+      }));
+    }catch(e){
+
+    }
+   return permissionGranted;
 
   }
 }

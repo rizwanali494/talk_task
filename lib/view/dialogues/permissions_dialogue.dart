@@ -31,7 +31,7 @@ class PermissionsDialogue extends StatelessWidget{
             child: SizedBox(
               height: 20.h,
               child: IconButton(onPressed: (){
-                Navigator.of(context).pop();
+                Navigator.of(context).pop(false);
               }, icon: const Icon(Icons.close),color: AppColors.grey787878,),
             ),
           ),
