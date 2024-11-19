@@ -12,7 +12,7 @@ class PermissionHelper {
 
   static Future<bool> checkAndRequestPermissions({required BuildContext context}) async {
     bool isNotificationAllowed = await checkAndRequestNotificationPermission(context: context);
-    bool isMicrophoneAllowed = await _checkAndRequestMicrophonePermission(context: context);
+    bool isMicrophoneAllowed = await checkAndRequestMicrophonePermission(context: context);
     return  isNotificationAllowed && isMicrophoneAllowed;
   }
 
@@ -23,27 +23,17 @@ class PermissionHelper {
     permissionCount++;
     prefs.setInt(AppPrefs.notificationClicked,permissionCount);
     if (notificationStatus.isDenied && permissionCount<=2 ) {
-      var result = await Permission.microphone.request();
-      var newMicrophoneStatus = await Permission.microphone.status;
+      var result = await Permission.notification.request();
+      var newMicrophoneStatus = await Permission.notification.status;
       if (!newMicrophoneStatus.isDenied) {
+        prefs.setInt(AppPrefs.notificationClicked,0);
         return true;
-      }
-
-      if (permissionCount>2) {
-        bool result= await showPermissionDialogue(
-          permissionType: AppConstants.allowNotification,
-          context: context,
-          iconPath: AppImages.iconPermissionNotification,
-        );
-        if(result){ await AppSettings.openAppSettings();}
-
-        return false;
       }
 
       return false;
     }
 
-    if (permissionCount>2) {
+    if (notificationStatus.isDenied && permissionCount>2) {
       bool result=await showPermissionDialogue(
         permissionType: AppConstants.allowNotification,
         context: context,
@@ -77,7 +67,7 @@ class PermissionHelper {
 
 
 
-  static Future<bool> _checkAndRequestMicrophonePermission({required BuildContext context}) async {
+  static Future<bool> checkAndRequestMicrophonePermission({required BuildContext context}) async {
     var microphoneStatus = await Permission.microphone.status;
     int permissionCount=prefs.getInt(AppPrefs.microphoneClicked)??0;
     permissionCount++;
@@ -87,24 +77,14 @@ class PermissionHelper {
       var newMicrophoneStatus = await Permission.microphone.status;
 
       if (!newMicrophoneStatus.isDenied) {
+        prefs.setInt(AppPrefs.microphoneClicked,0);
         return true;
-      }
-
-      if (permissionCount>2) {
-       bool result= await showPermissionDialogue(
-          permissionType: AppConstants.allowMicrophone,
-          context: context,
-          iconPath: AppImages.iconPermissionMicrophone,
-        );
-       if(result){ await AppSettings.openAppSettings();}
-
-        return false;
       }
 
       return false;
     }
 
-    if (permissionCount>2) {
+    if (microphoneStatus.isDenied && permissionCount>2) {
       bool result=await showPermissionDialogue(
         permissionType: AppConstants.allowMicrophone,
         context: context,

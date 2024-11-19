@@ -45,7 +45,7 @@ class MessageDialogue extends StatelessWidget{
                 child: Icon(Icons.info,size: 27.h,color: AppColors.whiteFFFFF,),
               ),
             ),
-            CustomText(text: AppConstants.permissionRequired,color: AppColors.blueDark002055,
+            CustomText(text: AppConstants.noData,color: AppColors.blueDark002055,
               fontSize: 18.sp,fontWeight: FontWeight.bold,),
             SizedBox(height: 10.h,),
             CustomText(text: title,color: AppColors.blueDark002055,

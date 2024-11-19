@@ -219,7 +219,7 @@ Widget _microphone(){
       onTap: () async {
 
         bool permissionsGranted=false;
-        permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
+        permissionsGranted=await PermissionHelper.checkAndRequestMicrophonePermission(context: context);
         if(!permissionsGranted  ) {
           //await PermissionHelper.openAppSettings();
         }

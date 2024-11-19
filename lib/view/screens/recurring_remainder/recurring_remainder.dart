@@ -186,7 +186,7 @@ class _RemainderState extends State<RecurringRemainders> {
       onTap: () async {
 
         bool permissionsGranted=false;
-        permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
+        permissionsGranted=await PermissionHelper.checkAndRequestMicrophonePermission(context: context);
         if(!permissionsGranted  ) {
           await PermissionHelper.openAppSettings();
         }
