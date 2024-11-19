@@ -16,22 +16,47 @@ class PermissionHelper {
     return  isNotificationAllowed && isMicrophoneAllowed;
   }
 
+
   static Future<bool> checkAndRequestNotificationPermission({required BuildContext context}) async {
-    var notificationStatus = await Permission.notification.status;
-    if (notificationStatus.isDenied) {
-     await showPermissionDialogue(permissionType: AppConstants.allowNotification, context: context, iconPath: AppImages.iconPermissionNotification);
-      await AwesomeNotifications().requestPermissionToSendNotifications();
-      bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
-      return isAllowed;
+    var microphoneStatus = await Permission.notification.status;
+    int permissionCount=prefs.getInt(AppPrefs.notificationClicked)??0;
+    permissionCount++;
+    prefs.setInt(AppPrefs.notificationClicked,permissionCount);
+    if (microphoneStatus.isGranted && permissionCount<=2 ) {
+      var result = await Permission.microphone.request();
+      var newMicrophoneStatus = await Permission.microphone.status;
+      if (!newMicrophoneStatus.isDenied) {
+        return true;
+      }
+
+      if (permissionCount>2) {
+        bool result= await showPermissionDialogue(
+          permissionType: AppConstants.allowNotification,
+          context: context,
+          iconPath: AppImages.iconPermissionNotification,
+        );
+        if(result){ await AppSettings.openAppSettings();}
+
+        return false;
+      }
+
+      return false;
     }
 
-    if (notificationStatus.isPermanentlyDenied) {
-      openAppSettings();
+    if (permissionCount>2) {
+      bool result=await showPermissionDialogue(
+        permissionType: AppConstants.allowNotification,
+        context: context,
+        iconPath: AppImages.iconPermissionNotification,
+      );
+      if(result){ await AppSettings.openAppSettings();}
+
       return false;
     }
 
     return true;
   }
+
 
   static Future<bool> checkAndRequesLocationPermission({required BuildContext context}) async {
     var locationStatus = await Permission.locationWhenInUse.status;
@@ -55,8 +80,8 @@ class PermissionHelper {
   static Future<bool> _checkAndRequestMicrophonePermission({required BuildContext context}) async {
     var microphoneStatus = await Permission.microphone.status;
     int permissionCount=prefs.getInt(AppPrefs.microphoneClicked)??0;
-    print("${microphoneStatus.name} Hello g");
-
+    permissionCount++;
+    prefs.setInt(AppPrefs.microphoneClicked,permissionCount);
     if (microphoneStatus.isDenied && permissionCount<=2 ) {
       var result = await Permission.microphone.request();
       var newMicrophoneStatus = await Permission.microphone.status;

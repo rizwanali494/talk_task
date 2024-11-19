@@ -36,7 +36,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
       bool isNotificationAllowed = await PermissionHelper.checkAndRequestNotificationPermission(context: context);
      if(!isNotificationAllowed){
-       await PermissionHelper.openAppSettings();
        return;
      }
       await prefs.setBool(AppPrefs.onBoardingShown, true);

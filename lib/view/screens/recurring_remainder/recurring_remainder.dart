@@ -184,9 +184,7 @@ class _RemainderState extends State<RecurringRemainders> {
   Widget _microphone(){
     return  InkWell(
       onTap: () async {
-        int permissionCount=prefs.getInt(AppPrefs.microphoneClicked)??0;
-        permissionCount++;
-        prefs.setInt(AppPrefs.microphoneClicked,permissionCount);
+
         bool permissionsGranted=false;
         permissionsGranted=await PermissionHelper.checkAndRequestPermissions(context: context);
         if(!permissionsGranted  ) {
