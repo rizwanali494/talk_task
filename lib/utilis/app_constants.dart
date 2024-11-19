@@ -216,6 +216,8 @@ Consequently, you may incur charges from your mobile provider for data usage dur
   static const String permissionRequired = "Permission Required";
   static const String allowNotification = "Please allow notification permissions to use this feature";
   static const String allowLocation = "Please allow location permissions to use this feature";
+  static const String messageMicrophone = "Please make sure you have stable internet connection .Or speak louder";
+
 
   //Location remainder
   static const String location = "Location";

@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:talk_task/services/permission_handler.dart';
+import 'package:talk_task/utilis/app_constants.dart';
 import 'package:talk_task/utilis/date_formating.dart';
+import '../view/dialogues/message_dialogue.dart';
 import '../view_model/date_picker_provider.dart';
 import '../view_model/event_title_provider.dart';
 import '../view_model/time_picking_provider.dart';
@@ -43,38 +46,118 @@ class SpeechToTextService {
 
         if (result.finalResult) {
           try {
-            // Hit the API and process the response
             Map result = await hitApi(text);
+            try {
 
-            // Format the event time and remainder time
-            Map eventTime = DateFormatting.formatAudioGivenTimeToHours(result['time']);
-            Map eventRemainderTime = DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
+              if (result['event'] != 'null' ) {
+                context.read<EventTitleProvider>().setTitle(result['event']);
+              } else {
+                print('Event title is null, skipping...');
+              }
+            } catch (e) {
+              print('Error setting event title: ${e.toString()}');
+            }
 
-            // Update the context providers with event details
-            context.read<EventTitleProvider>().setTitle(result['event']);
-            context.read<DatePickerProvider>().selectDate(
-                DateFormatting.formatDateToDateTime(
-                    result['date'],
-                    eventTime['hours'],
-                    eventTime['minutes'],
-                    eventTime['amPm']
-                )
-            );
+            try{
+              if (result['date'] != 'null' ) {
+                Map eventTime = DateFormatting.formatAudioGivenTimeToHours(result['time']);
+                context.read<DatePickerProvider>().selectDate(
+                        DateFormatting.formatDateToDateTime(
+                            result['date'],
+                            eventTime['hours'],
+                            eventTime['minutes'],
+                            eventTime['amPm']
+                        )
+                    );
+              } else {
+                print('Event title is null, skipping...');
+              }
+            }
+            catch(a){}
 
-            context.read<TimePickerProvider>().selectTime(
-                hour: eventTime['hours'],
-                minute: eventTime['minutes'],
-                timeAmOrPm: eventTime['amPm']
-            );
+            // Handle event time - if null, do nothing
+            try {
+              if (result['time'] != 'null') {
+                Map eventTime = DateFormatting.formatAudioGivenTimeToHours(result['time']);
+                if (eventTime.isNotEmpty && eventTime.containsKey('hours') && eventTime.containsKey('minutes') && eventTime.containsKey('amPm')) {
+                  context.read<DatePickerProvider>().selectDate(
+                      DateFormatting.formatDateToDateTime(
+                          result['date'],
+                          eventTime['hours'],
+                          eventTime['minutes'],
+                          eventTime['amPm']
+                      )
+                  );
 
-            context.read<RemainderTimePickerProvider>().selectTime(
-                hour: eventRemainderTime['hours'],
-                minute: eventRemainderTime['minutes'],
-                timeAmOrPm: eventRemainderTime['amPm']
-            );
+                  context.read<TimePickerProvider>().selectTime(
+                      hour: eventTime['hours'],
+                      minute: eventTime['minutes'],
+                      timeAmOrPm: eventTime['amPm']
+                  );
+                } else {
+                  print('Event time is null or invalid, skipping...');
+                }
+              } else {
+                print('Event time is null, skipping...');
+              }
+            } catch (e) {
+              print('Error handling event time: ${e.toString()}');
+            }
+
+            // Handle reminder time - if null, do nothing
+            try {
+              if (result['reminderTime'] != null) {
+                Map eventRemainderTime = DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
+                if (eventRemainderTime.isNotEmpty && eventRemainderTime.containsKey('hours') && eventRemainderTime.containsKey('minutes') && eventRemainderTime.containsKey('amPm')) {
+                  context.read<RemainderTimePickerProvider>().selectTime(
+                      hour: eventRemainderTime['hours'],
+                      minute: eventRemainderTime['minutes'],
+                      timeAmOrPm: eventRemainderTime['amPm']
+                  );
+                } else {
+                  print('Reminder time is null or invalid, skipping...');
+                }
+              } else {
+                print('Reminder time is null, skipping...');
+              }
+            } catch (e) {
+              print('Error handling reminder time: ${e.toString()}');
+            }
+
           } catch (e) {
-            print(e.toString());
+            print('Error fetching or processing data: ${e.toString()}');
           }
+
+          // try {
+          //
+          //   Map result = await hitApi(text);
+          //   Map eventTime = DateFormatting.formatAudioGivenTimeToHours(result['time']);
+          //   Map eventRemainderTime = DateFormatting.formatAudioGivenTimeToHours(result['reminderTime']);
+          //   context.read<EventTitleProvider>().setTitle(result['event']);
+          //   context.read<DatePickerProvider>().selectDate(
+          //       DateFormatting.formatDateToDateTime(
+          //           result['date'],
+          //           eventTime['hours'],
+          //           eventTime['minutes'],
+          //           eventTime['amPm']
+          //       )
+          //   );
+          //
+          //   context.read<TimePickerProvider>().selectTime(
+          //       hour: eventTime['hours'],
+          //       minute: eventTime['minutes'],
+          //       timeAmOrPm: eventTime['amPm']
+          //   );
+          //
+          //   context.read<RemainderTimePickerProvider>().selectTime(
+          //       hour: eventRemainderTime['hours'],
+          //       minute: eventRemainderTime['minutes'],
+          //       timeAmOrPm: eventRemainderTime['amPm']
+          //   );
+          // } catch (e) {
+          //   // showDialog(context: context, builder: (context)=>const MessageDialogue(title: AppConstants.messageMicrophone,));
+          //   print(e.toString());
+          // }
         }
       },
       listenFor: const Duration(minutes: 5),
